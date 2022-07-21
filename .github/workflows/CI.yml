@@ -1,9 +1,7 @@
-name: Java CI/CD
+name: Java CI
 
 on:
-  push:
-    branches:
-      - main
+  [push, pull_request]
 
 jobs:
   build-and-test:
@@ -31,15 +29,3 @@ jobs:
 
       - name: Build with Gradle wrapper
         run: ./gradlew build
-
-      - name: Deploy to DigitalOcean droplet
-        uses: appleboy/scp-action@master
-        with:
-          host: ${{ secrets.HOST }}
-          username: ${{ secrets.USERNAME }}
-          key: ${{ secrets.KEY }}
-          port: 22
-          source: "build/libs/http-server.jar"
-          target: "build"
-          strip_components: 2
-          overwrite: true
