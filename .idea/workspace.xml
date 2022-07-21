@@ -5,54 +5,11 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="791a4c69-41e9-4761-85c0-afab56e555da" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/.github/workflows/CI.yml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/config/checkstyle/checkstyle.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/http-server-spec/.gitignore" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/http-server-spec/.ruby-gemset" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/http-server-spec/.ruby-version" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/http-server-spec/Gemfile" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/http-server-spec/Gemfile.lock" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/http-server-spec/README.md" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/http-server-spec/Rakefile" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/http-server-spec/features/01_getting_started/method_not_allowed.feature" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/http-server-spec/features/01_getting_started/page_not_found.feature" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/http-server-spec/features/01_getting_started/simple_get.feature" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/http-server-spec/features/01_getting_started/simple_head.feature" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/http-server-spec/features/01_getting_started/simple_options.feature" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/http-server-spec/features/01_getting_started/simple_post.feature" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/http-server-spec/features/01_getting_started/simple_redirect.feature" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/http-server-spec/features/02_structured_data/structured_data.feature" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/http-server-spec/features/03_file_server/health_check.feature" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/http-server-spec/features/03_file_server/images.feature" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/http-server-spec/features/04_todo_list/create_todo.feature" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/http-server-spec/features/04_todo_list/delete_todo.feature" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/http-server-spec/features/04_todo_list/update_todo.feature" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/http-server-spec/features/steps/01_getting_started/method_not_allowed.rb" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/http-server-spec/features/steps/01_getting_started/page_not_found.rb" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/http-server-spec/features/steps/01_getting_started/simple_get.rb" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/http-server-spec/features/steps/01_getting_started/simple_head.rb" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/http-server-spec/features/steps/01_getting_started/simple_options.rb" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/http-server-spec/features/steps/01_getting_started/simple_post.rb" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/http-server-spec/features/steps/01_getting_started/simple_redirect.rb" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/http-server-spec/features/steps/02_structured_data/structured_data.rb" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/http-server-spec/features/steps/03_file_server/health_check.rb" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/http-server-spec/features/steps/03_file_server/images.rb" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/http-server-spec/features/steps/04_todo_list/create_todo.rb" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/http-server-spec/features/steps/04_todo_list/delete_todo.rb" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/http-server-spec/features/steps/04_todo_list/update_todo.rb" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/http-server-spec/features/steps/shared.rb" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/http-server-spec/features/support/config.yml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/http-server-spec/features/support/env.rb" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/http-server-spec/features/support/requests.rb" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/http-server-spec/features/support/response.rb" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/http-server-spec/server.rb" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/http-server-spec/web/doggo.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/http-server-spec/web/health-check.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/http-server-spec/web/kisses.gif" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/http-server-spec/web/kitteh.jpg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/http-server-spec/web/layout-styles.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.github/workflows/CD.yml" beforeDir="false" afterPath="$PROJECT_DIR$/.github/workflows/CD.yml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/uiDesigner.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/test/java/httpserver/AppTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/build.gradle" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/httpserver/App.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -85,15 +42,21 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;last_opened_file_path&quot;: &quot;/Users/sophiakim/Documents/http-server&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "SHARE_PROJECT_CONFIGURATION_FILES": "true",
+    "last_opened_file_path": "/Users/sophiakim/Documents/http-server/src/test/java/httpserver"
   }
-}</component>
+}]]></component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/src/test/java/httpserver" />
+      <recent name="$PROJECT_DIR$/src/test" />
       <recent name="$PROJECT_DIR$" />
       <recent name="$PROJECT_DIR$/.github/workflows" />
+    </key>
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/src/test/java" />
     </key>
   </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
