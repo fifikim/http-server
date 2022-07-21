@@ -21,10 +21,10 @@ jobs:
           distribution: 'adopt'
 
       - name: Run the linter for source code
-        run: ./gradlew :app:checkstyleMain
+        run: ./gradlew checkstyleMain
 
       - name: Run the linter for tests
-        run: ./gradlew :app:checkstyleTest
+        run: ./gradlew checkstyleTest
 
       - name: Run test suite
         run: ./gradlew test
