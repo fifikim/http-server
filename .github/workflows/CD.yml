@@ -1,0 +1,45 @@
+name: Java CI/CD
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  build-and-test:
+    name: Build
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
+
+      - name: Set up JDK 11
+        uses: actions/setup-java@v2
+        with:
+          java-version: '11'
+          distribution: 'adopt'
+
+      - name: Run the linter for source code
+        run: ./gradlew :app:checkstyleMain
+
+      - name: Run the linter for tests
+        run: ./gradlew :app:checkstyleTest
+
+      - name: Run test suite
+        run: ./gradlew test
+
+      - name: Build with Gradle wrapper
+        run: ./gradlew build
+
+      - name: Deploy to DigitalOcean droplet
+        uses: appleboy/scp-action@master
+        with:
+          host: ${{ secrets.HOST }}
+          username: ${{ secrets.USERNAME }}
+          key: ${{ secrets.KEY }}
+          port: 22
+          source: "build/libs/http-server.jar"
+          target: "build"
+          strip_components: 2
+          overwrite: true

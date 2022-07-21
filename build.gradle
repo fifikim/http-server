@@ -1,19 +1,56 @@
 plugins {
     id 'java'
+    id 'application'
+    id 'checkstyle'
+    id 'com.adarshr.test-logger' version '3.2.0'
 }
 
-group 'org.example'
-version '1.0-SNAPSHOT'
+java {
+    toolchain {
+        languageVersion = JavaLanguageVersion.of(11)
+    }
+}
 
 repositories {
     mavenCentral()
 }
 
 dependencies {
-    testImplementation 'org.junit.jupiter:junit-jupiter-api:5.8.1'
-    testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.8.1'
+    implementation 'org.junit.jupiter:junit-jupiter:5.8.1'
+    testImplementation 'junit:junit:4.13.2'
+    testImplementation 'org.mockito:mockito-core:3.+'
+    implementation 'com.google.guava:guava:30.1.1-jre'
 }
 
 test {
-    useJUnitPlatform()
+    useJUnit()
 }
+
+checkstyle {
+    maxWarnings = 0
+    toolVersion = '10.3.1'
+    getConfigDirectory().set(new File(rootDir, 'config/checkstyle'))
+}
+
+tasks.withType(Checkstyle) {
+    reports {
+        xml.required = false
+        html.required = true
+    }
+}
+
+application {
+    mainClass = 'httpserver.App'
+}
+
+jar {
+    archiveBaseName = 'http-server'
+    manifest {
+        attributes(
+                'Main-Class': 'httpserver.App'
+        )
+    }
+}
+
+task stage(dependsOn: ['build', 'clean'])
+build.mustRunAfter clean
