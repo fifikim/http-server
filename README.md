@@ -1,6 +1,6 @@
 <h1 align="center">HTTP Server</h1>
 
-This HTTP server establishes a connection with the client using a low-level socket library. It is built according to SOLID principles and using a test-driven development approach.
+This HTTP server establishes a connection with the client using a low-level socket library. It was built according to SOLID principles and using a test-driven development approach.
 
 No external dependencies have been incorporated, apart from those used for linting and testing purposes.
 
@@ -57,12 +57,12 @@ Automated linting and testing has been incorporated into the build process. Howe
 
 Run the linter for source code:
 ```
-./gradlew :app:checkstyleMain
+./gradlew checkstyleMain
 ```
 
 Run the linter for the test suite:
 ```
-./gradlew :app:checkstyleTest
+./gradlew checkstyleTest
 ```
 
 ### Testing <a name = "testing"></a>

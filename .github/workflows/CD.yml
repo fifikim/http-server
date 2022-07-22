@@ -20,15 +20,6 @@ jobs:
           java-version: '11'
           distribution: 'adopt'
 
-      - name: Run the linter for source code
-        run: ./gradlew checkstyleMain
-
-      - name: Run the linter for tests
-        run: ./gradlew checkstyleTest
-
-      - name: Run test suite
-        run: ./gradlew test
-
       - name: Build with Gradle wrapper
         run: ./gradlew build
 
