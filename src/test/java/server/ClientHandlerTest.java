@@ -8,8 +8,6 @@
 //import static org.mockito.Mockito.verify;
 //import static org.mockito.Mockito.when;
 //
-//import httpserver.server.SocketIo;
-//import httpserver.TestHelpers;
 //import java.io.ByteArrayInputStream;
 //import java.io.ByteArrayOutputStream;
 //import java.io.IOException;
@@ -51,8 +49,8 @@
 //    when(serverSocket.accept()).thenReturn(clientSocket);
 //
 //    socketIo = mock(SocketIo.class);
-//    when(socketIo.receive()).thenReturn(message);
-//    when(socketIo.send(message)).thenReturn(message);
+//    when(socketIo.read()).thenReturn(message);
+//    //when(socketIo.send(message)).thenReturn(message);
 //
 //    ByteArrayOutputStream consoleOut = TestHelpers.setConsoleOutput();
 //    TestHelpers.initializeServer(clientSocket);
@@ -82,12 +80,6 @@
 //  @After
 //  public void tearDown() {
 //    TestHelpers.restoreInitialStreams();
-//  }
-//
-//  @Test
-//  public void assignsClientId() throws IOException {
-//    initialize(nullMsg);
-//    assertThat(consoleOutput, containsString("EchoClient90210"));
 //  }
 //
 //  @Test

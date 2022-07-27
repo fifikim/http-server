@@ -8,7 +8,7 @@ public class RequestParser {
   }
 
   public Request parse() {
-    return new Request(method(), path(), version(), body());
+    return new Request(method(), path(), protocol(), body());
   }
 
   private String startLine() {
@@ -23,7 +23,7 @@ public class RequestParser {
     return startLine().split(" ")[1];
   }
 
-  private String version() {
+  private String protocol() {
     return startLine().split(" ")[2];
   }
 

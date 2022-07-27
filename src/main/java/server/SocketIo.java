@@ -14,18 +14,17 @@ public class SocketIo {
     output = clientSocket.getOutputStream();
   }
 
-  public String getRequest() throws IOException {
+  public String read() throws IOException {
     StringBuilder request = new StringBuilder();
 
     while (input.available() > 0) {
       request.append((char) input.read());
     }
 
-    System.out.println(request.toString());
     return request.toString();
   }
 
-  public void sendResponse(String message) throws IOException {
+  public void send(String message) throws IOException {
     System.out.println(message);
     output.write(message.getBytes("ASCII"));
     output.flush();

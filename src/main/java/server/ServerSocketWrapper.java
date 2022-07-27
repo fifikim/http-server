@@ -14,12 +14,12 @@ public class ServerSocketWrapper implements ServerSocketInterface {
   }
 
   public String getRequest() throws IOException {
-    String request = socketIo.getRequest();
-    return (request.isEmpty()) ? null : request;
+    String request = socketIo.read();
+    return (request.isBlank()) ? null : request;
   }
 
   public void sendResponse(Response response) throws IOException {
-    socketIo.sendResponse(response.format());
+    socketIo.send(response.toString());
   }
 
   public void closeSocket() throws IOException {

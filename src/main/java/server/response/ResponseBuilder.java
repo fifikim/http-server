@@ -8,12 +8,12 @@ public class ResponseBuilder {
   private String body = "\r\n";
 
   public ResponseBuilder setStartLine(String protocol, String status) {
-    this.startLine = ResponseFormatter.startLine(protocol, status);
+    startLine = ResponseFormatter.startLine(protocol, status);
     return this;
   }
 
   public ResponseBuilder setHeaders(ArrayList<String> headerList) {
-    this.headers = ResponseFormatter.formatHeaders(headerList);
+    headers = ResponseFormatter.formatHeaders(headerList);
     return this;
   }
 
