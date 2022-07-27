@@ -1,4 +1,4 @@
-@simple-get @01-getting-started
+@simple-get @01-getting-started @implemented
 Feature: Simple GET
 
   Scenario: Executing a GET request to /simple_get returns a 200

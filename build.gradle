@@ -41,14 +41,14 @@ tasks.withType(Checkstyle) {
 }
 
 application {
-    mainClass = 'httpserver.App'
+    mainClass = 'server.App'
 }
 
 jar {
     archiveBaseName = 'http-server'
     manifest {
         attributes(
-                'Main-Class': 'httpserver.App'
+                'Main-Class': 'server.App'
         )
     }
 }
