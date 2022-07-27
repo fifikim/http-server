@@ -1,16 +1,12 @@
-package httpserver;
+package server;
 
 import static org.junit.Assert.assertEquals;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.verify;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.net.Socket;
 import org.junit.Test;
-import server.SocketIo;
-import server.TestHelpers;
 
 public class SocketIoTest {
   private final String testMessage = "test message";
@@ -21,8 +17,7 @@ public class SocketIoTest {
   public void initialize() throws IOException {
     inputStream = new ByteArrayInputStream(testMessage.getBytes());
     outputStream = new ByteArrayOutputStream();
-
-    Socket clientSocket = TestHelpers.socket(inputStream, outputStream, 90210);
+    Socket clientSocket = TestHelpers.socket(inputStream, outputStream);
     socketIo = new SocketIo(clientSocket);
   }
 

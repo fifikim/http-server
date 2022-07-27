@@ -5,18 +5,20 @@ import java.util.ArrayList;
 public class ResponseFormatter {
   private static final String crlf = "\r\n";
 
-  public static String startLine(String protocol, String status) {
-    StringBuilder startLine = new StringBuilder();
+  public static String startLine(String startLine) {
+    StringBuilder formattedStartLine = new StringBuilder();
 
-    startLine.append(protocol);
-    startLine.append(" ");
-    startLine.append(status);
-    startLine.append(crlf);
+    formattedStartLine.append(startLine);
+    formattedStartLine.append(crlf);
 
-    return startLine.toString();
+    return formattedStartLine.toString();
   }
 
-  public static String formatHeaders(ArrayList<String> headers) {
+  public static String headers(ArrayList<String> headers) {
+    if (headers == null) {
+      return "";
+    }
+
     StringBuilder formattedHeaders = new StringBuilder();
 
     for (String header : headers) {
@@ -27,7 +29,11 @@ public class ResponseFormatter {
     return formattedHeaders.toString();
   }
 
-  public static String formatBody(String body) {
+  public static String body(String body) {
+    if (body == null) {
+      return crlf;
+    }
+
     StringBuilder formattedBody = new StringBuilder();
 
     formattedBody.append(crlf);

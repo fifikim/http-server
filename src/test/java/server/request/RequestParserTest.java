@@ -9,9 +9,7 @@ public class RequestParserTest {
   @Test
   public void parsesRequestWithNoBody() {
     String testRequest = TestHelpers.stringRequest();
-
-    RequestParser parser = new RequestParser(testRequest);
-    Request request = parser.parse();
+    Request request = new RequestParser().parse(testRequest);
 
     assertEquals("GET", request.method());
     assertEquals("/simple_get", request.path());
@@ -22,9 +20,7 @@ public class RequestParserTest {
   @Test
   public void parsesRequestWithBody() {
     String testRequest = TestHelpers.stringRequestWithBody();
-
-    RequestParser parser = new RequestParser(testRequest);
-    Request request = parser.parse();
+    Request request = new RequestParser().parse(testRequest);
 
     assertEquals("POST", request.method());
     assertEquals("/echo_body", request.path());

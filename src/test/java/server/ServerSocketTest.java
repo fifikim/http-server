@@ -16,6 +16,7 @@ import server.response.Response;
 public class ServerSocketTest {
   private ServerSocket serverSocket;
   private Socket clientSocket;
+  private SocketIo socketIo;
   private ServerSocketInterface serverSocketInterface;
   private ByteArrayInputStream inputStream;
   private ByteArrayOutputStream outputStream;
@@ -25,10 +26,11 @@ public class ServerSocketTest {
     outputStream = new ByteArrayOutputStream();
 
     serverSocket = mock(ServerSocket.class);
-    clientSocket = TestHelpers.socket(inputStream, outputStream, 90210);
+    clientSocket = TestHelpers.socket(inputStream, outputStream);
     when(serverSocket.accept()).thenReturn(clientSocket);
 
-    serverSocketInterface = new ServerSocketWrapper(clientSocket);
+    socketIo = new SocketIo(clientSocket);
+    serverSocketInterface = new ServerSocketWrapper(clientSocket, socketIo);
   }
 
   public void initializeWithInput(String testRequest) throws IOException {
@@ -36,10 +38,11 @@ public class ServerSocketTest {
     outputStream = new ByteArrayOutputStream();
 
     serverSocket = mock(ServerSocket.class);
-    clientSocket = TestHelpers.socket(inputStream, outputStream, 90210);
+    clientSocket = TestHelpers.socket(inputStream, outputStream);
     when(serverSocket.accept()).thenReturn(clientSocket);
 
-    serverSocketInterface = new ServerSocketWrapper(clientSocket);
+    socketIo = new SocketIo(clientSocket);
+    serverSocketInterface = new ServerSocketWrapper(clientSocket, socketIo);
   }
 
   @Test
@@ -64,27 +67,33 @@ public class ServerSocketTest {
 
   @Test
   public void sendResponseSendsResponseWithoutBody() throws IOException {
-    Response testResponse = TestHelpers.simpleGetResponse();
     initialize();
 
+    Response testResponse = TestHelpers.simpleGetResponse();
     serverSocketInterface.sendResponse(testResponse);
 
-    assertEquals(testResponse.toString(), outputStream.toString());
+    String expectedOutput = testResponse.format();
+    String actualOutput = outputStream.toString();
+
+    assertEquals(expectedOutput, actualOutput);
   }
 
   @Test
   public void sendResponseSendsResponseWithBody() throws IOException {
-    Response testResponse = TestHelpers.simpleGetWithBodyResponse();
     initialize();
 
+    Response testResponse = TestHelpers.simpleGetWithBodyResponse();
     serverSocketInterface.sendResponse(testResponse);
 
-    assertEquals(testResponse.toString(), outputStream.toString());
+    String expectedOutput = testResponse.format();
+    String actualOutput = outputStream.toString();
+    assertEquals(expectedOutput, actualOutput);
   }
 
   @Test
   public void closesConnectionAndStreams() throws IOException {
     initialize();
+
     serverSocketInterface.closeSocket();
 
     verify(clientSocket).close();

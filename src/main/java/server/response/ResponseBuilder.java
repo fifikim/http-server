@@ -4,21 +4,21 @@ import java.util.ArrayList;
 
 public class ResponseBuilder {
   private String startLine;
-  private String headers = "";
+  private ArrayList<String> headers;
   private String body = "\r\n";
 
-  public ResponseBuilder setStartLine(String protocol, String status) {
-    startLine = ResponseFormatter.startLine(protocol, status);
+  public ResponseBuilder setStartLine(String startLine) {
+    this.startLine = startLine;
     return this;
   }
 
-  public ResponseBuilder setHeaders(ArrayList<String> headerList) {
-    headers = ResponseFormatter.formatHeaders(headerList);
+  public ResponseBuilder setHeaders(ArrayList<String> headers) {
+    this.headers = headers;
     return this;
   }
 
   public ResponseBuilder setBody(String body) {
-    this.body = ResponseFormatter.formatBody(body);
+    this.body = body;
     return this;
   }
 

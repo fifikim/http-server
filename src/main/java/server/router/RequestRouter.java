@@ -1,27 +1,36 @@
 package server.router;
 
+import java.util.Arrays;
 import java.util.List;
 import server.request.Request;
 import server.response.Response;
-import server.router.routes.AllRoutes;
+import server.router.routes.HeadRequest;
 import server.router.routes.NotFound;
 import server.router.routes.Route;
+import server.router.routes.SimpleGet;
+import server.router.routes.SimpleGetWithBody;
 
 public class RequestRouter {
-  private final Request request;
-  private final List<Route> routes;
+  private Request request;
+  private List<Route> routes;
 
-  public RequestRouter(Request request) {
+  public Response getResponse(Request request) {
     this.request = request;
-    routes = AllRoutes.getList();
-  }
+    routes = getRouteList();
 
-  public Response getResponse() {
     for (Route route : routes) {
       if (request.path().equals(route.path())) {
-        return route.processRequest(request);
+        return route.processRequest();
       }
     }
-    return new NotFound().processRequest(request);
+    return new NotFound(request).processRequest();
+  }
+
+  private List<Route> getRouteList() {
+    return Arrays.asList(
+            new SimpleGet(request),
+            new SimpleGetWithBody(request),
+            new HeadRequest(request)
+    );
   }
 }

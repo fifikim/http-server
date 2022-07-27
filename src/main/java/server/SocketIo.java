@@ -25,7 +25,6 @@ public class SocketIo {
   }
 
   public void send(String message) throws IOException {
-    System.out.println(message);
     output.write(message.getBytes("ASCII"));
     output.flush();
   }

@@ -1,13 +1,11 @@
 package server.request;
 
 public class RequestParser {
-  private final String request;
+  private String request;
 
-  public RequestParser(String request) {
+  public Request parse(String request) {
     this.request = request;
-  }
 
-  public Request parse() {
     return new Request(method(), path(), protocol(), body());
   }
 

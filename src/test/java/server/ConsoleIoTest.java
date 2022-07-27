@@ -18,7 +18,7 @@ public class ConsoleIoTest {
 
   @After
   public void tearDown() {
-    TestHelpers.restoreInitialStreams();
+    System.setOut(System.out);
   }
 
   @Test

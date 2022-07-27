@@ -8,9 +8,16 @@ import server.router.RequestRouter;
 
 public class ClientHandler implements Runnable {
   private final ServerSocketInterface socketInterface;
+  private final RequestParser requestParser;
+  private final RequestRouter requestRouter;
 
-  public ClientHandler(ServerSocketInterface socketInterface) {
+  public ClientHandler(
+          ServerSocketInterface socketInterface,
+          RequestParser requestParser,
+          RequestRouter requestRouter) {
     this.socketInterface = socketInterface;
+    this.requestParser = requestParser;
+    this.requestRouter = requestRouter;
   }
 
   @Override
@@ -19,8 +26,8 @@ public class ClientHandler implements Runnable {
       String rawRequest;
 
       while ((rawRequest = socketInterface.getRequest()) != null) {
-        Request request = new RequestParser(rawRequest).parse();
-        Response response = new RequestRouter(request).getResponse();
+        Request request = requestParser.parse(rawRequest);
+        Response response = requestRouter.getResponse(request);
         socketInterface.sendResponse(response);
       }
     } catch (IOException e) {

@@ -7,6 +7,10 @@ import server.response.Response;
 import server.response.ResponseBuilder;
 
 public class NotFound extends Route {
+  public NotFound(Request request) {
+    super(request);
+  }
+
   @Override
   public String path() {
     return null;
@@ -18,9 +22,21 @@ public class NotFound extends Route {
   }
 
   @Override
-  public Response processRequest(Request request) {
+  public String resource() {
+    return null;
+  }
+
+  @Override
+  public Response processRequest() {
+    StringBuilder startLine = new StringBuilder();
+    startLine.append(request.protocol());
+    startLine.append(" ");
+    startLine.append(Status.NOT_FOUND.toString());
+
     return new ResponseBuilder()
-                .setStartLine(request.protocol(), Status.NOT_FOUND.toString())
+                .setStartLine(startLine.toString())
+                .setHeaders(null)
+                .setBody(null)
                 .build();
   }
 }

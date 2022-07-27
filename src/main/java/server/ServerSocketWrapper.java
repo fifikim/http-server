@@ -8,9 +8,9 @@ public class ServerSocketWrapper implements ServerSocketInterface {
   private final Socket clientSocket;
   private final SocketIo socketIo;
 
-  public ServerSocketWrapper(Socket clientSocket) throws IOException {
+  public ServerSocketWrapper(Socket clientSocket, SocketIo socketIo) throws IOException {
     this.clientSocket = clientSocket;
-    socketIo = createSocketStreams();
+    this.socketIo = socketIo;
   }
 
   public String getRequest() throws IOException {
@@ -19,14 +19,10 @@ public class ServerSocketWrapper implements ServerSocketInterface {
   }
 
   public void sendResponse(Response response) throws IOException {
-    socketIo.send(response.toString());
+    socketIo.send(response.format());
   }
 
   public void closeSocket() throws IOException {
     clientSocket.close();
-  }
-
-  private SocketIo createSocketStreams() throws IOException {
-    return new SocketIo(clientSocket);
   }
 }

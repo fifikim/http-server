@@ -7,47 +7,47 @@ import org.junit.Test;
 import server.TestHelpers;
 
 public class ResponseBuilderTest {
-  private final String startLine = "HTTP/1.1 200 OK\r\n";
-  private final String protocol = "HTTP/1.1";
-  private final String status = "200 OK";
+  private final String startLine = "HTTP/1.1 200 OK";
   private final ArrayList<String> headersList = TestHelpers.headersList();
-  private final String headersString = TestHelpers.headersString();
 
   @Test
   public void setsAndBuildsResponseWithStartLineHeadersAndBody() {
-    String body = "\r\nHello world";
+    String body = "Hello world";
 
-    Response expectedResponse = new Response(startLine, headersString, body);
+    Response expectedResponse = new Response(startLine, headersList, body);
     Response actualResponse =
             new ResponseBuilder()
-                    .setStartLine(protocol, status)
+                    .setStartLine(startLine)
                     .setHeaders(headersList)
-                    .setBody("Hello world")
+                    .setBody(body)
                     .build();
 
-    assertEquals(expectedResponse.toString(), actualResponse.toString());
+    assertEquals(expectedResponse.format(), actualResponse.format());
   }
 
   @Test
   public void setsAndBuildsResponseWithStartLineAndHeaders() {
-    Response expectedResponse = new Response(startLine, headersString, "\r\n");
+    Response expectedResponse = new Response(startLine, headersList, null);
     Response actualResponse =
             new ResponseBuilder()
-                    .setStartLine(protocol, status)
+                    .setStartLine(startLine)
                     .setHeaders(headersList)
+                    .setBody(null)
                     .build();
 
-    assertEquals(expectedResponse.toString(), actualResponse.toString());
+    assertEquals(expectedResponse.format(), actualResponse.format());
   }
 
   @Test
   public void setsAndBuildsResponseWithStartLineOnly() {
-    Response expectedResponse = new Response(startLine, "", "\r\n");
+    Response expectedResponse = new Response(startLine, null, null);
     Response actualResponse =
             new ResponseBuilder()
-                    .setStartLine(protocol, status)
+                    .setStartLine(startLine)
+                    .setHeaders(null)
+                    .setBody(null)
                     .build();
 
-    assertEquals(expectedResponse.toString(), actualResponse.toString());
+    assertEquals(expectedResponse.format(), actualResponse.format());
   }
 }

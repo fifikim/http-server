@@ -1,22 +1,24 @@
 package server.response;
 
+import java.util.ArrayList;
+
 public class Response {
   private final String startLine;
-  private final String headers;
+  private final ArrayList<String> headers;
   private final String body;
 
-  public Response(String startLine, String headers, String body) {
+  public Response(String startLine, ArrayList<String> headers, String body) {
     this.startLine = startLine;
     this.headers = headers;
     this.body = body;
   }
 
-  public String toString() {
+  public String format() {
     StringBuilder response = new StringBuilder();
 
-    response.append(startLine);
-    response.append(headers);
-    response.append(body);
+    response.append(ResponseFormatter.startLine(startLine));
+    response.append(ResponseFormatter.headers(headers));
+    response.append(ResponseFormatter.body(body));
 
     return response.toString();
   }
