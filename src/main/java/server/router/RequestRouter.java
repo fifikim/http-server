@@ -4,19 +4,16 @@ import java.util.Arrays;
 import java.util.List;
 import server.request.Request;
 import server.response.Response;
-import server.router.routes.HeadRequest;
 import server.router.routes.NotFound;
+import server.router.routes.Path;
 import server.router.routes.Route;
-import server.router.routes.SimpleGet;
-import server.router.routes.SimpleGetWithBody;
 
 public class RequestRouter {
   private Request request;
-  private List<Route> routes;
 
   public Response getResponse(Request request) {
     this.request = request;
-    routes = getAllRoutes();
+    List<Route> routes = getAllRoutes();
 
     for (Route route : routes) {
       if (request.path().equals(route.path())) {
@@ -28,9 +25,9 @@ public class RequestRouter {
 
   private List<Route> getAllRoutes() {
     return Arrays.asList(
-            new SimpleGet(request),
-            new SimpleGetWithBody(request),
-            new HeadRequest(request)
+            new Path(request, "/simple_get", List.of("GET"), null),
+            new Path(request, "/simple_get_with_body", List.of("GET"), "Hello world"),
+            new Path(request, "/head_request", Arrays.asList("HEAD", "OPTIONS"), null)
     );
   }
 }
