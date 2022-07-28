@@ -18,6 +18,7 @@ import org.junit.Test;
 import server.request.Request;
 import server.request.RequestParser;
 import server.response.Response;
+import server.response.ResponseFormatter;
 import server.router.RequestRouter;
 
 public class ClientHandlerTest {
@@ -86,7 +87,7 @@ public class ClientHandlerTest {
   @Test
   public void sendsResponseIfRequestReceived() throws IOException {
     runTestWithSocketIo();
-    assertEquals(testResponse.format(), outputStream.toString());
+    assertEquals(ResponseFormatter.toString(testResponse), outputStream.toString());
   }
 
   @Test

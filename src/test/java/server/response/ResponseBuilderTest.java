@@ -22,7 +22,7 @@ public class ResponseBuilderTest {
                     .setBody(body)
                     .build();
 
-    assertEquals(expectedResponse.format(), actualResponse.format());
+    assertEquals(expectedResponse, actualResponse);
   }
 
   @Test
@@ -35,7 +35,7 @@ public class ResponseBuilderTest {
                     .setBody(null)
                     .build();
 
-    assertEquals(expectedResponse.format(), actualResponse.format());
+    assertEquals(expectedResponse, actualResponse);
   }
 
   @Test
@@ -48,6 +48,6 @@ public class ResponseBuilderTest {
                     .setBody(null)
                     .build();
 
-    assertEquals(expectedResponse.format(), actualResponse.format());
+    assertEquals(expectedResponse, actualResponse);
   }
 }

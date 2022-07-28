@@ -16,7 +16,7 @@ public class RequestRouter {
 
   public Response getResponse(Request request) {
     this.request = request;
-    routes = getRouteList();
+    routes = getAllRoutes();
 
     for (Route route : routes) {
       if (request.path().equals(route.path())) {
@@ -26,7 +26,7 @@ public class RequestRouter {
     return new NotFound(request).processRequest();
   }
 
-  private List<Route> getRouteList() {
+  private List<Route> getAllRoutes() {
     return Arrays.asList(
             new SimpleGet(request),
             new SimpleGetWithBody(request),

@@ -23,7 +23,7 @@ The following routes and methods are currently supported:
 |-------------------------|:--------------------:|:-------------------------:|:--------------:|
 | /simple_get             |         GET          |           Allow           |       No       |    
 | /simple_get_with_body   |         GET          | Allow,<br/>Content-Length |      Yes       |
- | /head_request           |   HEAD,<br>OPTIONS   |           Allow           |       No       |
+| /head_request           |   HEAD,<br>OPTIONS   |           Allow           |       No       |
 
 The production server is located at [tbd]. Please see instructions below for guidance on installing and running the server locally on your own machine.
 

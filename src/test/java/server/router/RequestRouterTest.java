@@ -15,7 +15,7 @@ public class RequestRouterTest {
     Response expectedResponse = TestHelpers.simpleGetResponse();
     Response actualResponse = new RequestRouter().getResponse(request);
 
-    assertEquals(expectedResponse.format(), actualResponse.format());
+    assertEquals(expectedResponse, actualResponse);
   }
 
   @Test
@@ -25,7 +25,7 @@ public class RequestRouterTest {
     Response expectedResponse = TestHelpers.simpleGetWithBodyResponse();
     Response actualResponse = new RequestRouter().getResponse(request);
 
-    assertEquals(expectedResponse.format(), actualResponse.format());
+    assertEquals(expectedResponse, actualResponse);
   }
 
   @Test
@@ -35,7 +35,7 @@ public class RequestRouterTest {
     Response expectedResponse = TestHelpers.notFoundResponse();
     Response actualResponse = new RequestRouter().getResponse(request);
 
-    assertEquals(expectedResponse.format(), actualResponse.format());
+    assertEquals(expectedResponse, actualResponse);
   }
 
   @Test
@@ -45,6 +45,6 @@ public class RequestRouterTest {
     Response expectedResponse = TestHelpers.notAllowedResponse();
     Response actualResponse = new RequestRouter().getResponse(request);
 
-    assertEquals(expectedResponse.format(), actualResponse.format());
+    assertEquals(expectedResponse, actualResponse);
   }
 }

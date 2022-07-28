@@ -12,6 +12,7 @@ import java.net.ServerSocket;
 import java.net.Socket;
 import org.junit.Test;
 import server.response.Response;
+import server.response.ResponseFormatter;
 
 public class ServerSocketTest {
   private ServerSocket serverSocket;
@@ -72,7 +73,7 @@ public class ServerSocketTest {
     Response testResponse = TestHelpers.simpleGetResponse();
     serverSocketInterface.sendResponse(testResponse);
 
-    String expectedOutput = testResponse.format();
+    String expectedOutput = ResponseFormatter.toString(testResponse);
     String actualOutput = outputStream.toString();
 
     assertEquals(expectedOutput, actualOutput);
@@ -85,7 +86,7 @@ public class ServerSocketTest {
     Response testResponse = TestHelpers.simpleGetWithBodyResponse();
     serverSocketInterface.sendResponse(testResponse);
 
-    String expectedOutput = testResponse.format();
+    String expectedOutput = ResponseFormatter.toString(testResponse);
     String actualOutput = outputStream.toString();
     assertEquals(expectedOutput, actualOutput);
   }

@@ -3,6 +3,7 @@ package server;
 import java.io.IOException;
 import java.net.Socket;
 import server.response.Response;
+import server.response.ResponseFormatter;
 
 public class ServerSocketWrapper implements ServerSocketInterface {
   private final Socket clientSocket;
@@ -19,7 +20,8 @@ public class ServerSocketWrapper implements ServerSocketInterface {
   }
 
   public void sendResponse(Response response) throws IOException {
-    socketIo.send(response.format());
+    String responseString = ResponseFormatter.toString(response);
+    socketIo.send(responseString);
   }
 
   public void closeSocket() throws IOException {
