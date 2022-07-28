@@ -5,7 +5,6 @@ import java.util.List;
 import server.request.Request;
 import server.response.Response;
 import server.router.routes.NotFound;
-import server.router.routes.Path;
 import server.router.routes.Route;
 
 public class RequestRouter {
@@ -25,9 +24,9 @@ public class RequestRouter {
 
   private List<Route> getAllRoutes() {
     return Arrays.asList(
-            new Path(request, "/simple_get", List.of("GET"), null),
-            new Path(request, "/simple_get_with_body", List.of("GET"), "Hello world"),
-            new Path(request, "/head_request", Arrays.asList("HEAD", "OPTIONS"), null)
+            new Route(request, "/simple_get", List.of("GET"), null),
+            new Route(request, "/simple_get_with_body", List.of("GET"), "Hello world"),
+            new Route(request, "/head_request", Arrays.asList("HEAD", "OPTIONS"), null)
     );
   }
 }

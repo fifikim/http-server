@@ -6,7 +6,7 @@ import server.request.Request;
 import server.response.Response;
 import server.response.ResponseBuilder;
 
-public class NotFound extends Route {
+public class NotFound extends RouteTemplate {
   public NotFound(Request request) {
     super(request);
   }
