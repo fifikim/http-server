@@ -1,6 +1,8 @@
 package server.router.routes;
 
 import java.util.List;
+import server.constants.Method;
+import server.constants.Path;
 import server.request.Request;
 
 public class SimpleGetWithBody extends Route {
@@ -9,17 +11,17 @@ public class SimpleGetWithBody extends Route {
   }
 
   @Override
-  public String path() {
-    return "/simple_get_with_body";
+  public Path path() {
+    return Path.SIMPLE_GET_WITH_BODY;
   }
 
   @Override
-  public List<String> methods() {
-    return List.of("GET");
+  public List<Method> methods() {
+    return List.of(Method.GET);
   }
 
   @Override
-  public String resource() {
+  public String body() {
     return "Hello world";
   }
 }

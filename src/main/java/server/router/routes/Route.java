@@ -1,8 +1,11 @@
 package server.router.routes;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
+import server.constants.Header;
+import server.constants.Method;
+import server.constants.Path;
+import server.constants.Protocol;
 import server.constants.Status;
 import server.request.Request;
 import server.response.Response;
@@ -16,37 +19,39 @@ public abstract class Route {
     this.request = request;
   }
 
-  public abstract String path();
+  public abstract Path path();
 
-  protected abstract List<String> methods();
+  protected abstract List<Method> methods();
 
-  protected abstract String resource();
+  protected abstract String body();
 
   public Response processRequest() {
     return new ResponseBuilder()
-            .setStartLine(getStartLine())
-            .setHeaders(getHeaders())
-            .setBody(getBody())
+            .setStartLine(setStartLine())
+            .setHeaders(setHeaders())
+            .setBody(setBody())
             .build();
   }
 
-  protected String getStartLine() {
-    StringBuilder startLine = new StringBuilder();
-    startLine.append(request.protocol());
-    startLine.append(" ");
-
-    if (methods().contains(request.method())) {
-      status = Status.OK;
-    } else {
+  private void setStatus() {
+    if (methodNotAllowed()) {
       status = Status.NOT_ALLOWED;
+    } else {
+      status = Status.OK;
     }
+  }
 
+  private String setStartLine() {
+    setStatus();
+
+    StringBuilder startLine = new StringBuilder();
+    startLine.append(Protocol.DEFAULT);
     startLine.append(status);
 
     return startLine.toString();
   }
 
-  private ArrayList<String> getHeaders() {
+  private ArrayList<String> setHeaders() {
     ArrayList<String> headers = new ArrayList<>();
     headers.add(allowHeader());
 
@@ -57,33 +62,44 @@ public abstract class Route {
     return headers;
   }
 
-  private String getBody() {
-    return responseHasBody() ? resource() : null;
+  private String setBody() {
+    return responseHasBody() ? body() : null;
   }
 
   private String allowHeader() {
-    String joinedMethods = String.join(", ", methods());
+    ArrayList<String> stringMethods = new ArrayList<>();
+    for (Method method : methods()) {
+      stringMethods.add(method.name());
+    }
 
-    StringBuilder allowHeader = new StringBuilder("Allow: ");
-    allowHeader.append(joinedMethods);
+    String joinedMethods = String.join(", ", stringMethods);
 
-    return allowHeader.toString();
+    StringBuilder header = new StringBuilder();
+    header.append(Header.ALLOW.toKey());
+    header.append(joinedMethods);
+
+    return header.toString();
   }
 
   private String contentLengthHeader() {
-    int contentLength = resource().getBytes().length;
+    int contentLength = body().getBytes().length;
 
-    StringBuilder contentLengthHeader = new StringBuilder("Content-Length: ");
-    contentLengthHeader.append(contentLength);
+    StringBuilder header = new StringBuilder();
+    header.append(Header.CONTENT_LENGTH.toKey());
+    header.append(contentLength);
 
-    return contentLengthHeader.toString();
+    return header.toString();
+  }
+
+  private boolean methodNotAllowed() {
+    return !methods().contains(request.method());
   }
 
   private boolean responseHasBody() {
-    String[] noBodyMethods = {"HEAD", "TRACE", "CONNECT"};
+    List<Method> noBodyMethods = List.of(Method.CONNECT, Method.HEAD, Method.TRACE);
 
-    boolean bodyRequested = !Arrays.asList(noBodyMethods).contains(request.method());
-    boolean resourceExists = resource() != null;
+    boolean bodyRequested = !noBodyMethods.contains(request.method());
+    boolean resourceExists = body() != null;
     boolean requestSuccessful = status == Status.OK;
 
     return bodyRequested && resourceExists && requestSuccessful;

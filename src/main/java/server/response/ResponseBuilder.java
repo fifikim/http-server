@@ -5,7 +5,7 @@ import java.util.List;
 public class ResponseBuilder {
   private String startLine;
   private List<String> headers;
-  private String body = "\r\n";
+  private String body;
 
   public ResponseBuilder setStartLine(String startLine) {
     this.startLine = startLine;

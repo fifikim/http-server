@@ -1,6 +1,8 @@
 package server.router.routes;
 
 import java.util.List;
+import server.constants.Method;
+import server.constants.Path;
 import server.request.Request;
 
 public class HeadRequest extends Route {
@@ -9,17 +11,17 @@ public class HeadRequest extends Route {
   }
 
   @Override
-  public String path() {
-    return "/head_request";
+  public Path path() {
+    return Path.HEAD_REQUEST;
   }
 
   @Override
-  public List<String> methods() {
-    return List.of("HEAD", "OPTIONS");
+  public List<Method> methods() {
+    return List.of(Method.HEAD, Method.OPTIONS);
   }
 
   @Override
-  public String resource() {
+  public String body() {
     return null;
   }
 }

@@ -1,17 +1,15 @@
 package server.response;
 
 import java.util.List;
+import server.constants.Format;
 
 public class ResponseFormatter {
-  private static final String CRLF = "\r\n";
-
   public static String toString(Response response) {
     String startLine = formatStartLine(response.startLine());
     String headers = formatHeaders(response.headers());
     String body = formatBody(response.body());
 
     StringBuilder formattedResponse = new StringBuilder();
-
     formattedResponse.append(startLine);
     formattedResponse.append(headers);
     formattedResponse.append(body);
@@ -21,9 +19,8 @@ public class ResponseFormatter {
 
   private static String formatStartLine(String startLine) {
     StringBuilder formattedStartLine = new StringBuilder();
-
     formattedStartLine.append(startLine);
-    formattedStartLine.append(CRLF);
+    formattedStartLine.append(Format.BREAK);
 
     return formattedStartLine.toString();
   }
@@ -34,24 +31,21 @@ public class ResponseFormatter {
     }
 
     StringBuilder formattedHeaders = new StringBuilder();
-
     for (String header : headers) {
       formattedHeaders.append(header);
-      formattedHeaders.append(CRLF);
+      formattedHeaders.append(Format.BREAK);
     }
 
     return formattedHeaders.toString();
   }
 
   private static String formatBody(String body) {
-    if (body == null) {
-      return CRLF;
-    }
-
     StringBuilder formattedBody = new StringBuilder();
+    formattedBody.append(Format.BREAK);
 
-    formattedBody.append(CRLF);
-    formattedBody.append(body);
+    if (body != null) {
+      formattedBody.append(body);
+    }
 
     return formattedBody.toString();
   }

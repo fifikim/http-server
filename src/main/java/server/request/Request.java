@@ -1,4 +1,7 @@
 package server.request;
 
-public record Request(String method, String path, String protocol, String body) {
+import server.constants.Method;
+import server.constants.Path;
+
+public record Request(Method method, Path path, String body) {
 }

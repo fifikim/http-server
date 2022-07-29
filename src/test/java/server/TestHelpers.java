@@ -8,6 +8,8 @@ import java.io.InputStream;
 import java.io.OutputStream;
 import java.net.Socket;
 import java.util.List;
+import server.constants.Method;
+import server.constants.Path;
 import server.request.Request;
 import server.response.Response;
 
@@ -23,8 +25,16 @@ public class TestHelpers {
     return "GET /simple_get HTTP/1.1\r\n";
   }
 
+  public static String stringRequestWithBadRoute() {
+    return "GET /bad_route HTTP/1.1\r\n";
+  }
+
+  public static String stringRequestWithBadMethod() {
+    return "get /simple_get HTTP/1.1\r\n";
+  }
+
   public static Request parsedRequest() {
-    return new Request("GET", "/simple_get", "HTTP/1.1", "");
+    return new Request(Method.GET, Path.SIMPLE_GET, "");
   }
 
   public static String stringRequestWithBody() {
@@ -69,6 +79,12 @@ public class TestHelpers {
 
   public static Response notFoundResponse() {
     String startLine = "HTTP/1.1 404 Not Found";
+
+    return new Response(startLine, null, null);
+  }
+
+  public static Response badRequestResponse() {
+    String startLine = "HTTP/1.1 400 Bad Request";
 
     return new Response(startLine, null, null);
   }
