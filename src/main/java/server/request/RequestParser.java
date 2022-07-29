@@ -1,16 +1,16 @@
 package server.request;
 
 public class RequestParser {
-  private String request;
+  private String rawRequest;
 
-  public Request parse(String request) {
-    this.request = request;
+  public Request parse(String rawRequest) {
+    this.rawRequest = rawRequest;
 
     return new Request(method(), path(), protocol(), body());
   }
 
   private String startLine() {
-    return request.split("\r\n")[0];
+    return rawRequest.split("\r\n")[0];
   }
 
   private String method() {
@@ -26,7 +26,7 @@ public class RequestParser {
   }
 
   private String body() {
-    String[] splitBody = request.split("\r\n\r\n");
+    String[] splitBody = rawRequest.split("\r\n\r\n");
 
     return (splitBody.length > 1) ? splitBody[1] : "";
   }
