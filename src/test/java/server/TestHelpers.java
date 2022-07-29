@@ -7,6 +7,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.net.Socket;
+import java.util.HashMap;
 import java.util.List;
 import server.constants.Method;
 import server.constants.Path;
@@ -114,5 +115,34 @@ public class TestHelpers {
     List<String> headers = List.of("Allow: HEAD, OPTIONS");
 
     return new Response(startLine, headers, null);
+  }
+
+  public static Response echoBodyResponse() {
+    String startLine = "HTTP/1.1 200 OK";
+    List<String> headers = List.of("Allow: POST",
+                    "Content-Length: 12");
+    String body = "test message";
+
+    return new Response(startLine, headers, body);
+  }
+
+  public static Response redirectResponse() {
+    String startLine = "HTTP/1.1 301 Moved Permanently";
+    List<String> headers = List.of("Allow: GET",
+                    "Location: http://0.0.0.0:5000/simple_get");
+
+    return new Response(startLine, headers, null);
+  }
+
+  public static HashMap<String, String> mappedHeaders() {
+    HashMap<String, String> mappedHeaders = new HashMap<>();
+
+    mappedHeaders.put("User-Agent", "PostmanRuntime/7.29.2");
+    mappedHeaders.put("Accept", "*/*");
+    mappedHeaders.put("Host", "0.0.0.0:5000");
+    mappedHeaders.put("Accept-Encoding", "gzip, deflate, br");
+    mappedHeaders.put("Connection", "keep-alive");
+
+    return mappedHeaders;
   }
 }

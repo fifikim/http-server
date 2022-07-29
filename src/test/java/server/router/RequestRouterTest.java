@@ -2,6 +2,7 @@ package server.router;
 
 import static org.junit.Assert.assertEquals;
 
+import java.util.HashMap;
 import org.junit.Test;
 import server.TestHelpers;
 import server.constants.Method;
@@ -51,10 +52,42 @@ public class RequestRouterTest {
   }
 
   @Test
-  public void getsCorrectResponseForNotAllowedGetRequest() {
+  public void processesCorrectResponseForNotAllowedGetRequest() {
     Request request = new Request(Method.GET, Path.HEAD_REQUEST, null, null);
 
     Response expectedResponse = TestHelpers.notAllowedResponse();
+    Response actualResponse = new RequestRouter().getResponse(request);
+
+    assertEquals(expectedResponse, actualResponse);
+  }
+
+
+  @Test
+  public void returnsCorrectResponseForHeadRequestToSimpleGet() {
+    Request request = new Request(Method.HEAD, Path.SIMPLE_GET,  null, null);
+
+    Response expectedResponse = TestHelpers.simpleGetResponse();
+    Response actualResponse = new RequestRouter().getResponse(request);
+
+    assertEquals(expectedResponse, actualResponse);
+  }
+
+  @Test
+  public void returnsCorrectResponseForPostRequestToEchoBody() {
+    Request request = new Request(Method.POST, Path.ECHO_BODY, null, "test message");
+
+    Response expectedResponse = TestHelpers.echoBodyResponse();
+    Response actualResponse = new RequestRouter().getResponse(request);
+
+    assertEquals(expectedResponse, actualResponse);
+  }
+
+  @Test
+  public void returnsCorrectResponseForGetRequestToRedirect() {
+    HashMap<String, String> headers = TestHelpers.mappedHeaders();
+    Request request = new Request(Method.GET, Path.REDIRECT, headers, "test message");
+
+    Response expectedResponse = TestHelpers.redirectResponse();
     Response actualResponse = new RequestRouter().getResponse(request);
 
     assertEquals(expectedResponse, actualResponse);
