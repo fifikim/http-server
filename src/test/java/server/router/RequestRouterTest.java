@@ -12,7 +12,7 @@ import server.response.Response;
 public class RequestRouterTest {
   @Test
   public void processesCorrectResponseForSimpleGet() {
-    Request request = new Request(Method.GET, Path.SIMPLE_GET, "");
+    Request request = new Request(Method.GET, Path.SIMPLE_GET, null, null);
 
     Response expectedResponse = TestHelpers.simpleGetResponse();
     Response actualResponse = new RequestRouter().getResponse(request);
@@ -22,7 +22,7 @@ public class RequestRouterTest {
 
   @Test
   public void processesCorrectResponseForSimpleGetWithBody() {
-    Request request = new Request(Method.GET, Path.SIMPLE_GET_WITH_BODY, "");
+    Request request = new Request(Method.GET, Path.SIMPLE_GET_WITH_BODY, null, null);
 
     Response expectedResponse = TestHelpers.simpleGetWithBodyResponse();
     Response actualResponse = new RequestRouter().getResponse(request);
@@ -32,7 +32,7 @@ public class RequestRouterTest {
 
   @Test
   public void processesCorrectResponseForUnknownRoute() {
-    Request request = new Request(Method.GET, null, "");
+    Request request = new Request(Method.GET, null, null, null);
 
     Response expectedResponse = TestHelpers.notFoundResponse();
     Response actualResponse = new RequestRouter().getResponse(request);
@@ -52,7 +52,7 @@ public class RequestRouterTest {
 
   @Test
   public void getsCorrectResponseForNotAllowedGetRequest() {
-    Request request = new Request(Method.GET, Path.HEAD_REQUEST, "");
+    Request request = new Request(Method.GET, Path.HEAD_REQUEST, null, null);
 
     Response expectedResponse = TestHelpers.notAllowedResponse();
     Response actualResponse = new RequestRouter().getResponse(request);

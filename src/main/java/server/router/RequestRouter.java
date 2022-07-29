@@ -7,6 +7,8 @@ import server.request.Request;
 import server.response.Response;
 import server.response.ResponseBuilder;
 import server.router.routes.HeadRequest;
+import server.router.routes.EchoBody;
+import server.router.routes.Redirect;
 import server.router.routes.Route;
 import server.router.routes.SimpleGet;
 import server.router.routes.SimpleGetWithBody;
@@ -31,14 +33,17 @@ public class RequestRouter {
         return route.processRequest();
       }
     }
+
     return null;
   }
 
   private List<Route> getAllRoutes() {
     return List.of(
+            new EchoBody(request),
+            new HeadRequest(request),
+            new Redirect(request),
             new SimpleGet(request),
-            new SimpleGetWithBody(request),
-            new HeadRequest(request)
+            new SimpleGetWithBody(request)
     );
   }
 

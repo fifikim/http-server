@@ -14,6 +14,10 @@ import server.response.ResponseBuilder;
 public abstract class Route {
   protected final Request request;
   protected Status status;
+  protected String startLine;
+  protected ArrayList<String> headers;
+  protected String body;
+  protected String newLocation;
 
   protected Route(Request request) {
     this.request = request;
@@ -26,32 +30,39 @@ public abstract class Route {
   protected abstract String body();
 
   public Response processRequest() {
+    setStatus();
+    setStartLine();
+    setHeaders();
+    setBody();
+
     return new ResponseBuilder()
-            .setStartLine(setStartLine())
-            .setHeaders(setHeaders())
-            .setBody(setBody())
+            .setStartLine(startLine)
+            .setHeaders(headers)
+            .setBody(body)
             .build();
   }
 
-  private void setStatus() {
+  protected void setStatus() {
     if (methodNotAllowed()) {
       status = Status.NOT_ALLOWED;
+    } else if (hasNewLocation()) {
+      status = Status.MOVED;
     } else {
       status = Status.OK;
     }
   }
 
-  private String setStartLine() {
+  private void setStartLine() {
     setStatus();
 
     StringBuilder startLine = new StringBuilder();
     startLine.append(Protocol.DEFAULT);
     startLine.append(status);
 
-    return startLine.toString();
+    this.startLine = startLine.toString();
   }
 
-  private ArrayList<String> setHeaders() {
+  private void setHeaders() {
     ArrayList<String> headers = new ArrayList<>();
     headers.add(allowHeader());
 
@@ -59,11 +70,17 @@ public abstract class Route {
       headers.add(contentLengthHeader());
     }
 
-    return headers;
+    if (hasNewLocation()) {
+      headers.add(locationHeader());
+    }
+
+    this.headers = headers;
   }
 
-  private String setBody() {
-    return responseHasBody() ? body() : null;
+  private void setBody() {
+    if (responseHasBody()) {
+      this.body = body();
+    }
   }
 
   private String allowHeader() {
@@ -89,6 +106,19 @@ public abstract class Route {
     header.append(contentLength);
 
     return header.toString();
+  }
+
+  private String locationHeader() {
+    StringBuilder locationHeader = new StringBuilder("Location: ");
+    locationHeader.append("http://");
+    locationHeader.append(request.headers().get("Host"));
+    locationHeader.append(newLocation);
+
+    return locationHeader.toString();
+  }
+
+  private boolean hasNewLocation() {
+    return newLocation != null;
   }
 
   private boolean methodNotAllowed() {

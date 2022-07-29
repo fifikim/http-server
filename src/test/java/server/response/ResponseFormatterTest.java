@@ -21,7 +21,7 @@ public class ResponseFormatterTest {
   public void correctlyFormatsResponseWithStartLineAndHeaders() {
     Response testResponse = TestHelpers.simpleGetResponse();
 
-    String expectedOutput = "HTTP/1.1 200 OK\r\nAllow: GET\r\n\r\n";
+    String expectedOutput = "HTTP/1.1 200 OK\r\nAllow: GET, HEAD\r\n\r\n";
     String actualOutput = ResponseFormatter.toString(testResponse);
 
     assertEquals(expectedOutput, actualOutput);

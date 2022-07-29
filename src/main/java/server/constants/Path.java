@@ -4,7 +4,8 @@ public enum Path {
   SIMPLE_GET("/simple_get"),
   SIMPLE_GET_WITH_BODY("/simple_get_with_body"),
   HEAD_REQUEST("/head_request"),
-  ECHO_BODY("/echo_body");
+  ECHO_BODY("/echo_body"),
+  REDIRECT("/redirect");
 
   private final String url;
 

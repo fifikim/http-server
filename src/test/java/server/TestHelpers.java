@@ -34,7 +34,16 @@ public class TestHelpers {
   }
 
   public static Request parsedRequest() {
-    return new Request(Method.GET, Path.SIMPLE_GET, "");
+    return new Request(Method.GET, Path.SIMPLE_GET, null, null);
+  }
+
+  public static String stringRequestWithHeader() {
+    StringBuilder request = new StringBuilder();
+    request.append("GET /test_parser HTTP/1.1\r\n");
+    request.append("Accept: */*\r\n");
+    request.append("\r\n");
+
+    return request.toString();
   }
 
   public static String stringRequestWithBody() {
@@ -43,6 +52,17 @@ public class TestHelpers {
     request.append("Content-Length: 11\r\n");
     request.append("\r\n");
     request.append("Hello world");
+
+    return request.toString();
+  }
+
+  public static String stringRequestWithMultipleHeaders() {
+    StringBuilder request = new StringBuilder();
+    request.append("GET /test_parser HTTP/1.1\r\n");
+    request.append("Accept: */*\r\n");
+    request.append("Host: localhost:5000\r\n");
+    request.append("Accept-Encoding: gzip, deflate, br\r\n");
+    request.append("Connection: keep-alive\r\n");
 
     return request.toString();
   }
@@ -63,7 +83,7 @@ public class TestHelpers {
 
   public static Response simpleGetResponse() {
     String startLine = "HTTP/1.1 200 OK";
-    List<String> headers = List.of("Allow: GET");
+    List<String> headers = List.of("Allow: GET, HEAD");
 
     return new Response(startLine, headers, null);
   }
