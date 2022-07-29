@@ -1,10 +1,10 @@
 package server.response;
 
-import java.util.ArrayList;
+import java.util.List;
 
 public class ResponseBuilder {
   private String startLine;
-  private ArrayList<String> headers;
+  private List<String> headers;
   private String body = "\r\n";
 
   public ResponseBuilder setStartLine(String startLine) {
@@ -12,7 +12,7 @@ public class ResponseBuilder {
     return this;
   }
 
-  public ResponseBuilder setHeaders(ArrayList<String> headers) {
+  public ResponseBuilder setHeaders(List<String> headers) {
     this.headers = headers;
     return this;
   }

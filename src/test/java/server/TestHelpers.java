@@ -7,8 +7,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.net.Socket;
-import java.util.ArrayList;
-import java.util.Arrays;
+import java.util.List;
 import server.request.Request;
 import server.response.Response;
 
@@ -38,19 +37,31 @@ public class TestHelpers {
     return request.toString();
   }
 
+  public static String stringRequestWithBodyWithBreaks() {
+    StringBuilder request = new StringBuilder();
+    request.append("POST /echo_body HTTP/1.1\r\n");
+    request.append("Content-Length: 11\r\n");
+    request.append("\r\n");
+    request.append("Hello world\r\n");
+    request.append("\r\n");
+    request.append("Second line\r\n");
+    request.append("\r\n");
+    request.append("Third line");
+
+    return request.toString();
+  }
+
   public static Response simpleGetResponse() {
     String startLine = "HTTP/1.1 200 OK";
-    ArrayList<String> headers = new ArrayList<>(
-            Arrays.asList("Allow: GET"));
+    List<String> headers = List.of("Allow: GET");
 
     return new Response(startLine, headers, null);
   }
 
   public static Response simpleGetWithBodyResponse() {
     String startLine = "HTTP/1.1 200 OK";
-    ArrayList<String> headers = new ArrayList<>(
-            Arrays.asList("Allow: GET",
-                          "Content-Length: 11"));
+    List<String> headers = List.of("Allow: GET",
+                          "Content-Length: 11");
     String body = "Hello world";
 
     return new Response(startLine, headers, body);
@@ -64,17 +75,8 @@ public class TestHelpers {
 
   public static Response notAllowedResponse() {
     String startLine = "HTTP/1.1 405 Method Not Allowed";
-    ArrayList<String> headers = new ArrayList<>(
-            Arrays.asList("Allow: HEAD, OPTIONS"));
+    List<String> headers = List.of("Allow: HEAD, OPTIONS");
 
     return new Response(startLine, headers, null);
-  }
-
-  public static ArrayList<String> headersList() {
-    ArrayList<String> headers = new ArrayList<>();
-    headers.add("Allow: GET, HEAD");
-    headers.add("Content-Length: 11");
-
-    return headers;
   }
 }

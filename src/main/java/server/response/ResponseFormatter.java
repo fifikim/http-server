@@ -1,6 +1,6 @@
 package server.response;
 
-import java.util.ArrayList;
+import java.util.List;
 
 public class ResponseFormatter {
   private static final String CRLF = "\r\n";
@@ -28,7 +28,7 @@ public class ResponseFormatter {
     return formattedStartLine.toString();
   }
 
-  private static String formatHeaders(ArrayList<String> headers) {
+  private static String formatHeaders(List<String> headers) {
     if (headers == null) {
       return "";
     }

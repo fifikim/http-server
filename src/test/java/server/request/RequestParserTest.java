@@ -27,4 +27,15 @@ public class RequestParserTest {
     assertEquals("HTTP/1.1", request.protocol());
     assertEquals("Hello world", request.body());
   }
+
+  @Test
+  public void parsesRequestWithBodyThatIncludesLineBreaks() {
+    String testRequest = TestHelpers.stringRequestWithBodyWithBreaks();
+    Request request = new RequestParser().parse(testRequest);
+
+    assertEquals("POST", request.method());
+    assertEquals("/echo_body", request.path());
+    assertEquals("HTTP/1.1", request.protocol());
+    assertEquals("Hello world\r\n\r\nSecond line\r\n\r\nThird line", request.body());
+  }
 }

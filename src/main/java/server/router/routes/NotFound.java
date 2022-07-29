@@ -1,17 +1,32 @@
 package server.router.routes;
 
+import java.util.List;
 import server.constants.Status;
 import server.request.Request;
 import server.response.Response;
 import server.response.ResponseBuilder;
 
-public class NotFound {
-  private final Request request;
-
+public class NotFound extends Route {
   public NotFound(Request request) {
-    this.request = request;
+    super(request);
   }
 
+  @Override
+  public String path() {
+    return null;
+  }
+
+  @Override
+  public List<String> methods() {
+    return null;
+  }
+
+  @Override
+  public String resource() {
+    return null;
+  }
+
+  @Override
   public Response processRequest() {
     StringBuilder startLine = new StringBuilder();
     startLine.append(request.protocol());
@@ -19,9 +34,9 @@ public class NotFound {
     startLine.append(Status.NOT_FOUND);
 
     return new ResponseBuilder()
-                .setStartLine(startLine.toString())
-                .setHeaders(null)
-                .setBody(null)
-                .build();
+            .setStartLine(startLine.toString())
+            .setHeaders(null)
+            .setBody(null)
+            .build();
   }
 }

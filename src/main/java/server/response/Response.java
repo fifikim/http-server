@@ -1,6 +1,6 @@
 package server.response;
 
-import java.util.ArrayList;
+import java.util.List;
 
-public record Response(String startLine, ArrayList<String> headers, String body) {
+public record Response(String startLine, List<String> headers, String body) {
 }

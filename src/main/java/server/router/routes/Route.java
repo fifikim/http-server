@@ -8,31 +8,19 @@ import server.request.Request;
 import server.response.Response;
 import server.response.ResponseBuilder;
 
-public class Route {
-  private final String path;
-  private final List<String> methods;
-  private final String resource;
-  private final Request request;
-  private Status status;
+public abstract class Route {
+  protected final Request request;
+  protected Status status;
 
-  public Route(Request request, String path, List<String> methods, String resource) {
+  protected Route(Request request) {
     this.request = request;
-    this.path = path;
-    this.methods = methods;
-    this.resource = resource;
   }
 
-  public String path() {
-    return this.path;
-  }
+  public abstract String path();
 
-  public List<String> methods() {
-    return this.methods;
-  }
+  protected abstract List<String> methods();
 
-  public String resource() {
-    return this.resource;
-  }
+  protected abstract String resource();
 
   public Response processRequest() {
     return new ResponseBuilder()

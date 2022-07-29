@@ -1,5 +1,7 @@
 package server.request;
 
+import java.util.Arrays;
+
 public class RequestParser {
   private String rawRequest;
 
@@ -28,6 +30,11 @@ public class RequestParser {
   private String body() {
     String[] splitBody = rawRequest.split("\r\n\r\n");
 
-    return (splitBody.length > 1) ? splitBody[1] : "";
+    if (splitBody.length > 1) {
+      String[] bodyLines = Arrays.copyOfRange(splitBody, 1, splitBody.length);
+      return String.join("\r\n\r\n", bodyLines);
+    } else {
+      return "";
+    }
   }
 }
