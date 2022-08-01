@@ -1,4 +1,4 @@
-@simple-head @01-getting-started
+@simple-head @01-getting-started @implemented
 Feature: Simple HEAD
 
   Scenario: Executing a HEAD request to /simple_get
