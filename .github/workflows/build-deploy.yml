@@ -21,7 +21,7 @@ jobs:
           key: ${{ secrets.KEY }}
           port: 22
           script: |
-            git clone https://github.com/fifikim/http-server.git
             cd http-server
+            git pull
             ./gradlew build
             java -jar build/libs/http-server.jar
