@@ -5,6 +5,7 @@ import static org.junit.Assert.assertEquals;
 import java.util.Collections;
 import org.junit.Test;
 import server.TestHelpers;
+import server.constants.Header;
 import server.constants.Method;
 import server.constants.Path;
 
@@ -57,7 +58,7 @@ public class RequestParserTest {
 
     assertEquals(Method.GET, request.method());
     assertEquals(Path.SIMPLE_GET, request.path());
-    assertEquals("*/*", request.headers().get("Accept"));
+    assertEquals("*/*", request.headers().get(Header.ACCEPT));
     assertEquals(null, request.body());
   }
 
@@ -68,10 +69,10 @@ public class RequestParserTest {
 
     assertEquals(Method.GET, request.method());
     assertEquals(Path.SIMPLE_GET, request.path());
-    assertEquals("*/*", request.headers().get("Accept"));
-    assertEquals("localhost:5000", request.headers().get("Host"));
-    assertEquals("gzip, deflate, br", request.headers().get("Accept-Encoding"));
-    assertEquals("keep-alive", request.headers().get("Connection"));
+    assertEquals("*/*", request.headers().get(Header.ACCEPT));
+    assertEquals("localhost:5000", request.headers().get(Header.HOST));
+    assertEquals("gzip, deflate, br", request.headers().get(Header.ACCEPT_ENCODING));
+    assertEquals("keep-alive", request.headers().get(Header.CONNECTION));
     assertEquals(null, request.body());
   }
 
@@ -82,7 +83,7 @@ public class RequestParserTest {
 
     assertEquals(Method.POST, request.method());
     assertEquals(Path.ECHO_BODY, request.path());
-    assertEquals("11", request.headers().get("Content-Length"));
+    assertEquals("11", request.headers().get(Header.CONTENT_LENGTH));
     assertEquals("Hello world", request.body());
   }
 

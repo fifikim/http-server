@@ -9,6 +9,7 @@ import java.io.OutputStream;
 import java.net.Socket;
 import java.util.HashMap;
 import java.util.List;
+import server.constants.Header;
 import server.constants.Method;
 import server.constants.Path;
 import server.request.Request;
@@ -134,14 +135,27 @@ public class TestHelpers {
     return new Response(startLine, headers, null);
   }
 
-  public static HashMap<String, String> mappedHeaders() {
-    HashMap<String, String> mappedHeaders = new HashMap<>();
+  public static Response methodOptionsResponse() {
+    String startLine = "HTTP/1.1 200 OK";
+    List<String> headers = List.of("Allow: GET, HEAD, OPTIONS");
 
-    mappedHeaders.put("User-Agent", "PostmanRuntime/7.29.2");
-    mappedHeaders.put("Accept", "*/*");
-    mappedHeaders.put("Host", "0.0.0.0:5000");
-    mappedHeaders.put("Accept-Encoding", "gzip, deflate, br");
-    mappedHeaders.put("Connection", "keep-alive");
+    return new Response(startLine, headers, null);
+  }
+
+  public static Response methodOptions2Response() {
+    String startLine = "HTTP/1.1 200 OK";
+    List<String> headers = List.of("Allow: GET, HEAD, OPTIONS, POST, PUT");
+
+    return new Response(startLine, headers, null);
+  }
+
+  public static HashMap<Header, String> mappedHeaders() {
+    HashMap<Header, String> mappedHeaders = new HashMap<>();
+    mappedHeaders.put(Header.USER_AGENT, "PostmanRuntime/7.29.2");
+    mappedHeaders.put(Header.ACCEPT, "*/*");
+    mappedHeaders.put(Header.HOST, "0.0.0.0:5000");
+    mappedHeaders.put(Header.ACCEPT_ENCODING, "gzip, deflate, br");
+    mappedHeaders.put(Header.CONNECTION, "keep-alive");
 
     return mappedHeaders;
   }

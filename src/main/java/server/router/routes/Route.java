@@ -109,9 +109,10 @@ public abstract class Route {
   }
 
   private String locationHeader() {
-    StringBuilder locationHeader = new StringBuilder("Location: ");
+    StringBuilder locationHeader = new StringBuilder();
+    locationHeader.append(Header.LOCATION.toKey());
     locationHeader.append("http://");
-    locationHeader.append(request.headers().get("Host"));
+    locationHeader.append(request.headers().get(Header.HOST));
     locationHeader.append(newLocation);
 
     return locationHeader.toString();

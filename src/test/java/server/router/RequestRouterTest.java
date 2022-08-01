@@ -5,6 +5,7 @@ import static org.junit.Assert.assertEquals;
 import java.util.HashMap;
 import org.junit.Test;
 import server.TestHelpers;
+import server.constants.Header;
 import server.constants.Method;
 import server.constants.Path;
 import server.request.Request;
@@ -43,7 +44,7 @@ public class RequestRouterTest {
 
   @Test
   public void processesCorrectResponseForInvalidMethod() {
-    Request request = new Request(null, Path.SIMPLE_GET, "");
+    Request request = new Request(null, Path.SIMPLE_GET, null, null);
 
     Response expectedResponse = TestHelpers.badRequestResponse();
     Response actualResponse = new RequestRouter().getResponse(request);
@@ -82,8 +83,28 @@ public class RequestRouterTest {
   }
 
   @Test
+  public void returnsCorrectResponseForOptionsRequestToMethodOptions() {
+    Request request = new Request(Method.OPTIONS, Path.METHOD_OPTIONS, null, "test message");
+
+    Response expectedResponse = TestHelpers.methodOptionsResponse();
+    Response actualResponse = new RequestRouter().getResponse(request);
+
+    assertEquals(expectedResponse, actualResponse);
+  }
+
+  @Test
+  public void returnsCorrectResponseForPostRequestToMethodOptions2() {
+    Request request = new Request(Method.POST, Path.METHOD_OPTIONS2, null, "test message");
+
+    Response expectedResponse = TestHelpers.methodOptions2Response();
+    Response actualResponse = new RequestRouter().getResponse(request);
+
+    assertEquals(expectedResponse, actualResponse);
+  }
+
+  @Test
   public void returnsCorrectResponseForGetRequestToRedirect() {
-    HashMap<String, String> headers = TestHelpers.mappedHeaders();
+    HashMap<Header, String> headers = TestHelpers.mappedHeaders();
     Request request = new Request(Method.GET, Path.REDIRECT, headers, "test message");
 
     Response expectedResponse = TestHelpers.redirectResponse();
