@@ -8,7 +8,7 @@ import server.request.Request;
 public class Redirect extends Route {
   public Redirect(Request request) {
     super(request);
-    this.newLocation = "/simple_get";
+    this.newLocation = Path.SIMPLE_GET;
   }
 
   @Override

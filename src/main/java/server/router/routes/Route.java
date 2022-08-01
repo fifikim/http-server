@@ -17,7 +17,7 @@ public abstract class Route {
   protected String startLine;
   protected ArrayList<String> headers;
   protected String body;
-  protected String newLocation;
+  protected Path newLocation;
 
   protected Route(Request request) {
     this.request = request;

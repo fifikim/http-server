@@ -1,10 +1,10 @@
 package server.request;
 
 import java.util.Arrays;
+import java.util.HashMap;
 import server.constants.Format;
 import server.constants.Method;
 import server.constants.Path;
-import java.util.HashMap;
 
 public class RequestParser {
   private String rawRequest;

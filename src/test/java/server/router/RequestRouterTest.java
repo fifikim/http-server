@@ -61,7 +61,6 @@ public class RequestRouterTest {
     assertEquals(expectedResponse, actualResponse);
   }
 
-
   @Test
   public void returnsCorrectResponseForHeadRequestToSimpleGet() {
     Request request = new Request(Method.HEAD, Path.SIMPLE_GET,  null, null);

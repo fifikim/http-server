@@ -56,7 +56,7 @@ public class RequestParserTest {
     Request request = new RequestParser().parse(testRequest);
 
     assertEquals(Method.GET, request.method());
-    assertEquals("/test_parser", request.path());
+    assertEquals(Path.SIMPLE_GET, request.path());
     assertEquals("*/*", request.headers().get("Accept"));
     assertEquals(null, request.body());
   }
@@ -67,7 +67,7 @@ public class RequestParserTest {
     Request request = new RequestParser().parse(testRequest);
 
     assertEquals(Method.GET, request.method());
-    assertEquals("/test_parser", request.path());
+    assertEquals(Path.SIMPLE_GET, request.path());
     assertEquals("*/*", request.headers().get("Accept"));
     assertEquals("localhost:5000", request.headers().get("Host"));
     assertEquals("gzip, deflate, br", request.headers().get("Accept-Encoding"));
