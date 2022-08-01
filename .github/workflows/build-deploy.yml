@@ -17,7 +17,6 @@ jobs:
         with:
           local: './build/libs/http-server.jar'
           host: ${{ secrets.HOST }}
-          port: ${{ secrets.PORT }}
           user: ${{ secrets.USERNAME }}
           key: ${{ secrets.KEY }}
           post_upload: java -jar build/libs/http-server.jar
