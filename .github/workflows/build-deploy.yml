@@ -13,23 +13,12 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Deploy to DigitalOcean droplet
-        uses: appleboy/scp-action@master
+      - uses: mdallasanta/ssh-scp-deploy@{version}
         with:
+          local: './build/libs/http-server.jar'
           host: ${{ secrets.HOST }}
-          username: ${{ secrets.USERNAME }}
+          port: ${{ secrets.PORT }}
+          user: ${{ secrets.USERNAME }}
           key: ${{ secrets.KEY }}
-          port: 22
-          source: "build/libs/http-server.jar"
-          target: "build"
-          strip_components: 2
-          overwrite: true
+          post_upload: java -jar build/libs/http-server.jar
 
-      - name: Execute gradle build on production server
-        uses: appleboy/ssh-action@master
-        with:
-          host: ${{ secrets.HOST }}
-          username: ${{ secrets.USERNAME }}
-          key: ${{ secrets.KEY }}
-          port: 22
-          script: java -jar build/http-server.jar
