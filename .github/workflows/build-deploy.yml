@@ -31,5 +31,5 @@ jobs:
           host: ${{ secrets.HOST }}
           user: ${{ secrets.USERNAME }}
           key: ${{ secrets.KEY }}
-          post_upload: java -jar http-server.jar
+          post_upload: java -jar http-server.jar &
 
