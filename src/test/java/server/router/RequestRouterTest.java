@@ -84,7 +84,7 @@ public class RequestRouterTest {
 
   @Test
   public void returnsCorrectResponseForOptionsRequestToMethodOptions() {
-    Request request = new Request(Method.OPTIONS, Path.METHOD_OPTIONS, null, "test message");
+    Request request = new Request(Method.OPTIONS, Path.METHOD_OPTIONS, null, null);
 
     Response expectedResponse = TestHelpers.methodOptionsResponse();
     Response actualResponse = new RequestRouter().getResponse(request);
@@ -94,7 +94,7 @@ public class RequestRouterTest {
 
   @Test
   public void returnsCorrectResponseForPostRequestToMethodOptions2() {
-    Request request = new Request(Method.POST, Path.METHOD_OPTIONS2, null, "test message");
+    Request request = new Request(Method.POST, Path.METHOD_OPTIONS2, null, null);
 
     Response expectedResponse = TestHelpers.methodOptions2Response();
     Response actualResponse = new RequestRouter().getResponse(request);
@@ -105,7 +105,7 @@ public class RequestRouterTest {
   @Test
   public void returnsCorrectResponseForGetRequestToRedirect() {
     HashMap<Header, String> headers = TestHelpers.mappedHeaders();
-    Request request = new Request(Method.GET, Path.REDIRECT, headers, "test message");
+    Request request = new Request(Method.GET, Path.REDIRECT, headers, null);
 
     Response expectedResponse = TestHelpers.redirectResponse();
     Response actualResponse = new RequestRouter().getResponse(request);
