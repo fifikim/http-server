@@ -40,7 +40,7 @@ public class TestHelpers {
 
   public static String stringRequestWithHeader() {
     StringBuilder request = new StringBuilder();
-    request.append("GET /test_parser HTTP/1.1\r\n");
+    request.append("GET /simple_get HTTP/1.1\r\n");
     request.append("Accept: */*\r\n");
     request.append("\r\n");
 
@@ -59,7 +59,7 @@ public class TestHelpers {
 
   public static String stringRequestWithMultipleHeaders() {
     StringBuilder request = new StringBuilder();
-    request.append("GET /test_parser HTTP/1.1\r\n");
+    request.append("GET /simple_get HTTP/1.1\r\n");
     request.append("Accept: */*\r\n");
     request.append("Host: localhost:5000\r\n");
     request.append("Accept-Encoding: gzip, deflate, br\r\n");
