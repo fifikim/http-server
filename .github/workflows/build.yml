@@ -44,10 +44,3 @@ jobs:
           cd http-server-spec
           bundle install
           rake test:implemented
-
-      - name: Upload artifact
-        uses: actions/upload-artifact@v2
-        with:
-          name: server
-          path: build/libs/http-server.jar
-          retention-days: 1
