@@ -1,4 +1,4 @@
-@page-not-found @01-getting-started
+@page-not-found @01-getting-started @implemented
 Feature: Page Not Found
 
   Scenario: Getting an unconfigured resource returns a 404

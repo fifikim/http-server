@@ -1,4 +1,4 @@
-package httpserver;
+package server;
 
 import static org.junit.Assert.assertEquals;
 
@@ -8,7 +8,7 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
-public class AppTest {
+public class ConsoleIoTest {
   private final ByteArrayOutputStream mockOut = new ByteArrayOutputStream();
 
   @Before
@@ -23,8 +23,8 @@ public class AppTest {
 
   @Test
   public void printOutputsMessageToTerminal() {
-    App.main(null);
-
-    assertEquals("Hello world!", mockOut.toString().strip());
+    String message = "Test message";
+    ConsoleIo.print(message);
+    assertEquals(message, mockOut.toString().strip());
   }
 }

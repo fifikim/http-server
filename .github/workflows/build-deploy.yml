@@ -1,0 +1,41 @@
+name: build-deploy
+
+on:
+  push:
+    branches: [main]
+
+jobs:
+  use-build:
+    uses: fifikim/http-server/.github/workflows/build.yml@main
+
+  deploy-and-run:
+    needs: use-build
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Download use-build artifact
+        uses: actions/download-artifact@v2
+        with:
+          name: server
+          path: build/libs/http-server.jar
+
+      - name: Deploy to DigitalOcean droplet
+        uses: appleboy/scp-action@master
+        with:
+          host: ${{ secrets.HOST }}
+          username: ${{ secrets.USERNAME }}
+          key: ${{ secrets.KEY }}
+          port: 22
+          source: "build/libs/http-server.jar"
+          target: "build"
+          strip_components: 2
+          overwrite: true
+
+      - name: Execute gradle build on production server
+        uses: appleboy/ssh-action@master
+        with:
+          host: ${{ secrets.HOST }}
+          username: ${{ secrets.USERNAME }}
+          key: ${{ secrets.KEY }}
+          port: 22
+          script: java -jar build/http-server.jar

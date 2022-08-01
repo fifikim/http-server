@@ -1,21 +1,31 @@
 <h1 align="center">HTTP Server</h1>
 
+
+## Table of Contents
+- [About](#about)
+- [Getting Started](#getting_started)
+    - [Requirements](#requirements)
+    - [Installation](#installation)
+    - [Linting](#linting)
+    - [Testing](#testing)
+- [Usage](#usage)
+    - [Launching the Server](#launching)
+    - [Instructions](#instructions)
+
+## About <a name = "about"></a>
 This HTTP server establishes a connection with the client using a low-level socket library. It was built according to SOLID principles and using a test-driven development approach.
 
 No external dependencies have been incorporated, apart from those used for linting and testing purposes.
 
-The production server is located at [tbd]. Please see instructions below for guidance on running the server locally on your own machine.
+The following routes and methods are currently supported:
 
-## Table of Contents
+| URI                     |   Methods Allowed    |     Response Headers      | Response Body? |
+|-------------------------|:--------------------:|:-------------------------:|:--------------:|
+| /simple_get             |         GET          |           Allow           |       No       |    
+| /simple_get_with_body   |         GET          | Allow,<br/>Content-Length |      Yes       |
+| /head_request           |   HEAD,<br>OPTIONS   |           Allow           |       No       |
 
-- [Getting Started](#getting_started)
-  - [Requirements](#requirements)
-  - [Installation](#installation)
-  - [Linting](#linting)
-  - [Testing](#testing)
-- [Usage](#usage)
-  - [Launching the Server](#launching)
-  - [Instructions](#instructions)
+The production server is located at [tbd]. Please see instructions below for guidance on installing and running the server locally on your own machine.
 
 ## Getting Started <a name = "getting_started"></a>
 
@@ -67,7 +77,7 @@ Run the linter for the test suite:
 
 ### Testing <a name = "testing"></a>
 
-There are separate test suites for unit tests and acceptance tests. 
+There are separate test suites for unit tests and acceptance tests.
 
 Run unit tests from the project's root directory:
 ```
@@ -89,9 +99,10 @@ rake test
 ### Launch the server <a name = "launching"></a>
 
 ```
-./gradlew run
+java -jar build/libs/http-server.jar
 ```
 
 ### Instructions
 
 tbd
+ 

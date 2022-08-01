@@ -21,6 +21,15 @@ task :test do
 end
 
 namespace :test do
+  desc "Run all of the tests for implemented features"
+  task :implemented do
+    if is_server_running?(5000)
+      puts `bundle exec spinach --tags implemented`
+    else
+      server_not_running_error()
+    end
+  end
+
   desc "Run all of the tests in 01_getting_started"
   task :f1 do
     if is_server_running?(5000)

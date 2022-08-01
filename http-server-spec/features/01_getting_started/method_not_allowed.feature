@@ -1,4 +1,4 @@
-@method-not-allowed @01-getting-started
+@method-not-allowed @01-getting-started @implemented
 Feature: Method Not Allowed
 
   Scenario: Finding GET for an endpoint with only HEAD
