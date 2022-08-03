@@ -17,6 +17,7 @@ public abstract class Route {
   protected String startLine;
   protected ArrayList<String> headers;
   protected String body;
+  protected Path newLocation;
 
   protected Route(Request request) {
     this.request = request;
@@ -44,6 +45,8 @@ public abstract class Route {
   private void setStatus() {
     if (methodNotAllowed()) {
       status = Status.NOT_ALLOWED;
+    } else if (hasNewLocation()) {
+      status = Status.MOVED;
     } else {
       status = Status.OK;
     }
@@ -68,6 +71,10 @@ public abstract class Route {
 
     if (responseHasBody()) {
       headers.add(contentLengthHeader());
+    }
+
+    if (hasNewLocation()) {
+      headers.add(locationHeader());
     }
 
     if (!headers.isEmpty()) {
@@ -104,6 +111,20 @@ public abstract class Route {
     header.append(contentLength);
 
     return header.toString();
+  }
+
+  private String locationHeader() {
+    StringBuilder locationHeader = new StringBuilder();
+    locationHeader.append(Header.LOCATION.toKey());
+    locationHeader.append("http://");
+    locationHeader.append(request.headers().get(Header.HOST));
+    locationHeader.append(newLocation);
+
+    return locationHeader.toString();
+  }
+
+  private boolean hasNewLocation() {
+    return newLocation != null;
   }
 
   private boolean methodNotAllowed() {
