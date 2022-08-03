@@ -8,12 +8,16 @@ import server.response.Response;
 import server.response.ResponseBuilder;
 import server.router.routes.EchoBody;
 import server.router.routes.HeadRequest;
+import server.router.routes.HtmlResponse;
+import server.router.routes.JsonResponse;
 import server.router.routes.MethodOptions;
 import server.router.routes.MethodOptions2;
 import server.router.routes.Redirect;
 import server.router.routes.Route;
 import server.router.routes.SimpleGet;
 import server.router.routes.SimpleGetWithBody;
+import server.router.routes.TextResponse;
+import server.router.routes.XmlResponse;
 
 public class RequestRouter {
   private Request request;
@@ -41,13 +45,17 @@ public class RequestRouter {
 
   private List<Route> getAllRoutes() {
     return List.of(
+            new EchoBody(request),
             new HeadRequest(request),
+            new HtmlResponse(request),
+            new JsonResponse(request),
+            new MethodOptions(request),
+            new MethodOptions2(request),
+            new Redirect(request),
             new SimpleGet(request),
             new SimpleGetWithBody(request),
-            new EchoBody(request),
-            new Redirect(request),
-            new MethodOptions(request),
-            new MethodOptions2(request)
+            new TextResponse(request),
+            new XmlResponse(request)
     );
   }
 

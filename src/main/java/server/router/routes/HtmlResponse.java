@@ -6,15 +6,15 @@ import server.constants.Method;
 import server.constants.Path;
 import server.request.Request;
 
-public class SimpleGetWithBody extends Route {
-  public SimpleGetWithBody(Request request) {
+public class HtmlResponse extends Route {
+  public HtmlResponse(Request request) {
     super(request);
-    this.contentType = ContentType.TEXT;
+    this.contentType = ContentType.HTML;
   }
 
   @Override
   public Path path() {
-    return Path.SIMPLE_GET_WITH_BODY;
+    return Path.HTML_RESPONSE;
   }
 
   @Override
@@ -24,6 +24,6 @@ public class SimpleGetWithBody extends Route {
 
   @Override
   public String body() {
-    return "Hello world";
+    return "<html><body><p>HTML Response</p></body></html>";
   }
 }

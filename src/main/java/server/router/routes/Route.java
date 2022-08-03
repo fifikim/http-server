@@ -2,6 +2,7 @@ package server.router.routes;
 
 import java.util.ArrayList;
 import java.util.List;
+import server.constants.ContentType;
 import server.constants.Header;
 import server.constants.Method;
 import server.constants.Path;
@@ -19,6 +20,7 @@ public abstract class Route {
   protected ArrayList<String> headers;
   protected String body;
   protected Path newLocation;
+  protected ContentType contentType;
 
   protected Route(Request request) {
     this.request = request;
@@ -78,6 +80,7 @@ public abstract class Route {
     }
 
     if (responseHasBody()) {
+      headers.addContentType(contentType);
       headers.addContentLength(body);
     }
 

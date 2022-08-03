@@ -115,7 +115,8 @@ public class TestHelpers {
 
   public static Response simpleGetWithBodyResponse() {
     String startLine = "HTTP/1.1 200 OK";
-    List<String> headers = List.of("Content-Length: 11");
+    List<String> headers = List.of("Content-Type: text/plain;charset=utf-8",
+                                    "Content-Length: 11");
     String body = "Hello world";
 
     return new Response(startLine, headers, body);
@@ -124,8 +125,17 @@ public class TestHelpers {
   public static String stringGetWithBodyResponse() {
     StringBuilder response = new StringBuilder();
     response.append("HTTP/1.1 200 OK\r\n");
+    response.append("Content-Type: text/plain;charset=utf-8\r\n");
     response.append("Content-Length: 11\r\n\r\n");
-    response.append("Hello world\n");
+    response.append("Hello world");
+
+    return response.toString();
+  }
+
+  public static String sentGetWithBodyResponse() {
+    StringBuilder response = new StringBuilder();
+    response.append(stringGetWithBodyResponse());
+    response.append("\n");
 
     return response.toString();
   }
@@ -151,7 +161,7 @@ public class TestHelpers {
 
   public static Response echoBodyResponse() {
     String startLine = "HTTP/1.1 200 OK";
-    List<String> headers = List.of("Content-Length: 12");
+    List<String> headers = List.of("Content-Type: text/plain;charset=utf-8", "Content-Length: 12");
     String body = "test message";
 
     return new Response(startLine, headers, body);
@@ -198,5 +208,37 @@ public class TestHelpers {
     body.append("Third line");
 
     return body.toString();
+  }
+
+  public static Response htmlResponse() {
+    String startLine = "HTTP/1.1 200 OK";
+    List<String> headers = List.of("Content-Type: text/html;charset=utf-8",
+            "Content-Length: 46");
+
+    return new Response(startLine, headers, "<html><body><p>HTML Response</p></body></html>");
+  }
+
+  public static Response jsonResponse() {
+    String startLine = "HTTP/1.1 200 OK";
+    List<String> headers = List.of("Content-Type: application/json;charset=utf-8",
+                                    "Content-Length: 33");
+
+    return new Response(startLine, headers, "{\"key1\":\"value1\",\"key2\":\"value2\"}");
+  }
+
+  public static Response textResponse() {
+    String startLine = "HTTP/1.1 200 OK";
+    List<String> headers = List.of("Content-Type: text/plain;charset=utf-8",
+                                    "Content-Length: 13");
+
+    return new Response(startLine, headers, "text response");
+  }
+
+  public static Response xmlResponse() {
+    String startLine = "HTTP/1.1 200 OK";
+    List<String> headers = List.of("Content-Type: application/xml;charset=utf-8",
+                                    "Content-Length: 38");
+
+    return new Response(startLine, headers, "<note><body>XML Response</body></note>");
   }
 }

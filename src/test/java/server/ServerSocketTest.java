@@ -1,7 +1,6 @@
 package server;
 
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNull;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
@@ -121,7 +120,7 @@ public class ServerSocketTest {
 
     Request actualReceived = serverSocketInterface.getRequest();
 
-    assertNull(actualReceived);
+    assertEquals(null, actualReceived);
   }
 
   @Test
@@ -144,8 +143,9 @@ public class ServerSocketTest {
     Response testResponse = TestHelpers.simpleGetWithBodyResponse();
     serverSocketInterface.sendResponse(testResponse);
 
-    String expectedOutput = TestHelpers.stringGetWithBodyResponse();
+    String expectedOutput = TestHelpers.sentGetWithBodyResponse();
     String actualOutput = outputStream.toString();
+
     assertEquals(expectedOutput, actualOutput);
   }
 

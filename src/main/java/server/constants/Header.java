@@ -6,6 +6,7 @@ public enum Header {
   ALLOW("Allow"),
   CONNECTION("Connection"),
   CONTENT_LENGTH("Content-Length"),
+  CONTENT_TYPE("Content-Type"),
   HOST("Host"),
   LOCATION("Location"),
   POSTMAN_TOKEN("Postman-Token"),
