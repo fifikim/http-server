@@ -10,6 +10,7 @@ import server.constants.Status;
 import server.request.Request;
 import server.response.Response;
 import server.response.ResponseBuilder;
+import server.router.HeadersBuilder;
 
 public abstract class Route {
   protected final Request request;
@@ -32,8 +33,9 @@ public abstract class Route {
   public Response processRequest() {
     setStatus();
     setStartLine();
-    setHeaders();
     setBody();
+
+    setHeaders();
 
     return new ResponseBuilder()
             .setStartLine(startLine)
@@ -62,69 +64,29 @@ public abstract class Route {
     this.startLine = startLine.toString();
   }
 
-  private void setHeaders() {
-    ArrayList<String> headers = new ArrayList<>();
-
-    if (hasAllowHeader()) {
-      headers.add(allowHeader());
-    }
-
-    if (responseHasBody()) {
-      headers.add(contentLengthHeader());
-    }
-
-    if (hasNewLocation()) {
-      headers.add(locationHeader());
-    }
-
-    if (!headers.isEmpty()) {
-      this.headers = headers;
-    }
-  }
-
   private void setBody() {
     if (responseHasBody()) {
       this.body = body();
     }
   }
 
-  private String allowHeader() {
-    ArrayList<String> stringMethods = new ArrayList<>();
-    for (Method method : methods()) {
-      stringMethods.add(method.name());
+  private void setHeaders() {
+    HeadersBuilder headers = new HeadersBuilder();
+
+    if (hasAllowHeader()) {
+      headers.addAllow(methods());
     }
 
-    String joinedMethods = String.join(", ", stringMethods);
+    if (responseHasBody()) {
+      headers.addContentLength(body);
+    }
 
-    StringBuilder header = new StringBuilder();
-    header.append(Header.ALLOW.toKey());
-    header.append(joinedMethods);
+    if (hasNewLocation()) {
+      String host = request.headers().get(Header.HOST);
+      headers.addLocation(host, newLocation);
+    }
 
-    return header.toString();
-  }
-
-  private String contentLengthHeader() {
-    int contentLength = body().getBytes().length;
-
-    StringBuilder header = new StringBuilder();
-    header.append(Header.CONTENT_LENGTH.toKey());
-    header.append(contentLength);
-
-    return header.toString();
-  }
-
-  private String locationHeader() {
-    StringBuilder locationHeader = new StringBuilder();
-    locationHeader.append(Header.LOCATION.toKey());
-    locationHeader.append("http://");
-    locationHeader.append(request.headers().get(Header.HOST));
-    locationHeader.append(newLocation);
-
-    return locationHeader.toString();
-  }
-
-  private boolean hasNewLocation() {
-    return newLocation != null;
+    this.headers = headers.build();
   }
 
   private boolean methodNotAllowed() {
@@ -143,5 +105,9 @@ public abstract class Route {
 
   private boolean hasAllowHeader() {
     return request.method().equals(Method.OPTIONS) || status == Status.NOT_ALLOWED;
+  }
+
+  private boolean hasNewLocation() {
+    return newLocation != null;
   }
 }
