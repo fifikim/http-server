@@ -107,7 +107,6 @@ public class TestHelpers {
 
   public static Response simpleGetResponse() {
     String startLine = "HTTP/1.1 200 OK";
-
     return new Response(startLine, null, null);
   }
 
@@ -159,6 +158,13 @@ public class TestHelpers {
     return new Response(startLine, headers, null);
   }
 
+  public static Response echoBodyResponse() {
+    String startLine = "HTTP/1.1 200 OK";
+    List<String> headers = List.of("Content-Length: 12");
+    String body = "test message";
+
+    return new Response(startLine, headers, body);
+  }
 
   public static HashMap<String, String> mappedHeaders() {
     HashMap<String, String> mappedHeaders = new HashMap<>();
@@ -168,14 +174,6 @@ public class TestHelpers {
     mappedHeaders.put("Accept-Encoding", "gzip, deflate, br");
     mappedHeaders.put("Connection", "keep-alive");
     return mappedHeaders;
-  }
-
-  public static Response echoBodyResponse() {
-    String startLine = "HTTP/1.1 200 OK";
-    List<String> headers = List.of("Content-Length: 12");
-    String body = "test message";
-
-    return new Response(startLine, headers, body);
   }
 
   public static String bodyWithLineBreaks() {

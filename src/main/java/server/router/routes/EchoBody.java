@@ -25,6 +25,7 @@ public class EchoBody implements RouteHandler {
       responseBuilder.addAllowHeader(methodsAllowed);
     }
 
-    return  responseBuilder.build();
+    return responseBuilder.build();
   }
 }
+
