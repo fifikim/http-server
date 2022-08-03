@@ -1,6 +1,7 @@
 package server.router.routes;
 
 import java.util.List;
+import server.constants.ContentType;
 import server.constants.Method;
 import server.constants.Path;
 import server.request.Request;
@@ -8,6 +9,7 @@ import server.request.Request;
 public class HtmlResponse extends Route {
   public HtmlResponse(Request request) {
     super(request);
+    this.contentType = ContentType.HTML;
   }
 
   @Override

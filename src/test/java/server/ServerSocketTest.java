@@ -143,8 +143,9 @@ public class ServerSocketTest {
     Response testResponse = TestHelpers.simpleGetWithBodyResponse();
     serverSocketInterface.sendResponse(testResponse);
 
-    String expectedOutput = TestHelpers.stringGetWithBodyResponse();
+    String expectedOutput = TestHelpers.sentGetWithBodyResponse();
     String actualOutput = outputStream.toString();
+
     assertEquals(expectedOutput, actualOutput);
   }
 

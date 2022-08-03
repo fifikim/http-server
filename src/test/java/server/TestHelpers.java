@@ -115,7 +115,8 @@ public class TestHelpers {
 
   public static Response simpleGetWithBodyResponse() {
     String startLine = "HTTP/1.1 200 OK";
-    List<String> headers = List.of("Content-Type: text/plain;charset=utf-8", "Content-Length: 11");
+    List<String> headers = List.of("Content-Type: text/plain;charset=utf-8",
+                                    "Content-Length: 11");
     String body = "Hello world";
 
     return new Response(startLine, headers, body);
@@ -127,6 +128,14 @@ public class TestHelpers {
     response.append("Content-Type: text/plain;charset=utf-8\r\n");
     response.append("Content-Length: 11\r\n\r\n");
     response.append("Hello world");
+
+    return response.toString();
+  }
+
+  public static String sentGetWithBodyResponse() {
+    StringBuilder response = new StringBuilder();
+    response.append(stringGetWithBodyResponse());
+    response.append("\n");
 
     return response.toString();
   }

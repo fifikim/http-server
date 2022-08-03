@@ -2,14 +2,10 @@ name: build-deploy
 
 on:
   push:
-    branches: [main]
+    branches: [test-cd]
 
 jobs:
-  use-build:
-    uses: fifikim/http-server/.github/workflows/build.yml@main
-
   deploy-and-run:
-    needs: use-build
     runs-on: ubuntu-latest
 
     steps:
@@ -25,12 +21,20 @@ jobs:
       - name: Build with Gradle wrapper
         run: ./gradlew build
 
-      - uses: mdallasanta/ssh-scp-deploy@v1.2.0
+      - name: Upload new artifact to production server
+        uses: mdallasanta/ssh-scp-deploy@v1.2.0
         with:
           local: 'build/libs/http-server.jar'
+          remote: '~/test'
           host: ${{ secrets.HOST }}
           user: ${{ secrets.USERNAME }}
           key: ${{ secrets.KEY }}
-          pre_upload: kill -9 $(lsof -t -i:5000)
-          post_upload: java -jar http-server.jar
+          pre_upload: lsof -i:5000 -t | xargs -r kill
 
+      - name: Start server
+        uses: appleboy/ssh-action@master
+        with:
+          host: ${{ secrets.HOST }}
+          username: ${{ secrets.USERNAME }}
+          key: ${{ secrets.KEY }}
+          script: java -jar test/http-server.jar
