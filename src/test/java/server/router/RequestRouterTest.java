@@ -2,6 +2,7 @@ package server.router;
 
 import static org.junit.Assert.assertEquals;
 
+import java.util.HashMap;
 import org.junit.Test;
 import server.TestHelpers;
 import server.constants.Method;
@@ -91,10 +92,11 @@ public class RequestRouterTest {
   }
 
   @Test
-  public void returnsCorrectResponseForPostRequestToEchoBody() {
-    Request request = new Request(Method.POST, Path.ECHO_BODY, null, "test message");
+  public void returnsCorrectResponseForGetRequestToRedirect() {
+    HashMap<String, String> headers = TestHelpers.mappedHeaders();
+    Request request = new Request(Method.GET, Path.REDIRECT, headers, null);
 
-    Response expectedResponse = TestHelpers.echoBodyResponse();
+    Response expectedResponse = TestHelpers.redirectResponse();
     Response actualResponse = new RequestRouter().getResponse(request);
 
     assertEquals(expectedResponse, actualResponse);

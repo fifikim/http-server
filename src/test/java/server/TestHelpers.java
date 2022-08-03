@@ -166,6 +166,13 @@ public class TestHelpers {
     return new Response(startLine, headers, body);
   }
 
+  public static Response redirectResponse() {
+    String startLine = "HTTP/1.1 301 Moved Permanently";
+    List<String> headers = List.of("Location: http://0.0.0.0:5000/simple_get");
+
+    return new Response(startLine, headers, null);
+  }
+
   public static HashMap<String, String> mappedHeaders() {
     HashMap<String, String> mappedHeaders = new HashMap<>();
     mappedHeaders.put("User-Agent", "PostmanRuntime/7.29.2");
@@ -173,6 +180,7 @@ public class TestHelpers {
     mappedHeaders.put("Host", "0.0.0.0:5000");
     mappedHeaders.put("Accept-Encoding", "gzip, deflate, br");
     mappedHeaders.put("Connection", "keep-alive");
+
     return mappedHeaders;
   }
 

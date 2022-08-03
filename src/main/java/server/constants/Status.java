@@ -4,7 +4,8 @@ public enum Status {
   OK("200 OK"),
   BAD_REQUEST("400 Bad Request"),
   NOT_FOUND("404 Not Found"),
-  NOT_ALLOWED("405 Method Not Allowed");
+  NOT_ALLOWED("405 Method Not Allowed"),
+  MOVED("301 Moved Permanently");
 
   private final String value;
 
