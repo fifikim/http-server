@@ -1,4 +1,4 @@
-@simple-options @01-getting-started
+@simple-options @01-getting-started @implemented
 Feature: Simple OPTIONS
 
   Scenario: Finding OPTIONS for an endpoint with only GET

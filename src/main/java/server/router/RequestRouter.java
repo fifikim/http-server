@@ -10,6 +10,8 @@ import server.response.Response;
 import server.response.ResponseBuilder;
 import server.router.routes.EchoBody;
 import server.router.routes.HeadRequest;
+import server.router.routes.MethodOptions;
+import server.router.routes.MethodOptions2;
 import server.router.routes.Redirect;
 import server.router.routes.RouteHandler;
 import server.router.routes.SimpleGet;
@@ -44,6 +46,8 @@ public class RequestRouter {
     routes.put(Path.HEAD_REQUEST, new HeadRequest());
     routes.put(Path.ECHO_BODY, new EchoBody());
     routes.put(Path.REDIRECT, new Redirect());
+    routes.put(Path.METHOD_OPTIONS, new MethodOptions());
+    routes.put(Path.METHOD_OPTIONS2, new MethodOptions2());
 
     return routes;
   }
