@@ -92,4 +92,25 @@ public class RequestRouterTest {
 
     assertEquals(expectedResponse, actualResponse);
   }
+
+
+  @Test
+  public void returnsCorrectResponseForOptionsRequestToMethodOptions() {
+    Request request = new Request(Method.OPTIONS, Path.METHOD_OPTIONS, null, null);
+
+    Response expectedResponse = TestHelpers.methodOptionsResponse();
+    Response actualResponse = new RequestRouter().getResponse(request);
+
+    assertEquals(expectedResponse, actualResponse);
+  }
+
+  @Test
+  public void returnsCorrectResponseForOptionsRequestToMethodOptions2() {
+    Request request = new Request(Method.OPTIONS, Path.METHOD_OPTIONS2, null, null);
+
+    Response expectedResponse = TestHelpers.methodOptions2Response();
+    Response actualResponse = new RequestRouter().getResponse(request);
+
+    assertEquals(expectedResponse, actualResponse);
+  }
 }

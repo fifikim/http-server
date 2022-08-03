@@ -8,6 +8,8 @@ import server.response.Response;
 import server.response.ResponseBuilder;
 import server.router.routes.EchoBody;
 import server.router.routes.HeadRequest;
+import server.router.routes.MethodOptions;
+import server.router.routes.MethodOptions2;
 import server.router.routes.Redirect;
 import server.router.routes.Route;
 import server.router.routes.SimpleGet;
@@ -43,7 +45,9 @@ public class RequestRouter {
             new SimpleGet(request),
             new SimpleGetWithBody(request),
             new EchoBody(request),
-            new Redirect(request)
+            new Redirect(request),
+            new MethodOptions(request),
+            new MethodOptions2(request)
     );
   }
 
