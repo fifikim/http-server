@@ -2,10 +2,8 @@ package server.router;
 
 import static org.junit.Assert.assertEquals;
 
-import java.util.HashMap;
 import org.junit.Test;
 import server.TestHelpers;
-import server.constants.Header;
 import server.constants.Method;
 import server.constants.Path;
 import server.request.Request;

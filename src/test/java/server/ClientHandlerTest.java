@@ -23,7 +23,6 @@ public class ClientHandlerTest {
   private final String testRequest = TestHelpers.stringRequest();
   private final Request request = TestHelpers.simpleGetRequest();
   private final Response testResponse = TestHelpers.simpleGetResponse();
-  private InputStream inputStream;
   private OutputStream outputStream;
   private SocketIo socketIo;
   private Socket clientSocket;
@@ -31,7 +30,7 @@ public class ClientHandlerTest {
 
   @Before
   public void initialize() throws IOException {
-    inputStream = new ByteArrayInputStream(testRequest.getBytes());
+    InputStream inputStream = new ByteArrayInputStream(testRequest.getBytes());
     outputStream = new ByteArrayOutputStream();
 
     ServerSocket serverSocket = mock(ServerSocket.class);

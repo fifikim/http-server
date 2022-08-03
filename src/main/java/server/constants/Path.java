@@ -1,10 +1,10 @@
 package server.constants;
 
 public enum Path {
-  ECHO_BODY("/echo_body"),
-  HEAD_REQUEST("/head_request"),
   SIMPLE_GET("/simple_get"),
-  SIMPLE_GET_WITH_BODY("/simple_get_with_body");
+  SIMPLE_GET_WITH_BODY("/simple_get_with_body"),
+  HEAD_REQUEST("/head_request"),
+  ECHO_BODY("/echo_body");
 
   private final String url;
 

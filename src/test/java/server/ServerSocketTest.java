@@ -1,6 +1,7 @@
 package server;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNull;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
@@ -120,7 +121,7 @@ public class ServerSocketTest {
 
     Request actualReceived = serverSocketInterface.getRequest();
 
-    assertEquals(null, actualReceived);
+    assertNull(actualReceived);
   }
 
   @Test

@@ -31,7 +31,6 @@ public class SocketIoTest {
     socketIo = new SocketIo(clientSocket);
   }
 
-
   @Test
   public void readsSingleLineOfInputStream() throws IOException {
     initialize();
@@ -55,7 +54,6 @@ public class SocketIoTest {
 
     String expectedSent = "test message\n";
     String actualSent = outputStream.toString();
-
 
     assertEquals(expectedSent, actualSent);
   }

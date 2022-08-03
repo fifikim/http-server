@@ -1,6 +1,7 @@
 package server.request;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNull;
 
 import java.util.HashMap;
 import org.junit.Test;
@@ -23,7 +24,7 @@ public class RequestParserTest {
     String testRequest = TestHelpers.stringRequestWithBadMethod();
     Method method = new RequestParser(testRequest).method();
 
-    assertEquals(null, method);
+    assertNull(method);
   }
 
   @Test
@@ -39,7 +40,7 @@ public class RequestParserTest {
     String testRequest = TestHelpers.stringRequestWithBadRoute();
     Path path = new RequestParser(testRequest).path();
 
-    assertEquals(null, path);
+    assertNull(path);
   }
 
   @Test
