@@ -26,8 +26,6 @@ public class ServerSocketWrapper implements ServerSocketInterface {
     String rawRequest = getRequestHead();
 
     if (!rawRequest.isBlank()) {
-      System.out.println("request head: " + rawRequest);
-
       RequestParser parser = new RequestParser(rawRequest);
       Method method = parser.method();
       Path path = parser.path();
@@ -37,7 +35,6 @@ public class ServerSocketWrapper implements ServerSocketInterface {
       if (headers.containsKey(Header.CONTENT_LENGTH)) {
         int bytes = Integer.parseInt(headers.get(Header.CONTENT_LENGTH));
         body = getRequestBody(bytes);
-        System.out.println("request body: " + body);
       }
 
       return new RequestBuilder()
