@@ -11,7 +11,7 @@ public class ResponseFormatterTest {
     Response testResponse = TestHelpers.simpleGetWithBodyResponse();
 
     String expectedOutput =
-            "HTTP/1.1 200 OK\r\nAllow: GET\r\nContent-Length: 11\r\n\r\nHello world";
+            "HTTP/1.1 200 OK\r\nContent-Length: 11\r\n\r\nHello world";
     String actualOutput = ResponseFormatter.toString(testResponse);
 
     assertEquals(expectedOutput, actualOutput);
@@ -21,7 +21,7 @@ public class ResponseFormatterTest {
   public void correctlyFormatsResponseWithStartLineAndHeaders() {
     Response testResponse = TestHelpers.simpleGetResponse();
 
-    String expectedOutput = "HTTP/1.1 200 OK\r\nAllow: GET, HEAD\r\n\r\n";
+    String expectedOutput = "HTTP/1.1 200 OK\r\n";
     String actualOutput = ResponseFormatter.toString(testResponse);
 
     assertEquals(expectedOutput, actualOutput);
@@ -31,7 +31,7 @@ public class ResponseFormatterTest {
   public void correctlyFormatsResponseWithStartLineOnly() {
     Response testResponse = TestHelpers.notFoundResponse();
 
-    String expectedOutput = "HTTP/1.1 404 Not Found\r\n\r\n";
+    String expectedOutput = "HTTP/1.1 404 Not Found\r\n";
     String actualOutput = ResponseFormatter.toString(testResponse);
 
     assertEquals(expectedOutput, actualOutput);

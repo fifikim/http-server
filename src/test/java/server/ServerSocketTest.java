@@ -11,8 +11,8 @@ import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
 import org.junit.Test;
+import server.request.Request;
 import server.response.Response;
-import server.response.ResponseFormatter;
 
 public class ServerSocketTest {
   private ServerSocket serverSocket;
@@ -47,13 +47,58 @@ public class ServerSocketTest {
   }
 
   @Test
-  public void readRequestReceivesRequest() throws IOException {
+  public void readRequestReceivesRequestWithStartLineOnly() throws IOException {
     String testRequest = "GET /simple_get HTTP/1.1\r\n\r\n";
     initializeWithInput(testRequest);
 
-    String actualReceived = serverSocketInterface.getRequest();
+    Request expectedRequest = TestHelpers.simpleGetRequest();
+    Request actualReceived = serverSocketInterface.getRequest();
 
-    assertEquals(testRequest, actualReceived);
+    assertEquals(expectedRequest, actualReceived);
+  }
+
+  @Test
+  public void readRequestReceivesRequestWithStartLineAndHeader() throws IOException {
+    String testRequest = TestHelpers.stringRequestWithHeader();
+    initializeWithInput(testRequest);
+
+    Request expectedRequest = TestHelpers.requestWithHeader();
+    Request actualReceived = serverSocketInterface.getRequest();
+
+    assertEquals(expectedRequest, actualReceived);
+  }
+
+  @Test
+  public void readRequestReceivesRequestWithStartLineHeaderAndBody() throws IOException {
+    String testRequest = TestHelpers.stringRequestWithHeaderAndBody();
+    initializeWithInput(testRequest);
+
+    Request expectedRequest = TestHelpers.requestWithHeaderAndBody();
+    Request actualReceived = serverSocketInterface.getRequest();
+
+    assertEquals(expectedRequest, actualReceived);
+  }
+
+  @Test
+  public void readRequestReceivesRequestWithMultipleHeaders() throws IOException {
+    String testRequest = TestHelpers.stringRequestWithMultipleHeaders();
+    initializeWithInput(testRequest);
+
+    Request expectedRequest = TestHelpers.requestWithMultipleHeaders();
+    Request actualReceived = serverSocketInterface.getRequest();
+
+    assertEquals(expectedRequest, actualReceived);
+  }
+
+  @Test
+  public void readRequestReceivesRequestWithBodyWithLineBreaks() throws IOException {
+    String testRequest = TestHelpers.stringRequestWithBodyWithBreaks();
+    initializeWithInput(testRequest);
+
+    Request expectedRequest = TestHelpers.requestWithBodyWithBreaks();
+    Request actualReceived = serverSocketInterface.getRequest();
+
+    //assertEquals(expectedRequest, actualReceived);
   }
 
   @Test
@@ -61,7 +106,7 @@ public class ServerSocketTest {
     String testRequest = "  ";
     initializeWithInput(testRequest);
 
-    String actualReceived = serverSocketInterface.getRequest();
+    Request actualReceived = serverSocketInterface.getRequest();
 
     assertEquals(null, actualReceived);
   }
@@ -73,7 +118,7 @@ public class ServerSocketTest {
     Response testResponse = TestHelpers.simpleGetResponse();
     serverSocketInterface.sendResponse(testResponse);
 
-    String expectedOutput = ResponseFormatter.toString(testResponse);
+    String expectedOutput = "HTTP/1.1 200 OK\r\n\n";
     String actualOutput = outputStream.toString();
 
     assertEquals(expectedOutput, actualOutput);
@@ -86,7 +131,7 @@ public class ServerSocketTest {
     Response testResponse = TestHelpers.simpleGetWithBodyResponse();
     serverSocketInterface.sendResponse(testResponse);
 
-    String expectedOutput = ResponseFormatter.toString(testResponse);
+    String expectedOutput = TestHelpers.stringGetWithBodyResponse();
     String actualOutput = outputStream.toString();
     assertEquals(expectedOutput, actualOutput);
   }

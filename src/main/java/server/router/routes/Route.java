@@ -42,7 +42,7 @@ public abstract class Route {
             .build();
   }
 
-  protected void setStatus() {
+  private void setStatus() {
     if (methodNotAllowed()) {
       status = Status.NOT_ALLOWED;
     } else if (hasNewLocation()) {
@@ -64,7 +64,10 @@ public abstract class Route {
 
   private void setHeaders() {
     ArrayList<String> headers = new ArrayList<>();
-    headers.add(allowHeader());
+
+    if (hasAllowHeader()) {
+      headers.add(allowHeader());
+    }
 
     if (responseHasBody()) {
       headers.add(contentLengthHeader());
@@ -74,7 +77,9 @@ public abstract class Route {
       headers.add(locationHeader());
     }
 
-    this.headers = headers;
+    if (!headers.isEmpty()) {
+      this.headers = headers;
+    }
   }
 
   private void setBody() {
@@ -134,5 +139,9 @@ public abstract class Route {
     boolean requestSuccessful = status == Status.OK;
 
     return bodyRequested && resourceExists && requestSuccessful;
+  }
+
+  private boolean hasAllowHeader() {
+    return request.method().equals(Method.OPTIONS) || status == Status.NOT_ALLOWED;
   }
 }

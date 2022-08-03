@@ -8,6 +8,7 @@ public enum Header {
   CONTENT_LENGTH("Content-Length"),
   HOST("Host"),
   LOCATION("Location"),
+  POSTMAN_TOKEN("Postman-Token"),
   USER_AGENT("User-Agent");
 
   private final String value;

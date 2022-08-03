@@ -93,8 +93,8 @@ public class RequestRouterTest {
   }
 
   @Test
-  public void returnsCorrectResponseForPostRequestToMethodOptions2() {
-    Request request = new Request(Method.POST, Path.METHOD_OPTIONS2, null, null);
+  public void returnsCorrectResponseForOptionsRequestToMethodOptions2() {
+    Request request = new Request(Method.OPTIONS, Path.METHOD_OPTIONS2, null, null);
 
     Response expectedResponse = TestHelpers.methodOptions2Response();
     Response actualResponse = new RequestRouter().getResponse(request);

@@ -2,7 +2,7 @@ package server.request;
 
 import static org.junit.Assert.assertEquals;
 
-import java.util.Collections;
+import java.util.HashMap;
 import org.junit.Test;
 import server.TestHelpers;
 import server.constants.Header;
@@ -11,89 +11,53 @@ import server.constants.Path;
 
 public class RequestParserTest {
   @Test
+  public void parsesRequestMethod() {
+    String testRequest = TestHelpers.stringRequest();
+    Method method = new RequestParser(testRequest).method();
+
+    assertEquals(Method.GET, method);
+  }
+
+  @Test
   public void parsesInvalidMethodAsNullMethod() {
     String testRequest = TestHelpers.stringRequestWithBadMethod();
-    Request request = new RequestParser().parse(testRequest);
+    Method method = new RequestParser(testRequest).method();
 
-    assertEquals(null, request.method());
-    assertEquals(Path.SIMPLE_GET, request.path());
-    assertEquals(null, request.body());
+    assertEquals(null, method);
+  }
+
+  @Test
+  public void parsesRequestPath() {
+    String testRequest = TestHelpers.stringRequest();
+    Path path = new RequestParser(testRequest).path();
+
+    assertEquals(Path.SIMPLE_GET, path);
   }
 
   @Test
   public void parsesUnknownRouteAsNullPath() {
     String testRequest = TestHelpers.stringRequestWithBadRoute();
-    Request request = new RequestParser().parse(testRequest);
+    Path path = new RequestParser(testRequest).path();
 
-    assertEquals(Method.GET, request.method());
-    assertEquals(null, request.path());
-    assertEquals(null, request.body());
+    assertEquals(null, path);
   }
 
   @Test
-  public void parsesRequestWithNoBody() {
-    String testRequest = TestHelpers.stringRequest();
-    Request request = new RequestParser().parse(testRequest);
-
-    assertEquals(Method.GET, request.method());
-    assertEquals(Path.SIMPLE_GET, request.path());
-    assertEquals(null, request.body());
-  }
-
-  @Test
-  public void parsesRequestWithStartLineOnly() {
-    String testRequest = TestHelpers.stringRequest();
-    Request request = new RequestParser().parse(testRequest);
-
-    assertEquals(Method.GET, request.method());
-    assertEquals(Path.SIMPLE_GET, request.path());
-    assertEquals(Collections.emptyMap(), request.headers());
-    assertEquals(null, request.body());
-  }
-
-  @Test
-  public void parsesRequestWithHeaders() {
+  public void parsesRequestHeader() {
     String testRequest = TestHelpers.stringRequestWithHeader();
-    Request request = new RequestParser().parse(testRequest);
+    HashMap<Header, String> header = new RequestParser(testRequest).headers();
 
-    assertEquals(Method.GET, request.method());
-    assertEquals(Path.SIMPLE_GET, request.path());
-    assertEquals("*/*", request.headers().get(Header.ACCEPT));
-    assertEquals(null, request.body());
+    assertEquals("*/*", header.get(Header.ACCEPT));
   }
 
   @Test
   public void parsesMultipleHeadersAsHashMapPairs() {
     String testRequest = TestHelpers.stringRequestWithMultipleHeaders();
-    Request request = new RequestParser().parse(testRequest);
+    HashMap<Header, String> headers = new RequestParser(testRequest).headers();
 
-    assertEquals(Method.GET, request.method());
-    assertEquals(Path.SIMPLE_GET, request.path());
-    assertEquals("*/*", request.headers().get(Header.ACCEPT));
-    assertEquals("localhost:5000", request.headers().get(Header.HOST));
-    assertEquals("gzip, deflate, br", request.headers().get(Header.ACCEPT_ENCODING));
-    assertEquals("keep-alive", request.headers().get(Header.CONNECTION));
-    assertEquals(null, request.body());
-  }
-
-  @Test
-  public void parsesRequestWithHeadersAndBody() {
-    String testRequest = TestHelpers.stringRequestWithBody();
-    Request request = new RequestParser().parse(testRequest);
-
-    assertEquals(Method.POST, request.method());
-    assertEquals(Path.ECHO_BODY, request.path());
-    assertEquals("11", request.headers().get(Header.CONTENT_LENGTH));
-    assertEquals("Hello world", request.body());
-  }
-
-  @Test
-  public void parsesRequestWithBodyThatIncludesLineBreaks() {
-    String testRequest = TestHelpers.stringRequestWithBodyWithBreaks();
-    Request request = new RequestParser().parse(testRequest);
-
-    assertEquals(Method.POST, request.method());
-    assertEquals(Path.ECHO_BODY, request.path());
-    assertEquals("Hello world\r\n\r\nSecond line\r\n\r\nThird line", request.body());
+    assertEquals("*/*", headers.get(Header.ACCEPT));
+    assertEquals("0.0.0.0:5000", headers.get(Header.HOST));
+    assertEquals("gzip, deflate, br", headers.get(Header.ACCEPT_ENCODING));
+    assertEquals("keep-alive", headers.get(Header.CONNECTION));
   }
 }
