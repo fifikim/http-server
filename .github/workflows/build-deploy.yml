@@ -2,7 +2,7 @@ name: build-deploy
 
 on:
   push:
-    branches: [test-cd]
+    branches: [main]
 
 jobs:
   deploy-and-run:
@@ -30,11 +30,3 @@ jobs:
           user: ${{ secrets.USERNAME }}
           key: ${{ secrets.KEY }}
           pre_upload: lsof -i:5000 -t | xargs -r kill
-
-      - name: Start server
-        uses: appleboy/ssh-action@master
-        with:
-          host: ${{ secrets.HOST }}
-          username: ${{ secrets.USERNAME }}
-          key: ${{ secrets.KEY }}
-          script: java -jar test/http-server.jar
