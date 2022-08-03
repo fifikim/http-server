@@ -10,8 +10,8 @@ public class ResponseFormatterTest {
   public void correctlyFormatsResponseWithStartLineHeadersAndBody() {
     Response testResponse = TestHelpers.simpleGetWithBodyResponse();
 
-    String expectedOutput =
-            "HTTP/1.1 200 OK\r\nContent-Length: 11\r\n\r\nHello world";
+    String expectedOutput = TestHelpers.stringGetWithBodyResponse();
+
     String actualOutput = ResponseFormatter.toString(testResponse);
 
     assertEquals(expectedOutput, actualOutput);

@@ -2,6 +2,7 @@ package server.router.routes;
 
 import java.util.ArrayList;
 import java.util.List;
+import server.constants.ContentType;
 import server.constants.Header;
 import server.constants.Method;
 import server.constants.Path;
@@ -70,6 +71,7 @@ public abstract class Route {
     }
 
     if (responseHasBody()) {
+      headers.add(contentTypeHeader());
       headers.add(contentLengthHeader());
     }
 
@@ -111,6 +113,38 @@ public abstract class Route {
     header.append(contentLength);
 
     return header.toString();
+  }
+
+  private String contentTypeHeader() {
+    StringBuilder header = new StringBuilder();
+    header.append(Header.CONTENT_TYPE.toKey());
+    header.append(getContentType());
+
+    return header.toString();
+  }
+
+  private ContentType getContentType() {
+    if (isHtml()) {
+      return ContentType.HTML;
+    } else if (isJson()) {
+      return ContentType.JSON;
+    } else if (isXml()) {
+      return ContentType.XML;
+    } else {
+      return ContentType.TEXT;
+    }
+  }
+
+  private boolean isHtml() {
+    return body().startsWith("<html>") && body().endsWith("</html>");
+  }
+
+  private boolean isJson() {
+    return body().startsWith("{") && body().endsWith("}");
+  }
+
+  private boolean isXml() {
+    return body().startsWith("<") && body().endsWith(">") && !isHtml();
   }
 
   private String locationHeader() {
