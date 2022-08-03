@@ -6,6 +6,7 @@ import java.util.HashMap;
 import java.util.Map;
 import org.junit.Test;
 import server.TestHelpers;
+import server.constants.Header;
 import server.constants.Method;
 import server.constants.Path;
 import server.request.Request;
@@ -114,6 +115,17 @@ public class RequestRouterTest {
     Request request = new Request(Method.POST, Path.ECHO_BODY, null, "test message");
 
     Response expectedResponse = TestHelpers.echoBodyResponse();
+    Response actualResponse = new RequestRouter().getResponse(request);
+
+    assertEquals(expectedResponse, actualResponse);
+  }
+
+  @Test
+  public void returnsCorrectResponseForGetRequestToRedirect() {
+    HashMap<Header, String> headers = TestHelpers.mappedHeaders();
+    Request request = new Request(Method.GET, Path.REDIRECT, headers, null);
+
+    Response expectedResponse = TestHelpers.redirectResponse();
     Response actualResponse = new RequestRouter().getResponse(request);
 
     assertEquals(expectedResponse, actualResponse);
