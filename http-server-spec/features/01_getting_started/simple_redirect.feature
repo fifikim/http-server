@@ -1,4 +1,4 @@
-@simple-redirect @01-getting-started @implemented
+@simple-redirect @01-getting-started
 Feature: Simple Redirect
 
   Scenario: Getting a resource that has been moved to a different location

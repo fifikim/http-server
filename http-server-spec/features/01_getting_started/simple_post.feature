@@ -1,4 +1,4 @@
-@simple-post @01-getting-started @implemented
+@simple-post @01-getting-started
 Feature: Simple POST
 
   Scenario: Posting echos the body

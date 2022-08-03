@@ -149,35 +149,6 @@ public class TestHelpers {
     return new Response(startLine, headers, null);
   }
 
-  public static Response echoBodyResponse() {
-    String startLine = "HTTP/1.1 200 OK";
-    List<String> headers = List.of("Content-Length: 12");
-    String body = "test message";
-
-    return new Response(startLine, headers, body);
-  }
-
-  public static Response redirectResponse() {
-    String startLine = "HTTP/1.1 301 Moved Permanently";
-    List<String> headers = List.of("Location: http://0.0.0.0:5000/simple_get");
-
-    return new Response(startLine, headers, null);
-  }
-
-  public static Response methodOptionsResponse() {
-    String startLine = "HTTP/1.1 200 OK";
-    List<String> headers = List.of("Allow: GET, HEAD, OPTIONS");
-
-    return new Response(startLine, headers, null);
-  }
-
-  public static Response methodOptions2Response() {
-    String startLine = "HTTP/1.1 200 OK";
-    List<String> headers = List.of("Allow: GET, HEAD, OPTIONS, POST, PUT");
-
-    return new Response(startLine, headers, null);
-  }
-
   public static HashMap<Header, String> mappedHeaders() {
     HashMap<Header, String> mappedHeaders = new HashMap<>();
     mappedHeaders.put(Header.USER_AGENT, "PostmanRuntime/7.29.2");

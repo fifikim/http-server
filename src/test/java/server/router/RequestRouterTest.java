@@ -71,45 +71,4 @@ public class RequestRouterTest {
 
     assertEquals(expectedResponse, actualResponse);
   }
-
-  @Test
-  public void returnsCorrectResponseForPostRequestToEchoBody() {
-    Request request = new Request(Method.POST, Path.ECHO_BODY, null, "test message");
-
-    Response expectedResponse = TestHelpers.echoBodyResponse();
-    Response actualResponse = new RequestRouter().getResponse(request);
-
-    assertEquals(expectedResponse, actualResponse);
-  }
-
-  @Test
-  public void returnsCorrectResponseForOptionsRequestToMethodOptions() {
-    Request request = new Request(Method.OPTIONS, Path.METHOD_OPTIONS, null, null);
-
-    Response expectedResponse = TestHelpers.methodOptionsResponse();
-    Response actualResponse = new RequestRouter().getResponse(request);
-
-    assertEquals(expectedResponse, actualResponse);
-  }
-
-  @Test
-  public void returnsCorrectResponseForOptionsRequestToMethodOptions2() {
-    Request request = new Request(Method.OPTIONS, Path.METHOD_OPTIONS2, null, null);
-
-    Response expectedResponse = TestHelpers.methodOptions2Response();
-    Response actualResponse = new RequestRouter().getResponse(request);
-
-    assertEquals(expectedResponse, actualResponse);
-  }
-
-  @Test
-  public void returnsCorrectResponseForGetRequestToRedirect() {
-    HashMap<Header, String> headers = TestHelpers.mappedHeaders();
-    Request request = new Request(Method.GET, Path.REDIRECT, headers, null);
-
-    Response expectedResponse = TestHelpers.redirectResponse();
-    Response actualResponse = new RequestRouter().getResponse(request);
-
-    assertEquals(expectedResponse, actualResponse);
-  }
 }
