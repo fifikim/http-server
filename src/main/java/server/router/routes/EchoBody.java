@@ -24,4 +24,3 @@ public class EchoBody implements RouteHandler {
     return responseBuilder.build();
   }
 }
-
