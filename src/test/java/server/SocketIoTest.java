@@ -1,6 +1,8 @@
 package server;
 
 import static org.junit.Assert.assertEquals;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.verify;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
@@ -20,6 +22,15 @@ public class SocketIoTest {
     Socket clientSocket = TestHelpers.socket(inputStream, outputStream);
     socketIo = new SocketIo(clientSocket);
   }
+
+  public void initializeWithMockStreams() throws IOException {
+    inputStream = mock(ByteArrayInputStream.class);
+    outputStream = mock(ByteArrayOutputStream.class);
+
+    Socket clientSocket = TestHelpers.socket(inputStream, outputStream);
+    socketIo = new SocketIo(clientSocket);
+  }
+
 
   @Test
   public void readsSingleLineOfInputStream() throws IOException {
@@ -50,7 +61,11 @@ public class SocketIoTest {
   }
 
   @Test
-  public void closesStreams() {
-    //
+  public void closesStreams() throws IOException {
+    initializeWithMockStreams();
+    socketIo.closeStreams();
+
+    verify(inputStream).close();
+    verify(outputStream).close();
   }
 }

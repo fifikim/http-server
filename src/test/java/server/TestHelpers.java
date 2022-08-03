@@ -92,21 +92,17 @@ public class TestHelpers {
   public static String stringRequestWithBodyWithBreaks() {
     StringBuilder request = new StringBuilder();
     request.append("POST /echo_body HTTP/1.1\r\n");
-    request.append("Content-Length: 11\r\n");
+    request.append("Content-Length: 40\r\n");
     request.append("\r\n");
-    request.append("Hello world\r\n");
-    request.append("\r\n");
-    request.append("Second line\r\n");
-    request.append("\r\n");
-    request.append("Third line");
+    request.append(bodyWithLineBreaks());
 
     return request.toString();
   }
 
   public static Request requestWithBodyWithBreaks() {
     HashMap<Header, String> headers = new HashMap<>();
-    headers.put(Header.CONTENT_LENGTH, "130");
-    String body = "Hello world\r\n\r\nSecond line\r\n\r\nThird line";
+    headers.put(Header.CONTENT_LENGTH, "40");
+    String body = bodyWithLineBreaks();
 
     return new Request(Method.POST, Path.ECHO_BODY, headers, body);
   }
@@ -191,5 +187,16 @@ public class TestHelpers {
     mappedHeaders.put(Header.CONNECTION, "keep-alive");
 
     return mappedHeaders;
+  }
+
+  public static String bodyWithLineBreaks() {
+    StringBuilder body = new StringBuilder();
+    body.append("Hello world\r\n");
+    body.append("\r\n");
+    body.append("Second line\r\n");
+    body.append("\r\n");
+    body.append("Third line");
+
+    return body.toString();
   }
 }

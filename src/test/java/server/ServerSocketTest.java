@@ -46,6 +46,18 @@ public class ServerSocketTest {
     serverSocketInterface = new ServerSocketWrapper(clientSocket, socketIo);
   }
 
+  public void initializeWithMockStreams() throws IOException {
+    inputStream = mock(ByteArrayInputStream.class);
+    outputStream = mock(ByteArrayOutputStream.class);
+
+    serverSocket = mock(ServerSocket.class);
+    clientSocket = TestHelpers.socket(inputStream, outputStream);
+    when(serverSocket.accept()).thenReturn(clientSocket);
+
+    socketIo = mock(SocketIo.class);
+    serverSocketInterface = new ServerSocketWrapper(clientSocket, socketIo);
+  }
+
   @Test
   public void readRequestReceivesRequestWithStartLineOnly() throws IOException {
     String testRequest = "GET /simple_get HTTP/1.1\r\n\r\n";
@@ -98,7 +110,7 @@ public class ServerSocketTest {
     Request expectedRequest = TestHelpers.requestWithBodyWithBreaks();
     Request actualReceived = serverSocketInterface.getRequest();
 
-    //assertEquals(expectedRequest, actualReceived);
+    assertEquals(expectedRequest, actualReceived);
   }
 
   @Test
@@ -138,10 +150,11 @@ public class ServerSocketTest {
 
   @Test
   public void closesConnectionAndStreams() throws IOException {
-    initialize();
+    initializeWithMockStreams();
 
     serverSocketInterface.closeSocket();
 
     verify(clientSocket).close();
+    verify(socketIo).closeStreams();
   }
 }
