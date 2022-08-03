@@ -5,19 +5,19 @@ import server.constants.Method;
 import server.constants.Path;
 import server.request.Request;
 
-public class SimpleGet extends Route {
-  public SimpleGet(Request request) {
+public class MethodOptions extends Route {
+  public MethodOptions(Request request) {
     super(request);
   }
 
   @Override
   public Path path() {
-    return Path.SIMPLE_GET;
+    return Path.METHOD_OPTIONS;
   }
 
   @Override
   public List<Method> methods() {
-    return List.of(Method.GET, Method.HEAD);
+    return List.of(Method.GET, Method.HEAD, Method.OPTIONS);
   }
 
   @Override

@@ -1,7 +1,12 @@
 package server.request;
 
+import java.util.HashMap;
+import server.constants.Header;
 import server.constants.Method;
 import server.constants.Path;
 
-public record Request(Method method, Path path, String body) {
+public record Request(Method method,
+                      Path path,
+                      HashMap<Header, String> headers,
+                      String body) {
 }

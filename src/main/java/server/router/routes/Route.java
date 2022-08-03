@@ -14,6 +14,10 @@ import server.response.ResponseBuilder;
 public abstract class Route {
   protected final Request request;
   protected Status status;
+  protected String startLine;
+  protected ArrayList<String> headers;
+  protected String body;
+  protected Path newLocation;
 
   protected Route(Request request) {
     this.request = request;
@@ -26,44 +30,62 @@ public abstract class Route {
   protected abstract String body();
 
   public Response processRequest() {
+    setStatus();
+    setStartLine();
+    setHeaders();
+    setBody();
+
     return new ResponseBuilder()
-            .setStartLine(setStartLine())
-            .setHeaders(setHeaders())
-            .setBody(setBody())
+            .setStartLine(startLine)
+            .setHeaders(headers)
+            .setBody(body)
             .build();
   }
 
   private void setStatus() {
     if (methodNotAllowed()) {
       status = Status.NOT_ALLOWED;
+    } else if (hasNewLocation()) {
+      status = Status.MOVED;
     } else {
       status = Status.OK;
     }
   }
 
-  private String setStartLine() {
+  private void setStartLine() {
     setStatus();
 
     StringBuilder startLine = new StringBuilder();
     startLine.append(Protocol.DEFAULT);
     startLine.append(status);
 
-    return startLine.toString();
+    this.startLine = startLine.toString();
   }
 
-  private ArrayList<String> setHeaders() {
+  private void setHeaders() {
     ArrayList<String> headers = new ArrayList<>();
-    headers.add(allowHeader());
+
+    if (hasAllowHeader()) {
+      headers.add(allowHeader());
+    }
 
     if (responseHasBody()) {
       headers.add(contentLengthHeader());
     }
 
-    return headers;
+    if (hasNewLocation()) {
+      headers.add(locationHeader());
+    }
+
+    if (!headers.isEmpty()) {
+      this.headers = headers;
+    }
   }
 
-  private String setBody() {
-    return responseHasBody() ? body() : null;
+  private void setBody() {
+    if (responseHasBody()) {
+      this.body = body();
+    }
   }
 
   private String allowHeader() {
@@ -91,6 +113,20 @@ public abstract class Route {
     return header.toString();
   }
 
+  private String locationHeader() {
+    StringBuilder locationHeader = new StringBuilder();
+    locationHeader.append(Header.LOCATION.toKey());
+    locationHeader.append("http://");
+    locationHeader.append(request.headers().get(Header.HOST));
+    locationHeader.append(newLocation);
+
+    return locationHeader.toString();
+  }
+
+  private boolean hasNewLocation() {
+    return newLocation != null;
+  }
+
   private boolean methodNotAllowed() {
     return !methods().contains(request.method());
   }
@@ -103,5 +139,9 @@ public abstract class Route {
     boolean requestSuccessful = status == Status.OK;
 
     return bodyRequested && resourceExists && requestSuccessful;
+  }
+
+  private boolean hasAllowHeader() {
+    return request.method().equals(Method.OPTIONS) || status == Status.NOT_ALLOWED;
   }
 }

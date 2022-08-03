@@ -22,9 +22,17 @@ public class SocketIoTest {
   }
 
   @Test
-  public void readsSocketStreamInput() throws IOException {
+  public void readsSingleLineOfInputStream() throws IOException {
     initialize();
-    String actualReceived = socketIo.read();
+    String actualReceived = socketIo.readLine();
+
+    assertEquals(testMessage, actualReceived);
+  }
+
+  @Test
+  public void readsGivenNumberOfBytesOfInputStream() throws IOException {
+    initialize();
+    String actualReceived = socketIo.readBytes(12);
 
     assertEquals(testMessage, actualReceived);
   }
@@ -34,6 +42,15 @@ public class SocketIoTest {
     initialize();
     socketIo.send(testMessage);
 
-    assertEquals(testMessage, outputStream.toString());
+    String expectedSent = "test message\n";
+    String actualSent = outputStream.toString();
+
+
+    assertEquals(expectedSent, actualSent);
+  }
+
+  @Test
+  public void closesStreams() {
+    //
   }
 }

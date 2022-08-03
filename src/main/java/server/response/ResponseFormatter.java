@@ -41,9 +41,9 @@ public class ResponseFormatter {
 
   private static String formatBody(String body) {
     StringBuilder formattedBody = new StringBuilder();
-    formattedBody.append(Format.BREAK);
 
     if (body != null) {
+      formattedBody.append(Format.BREAK);
       formattedBody.append(body);
     }
 

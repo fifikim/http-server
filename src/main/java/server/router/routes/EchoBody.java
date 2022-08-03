@@ -5,23 +5,23 @@ import server.constants.Method;
 import server.constants.Path;
 import server.request.Request;
 
-public class SimpleGet extends Route {
-  public SimpleGet(Request request) {
+public class EchoBody extends Route {
+  public EchoBody(Request request) {
     super(request);
   }
 
   @Override
   public Path path() {
-    return Path.SIMPLE_GET;
+    return Path.ECHO_BODY;
   }
 
   @Override
   public List<Method> methods() {
-    return List.of(Method.GET, Method.HEAD);
+    return List.of(Method.POST);
   }
 
   @Override
   public String body() {
-    return null;
+    return request.body();
   }
 }

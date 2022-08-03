@@ -8,7 +8,7 @@ import org.junit.Test;
 public class ResponseBuilderTest {
   private final String startLine = "HTTP/1.1 200 OK";
   private final List<String> headers = List.of("Allow: GET, HEAD",
-                                                      "Content-Length: 11");
+                                              "Content-Length: 11");
 
   @Test
   public void setsAndBuildsResponseWithStartLineHeadersAndBody() {

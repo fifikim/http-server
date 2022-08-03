@@ -1,10 +1,11 @@
 package server;
 
 import java.io.IOException;
+import server.request.Request;
 import server.response.Response;
 
 public interface ServerSocketInterface {
-  String getRequest() throws IOException;
+  Request getRequest() throws IOException;
 
   void sendResponse(Response response) throws IOException;
 
