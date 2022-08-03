@@ -6,6 +6,7 @@ import server.constants.Status;
 import server.request.Request;
 import server.response.Response;
 import server.response.ResponseBuilder;
+import server.router.routes.EchoBody;
 import server.router.routes.HeadRequest;
 import server.router.routes.Route;
 import server.router.routes.SimpleGet;
@@ -39,7 +40,8 @@ public class RequestRouter {
     return List.of(
             new HeadRequest(request),
             new SimpleGet(request),
-            new SimpleGetWithBody(request)
+            new SimpleGetWithBody(request),
+            new EchoBody(request)
     );
   }
 

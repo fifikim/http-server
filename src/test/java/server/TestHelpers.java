@@ -149,6 +149,14 @@ public class TestHelpers {
     return new Response(startLine, headers, null);
   }
 
+  public static Response echoBodyResponse() {
+    String startLine = "HTTP/1.1 200 OK";
+    List<String> headers = List.of("Content-Length: 12");
+    String body = "test message";
+
+    return new Response(startLine, headers, body);
+  }
+
   public static HashMap<Header, String> mappedHeaders() {
     HashMap<Header, String> mappedHeaders = new HashMap<>();
     mappedHeaders.put(Header.USER_AGENT, "PostmanRuntime/7.29.2");
