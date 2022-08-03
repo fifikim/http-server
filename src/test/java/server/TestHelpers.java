@@ -126,7 +126,7 @@ public class TestHelpers {
     response.append("HTTP/1.1 200 OK\r\n");
     response.append("Content-Type: text/plain;charset=utf-8\r\n");
     response.append("Content-Length: 11\r\n\r\n");
-    response.append("Hello world\n");
+    response.append("Hello world");
 
     return response.toString();
   }

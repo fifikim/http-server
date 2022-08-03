@@ -11,7 +11,6 @@ public class ResponseFormatterTest {
     Response testResponse = TestHelpers.simpleGetWithBodyResponse();
 
     String expectedOutput = TestHelpers.stringGetWithBodyResponse();
-
     String actualOutput = ResponseFormatter.toString(testResponse);
 
     assertEquals(expectedOutput, actualOutput);
