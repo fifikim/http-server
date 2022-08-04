@@ -64,7 +64,17 @@ public class RequestRouterTest {
   public void returnsCorrectResponseForHeadRequestToSimpleGet() {
     Request request = new Request(Method.HEAD, Path.SIMPLE_GET,  null, null);
 
-    Response expectedResponse = TestHelpers.simpleGetResponse();
+    Response expectedResponse = TestHelpers.headRequestToSimpleGetResponse();
+    Response actualResponse = new RequestRouter().getResponse(request);
+
+    assertEquals(expectedResponse, actualResponse);
+  }
+
+  @Test
+  public void returnsCorrectResponseForHeadRequestToHeadRequest() {
+    Request request = new Request(Method.HEAD, Path.HEAD_REQUEST,  null, null);
+
+    Response expectedResponse = TestHelpers.headRequestToHeadResponse();
     Response actualResponse = new RequestRouter().getResponse(request);
 
     assertEquals(expectedResponse, actualResponse);

@@ -2,26 +2,32 @@ package server.router.routes;
 
 import java.util.List;
 import server.constants.Method;
-import server.constants.Path;
-import server.request.Request;
+import server.constants.Status;
+import server.response.Response;
+import server.response.ResponseBuilder;
 
 public class SimpleGetWithBody extends Route {
-  public SimpleGetWithBody(Request request) {
-    super(request);
+  @Override
+  protected List<Method> methodsAllowed() {
+    return List.of(Method.GET, Method.HEAD);
   }
 
   @Override
-  public Path path() {
-    return Path.SIMPLE_GET_WITH_BODY;
-  }
-
-  @Override
-  public List<Method> methods() {
-    return List.of(Method.GET);
-  }
-
-  @Override
-  public String body() {
+  protected String body() {
     return "Hello world";
+  }
+
+  @Override
+  protected Response get() {
+    return new ResponseBuilder()
+            .setStartLine(Status.OK.format())
+            .setHeaders(List.of(contentLengthHeader()))
+            .setBody(body())
+            .build();
+  }
+
+  @Override
+  protected Response head() {
+    return null;
   }
 }

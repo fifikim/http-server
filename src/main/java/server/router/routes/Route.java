@@ -1,88 +1,37 @@
 package server.router.routes;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import server.constants.Method;
-import server.constants.Path;
-import server.constants.Protocol;
 import server.constants.Status;
 import server.request.Request;
 import server.response.Response;
-import server.response.ResponseBuilder;
 
-public abstract class Route {
-  protected final Request request;
-  protected Status status;
-  protected String startLine;
-  protected ArrayList<String> headers;
-  protected String body;
+public abstract class Route implements RouteHandler {
+  public Response processRequest(Request request) {
+    HashMap<Method, Response> actions = getActions();
+    Method method = request.method();
 
-  protected Route(Request request) {
-    this.request = request;
+    if (isMethodAllowed(method)) {
+      return actions.get(method);
+    } else {
+      return methodNotAllowed();
+    }
   }
 
-  public abstract Path path();
-
-  protected abstract List<Method> methods();
+  protected abstract List<Method> methodsAllowed();
 
   protected abstract String body();
 
-  public Response processRequest() {
-    setStatus();
-    setStartLine();
-    setHeaders();
-    setBody();
+  protected abstract Response get();
 
-    return new ResponseBuilder()
-            .setStartLine(startLine)
-            .setHeaders(headers)
-            .setBody(body)
-            .build();
-  }
+  protected abstract Response head();
 
-  private void setStatus() {
-    if (methodNotAllowed()) {
-      status = Status.NOT_ALLOWED;
-    } else {
-      status = Status.OK;
-    }
-  }
-
-  private void setStartLine() {
-    setStatus();
-
-    StringBuilder startLine = new StringBuilder();
-    startLine.append(Protocol.DEFAULT);
-    startLine.append(status);
-
-    this.startLine = startLine.toString();
-  }
-
-  private void setHeaders() {
-    ArrayList<String> headers = new ArrayList<>();
-
-    if (hasAllowHeader()) {
-      headers.add(allowHeader());
-    }
-
-    if (responseHasBody()) {
-      headers.add(contentLengthHeader());
-    }
-
-    if (!headers.isEmpty()) {
-      this.headers = headers;
-    }
-  }
-
-  private void setBody() {
-    if (responseHasBody()) {
-      this.body = body();
-    }
-  }
-
-  private String allowHeader() {
+  protected String allowHeader() {
     ArrayList<String> stringMethods = new ArrayList<>();
-    for (Method method : methods()) {
+
+    for (Method method : methodsAllowed()) {
       stringMethods.add(method.name());
     }
 
@@ -95,7 +44,7 @@ public abstract class Route {
     return header.toString();
   }
 
-  private String contentLengthHeader() {
+  protected String contentLengthHeader() {
     int contentLength = body().getBytes().length;
 
     StringBuilder header = new StringBuilder();
@@ -105,21 +54,20 @@ public abstract class Route {
     return header.toString();
   }
 
-  private boolean methodNotAllowed() {
-    return !methods().contains(request.method());
+  private HashMap<Method, Response> getActions() {
+    HashMap<Method, Response> actions = new HashMap<>();
+    actions.put(Method.GET, get());
+    actions.put(Method.HEAD, head());
+
+    return actions;
   }
 
-  private boolean responseHasBody() {
-    List<Method> noBodyMethods = List.of(Method.CONNECT, Method.HEAD, Method.TRACE);
-
-    boolean bodyRequested = !noBodyMethods.contains(request.method());
-    boolean resourceExists = body() != null;
-    boolean requestSuccessful = status == Status.OK;
-
-    return bodyRequested && resourceExists && requestSuccessful;
+  private boolean isMethodAllowed(Method method) {
+    return methodsAllowed().contains(method);
   }
 
-  private boolean hasAllowHeader() {
-    return request.method().equals(Method.OPTIONS) || status == Status.NOT_ALLOWED;
+  private Response methodNotAllowed() {
+    List<String> headers = List.of(allowHeader());
+    return new Response(Status.NOT_ALLOWED.format(), headers, null);
   }
 }
