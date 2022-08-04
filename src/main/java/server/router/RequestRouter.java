@@ -1,6 +1,7 @@
 package server.router;
 
-import java.util.List;
+import java.util.HashMap;
+import server.constants.Path;
 import server.constants.Protocol;
 import server.constants.Status;
 import server.request.Request;
@@ -16,7 +17,7 @@ public class RequestRouter {
 
   public Response getResponse(Request request) {
     this.request = request;
-    List<Route> routes = getAllRoutes();
+    HashMap<Path, Route> routes = getAllRoutes();
 
     if (request.path() == null) {
       return errorResponse(Status.NOT_FOUND);
@@ -26,21 +27,21 @@ public class RequestRouter {
       return errorResponse(Status.BAD_REQUEST);
     }
 
-    for (Route route : routes) {
-      if (route.path().equals(request.path())) {
-        return route.processRequest();
-      }
+    Route route = routes.get(request.path());
+    if (route != null) {
+      return route.processRequest();
     }
 
     return null;
   }
 
-  private List<Route> getAllRoutes() {
-    return List.of(
-            new HeadRequest(request),
-            new SimpleGet(request),
-            new SimpleGetWithBody(request)
-    );
+  private HashMap<Path, Route> getAllRoutes() {
+    HashMap<Path, Route> routes = new HashMap<>();
+    routes.put(Path.SIMPLE_GET, new SimpleGet(request));
+    routes.put(Path.SIMPLE_GET_WITH_BODY, new SimpleGetWithBody(request));
+    routes.put(Path.HEAD_REQUEST, new HeadRequest(request));
+
+    return routes;
   }
 
   private Response errorResponse(Status status) {

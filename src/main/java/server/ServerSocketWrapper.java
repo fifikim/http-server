@@ -68,8 +68,10 @@ public class ServerSocketWrapper implements ServerSocketInterface {
   }
 
   public void sendResponse(Response response) {
-    String responseString = ResponseFormatter.toString(response);
-    socketIo.send(responseString);
+    if (response != null) {
+      String responseString = ResponseFormatter.toString(response);
+      socketIo.send(responseString);
+    }
   }
 
   public void closeSocket() throws IOException {
