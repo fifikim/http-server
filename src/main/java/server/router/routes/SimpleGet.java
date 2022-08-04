@@ -1,34 +1,33 @@
 package server.router.routes;
 
-import java.util.List;
+import java.util.Arrays;
+import java.util.LinkedHashSet;
+import java.util.Set;
 import server.constants.Method;
 import server.constants.Status;
+import server.request.Request;
 import server.response.Response;
 import server.response.ResponseBuilder;
 
-public class SimpleGet extends Route {
-  @Override
-  protected List<Method> methodsAllowed() {
-    return List.of(Method.GET, Method.HEAD);
-  }
+public class SimpleGet implements RouteHandler {
+  Set<Method> methodsAllowed = new LinkedHashSet<>(Arrays.asList(Method.GET, Method.HEAD));
 
   @Override
-  protected String body() {
-    return null;
-  }
+  public Response processRequest(Request request) {
+    ResponseBuilder responseBuilder = new ResponseBuilder();
+    Method method = request.method();
 
-  @Override
-  protected Response get() {
-    return new ResponseBuilder()
-            .setStartLine(Status.OK.format())
-            .build();
-  }
+    switch (method) {
+      case GET:
+        break;
+      case HEAD:
+        responseBuilder.addAllowHeader(methodsAllowed);
+        break;
+      default:
+        responseBuilder.setStartLine(Status.NOT_ALLOWED.format());
+        responseBuilder.addAllowHeader(methodsAllowed);
+    }
 
-  @Override
-  protected Response head() {
-    return new ResponseBuilder()
-            .setStartLine(Status.OK.format())
-            .setHeaders(List.of(allowHeader()))
-            .build();
+    return  responseBuilder.build();
   }
 }

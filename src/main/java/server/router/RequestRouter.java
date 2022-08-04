@@ -5,7 +5,6 @@ import server.constants.Path;
 import server.constants.Status;
 import server.request.Request;
 import server.response.Response;
-import server.response.ResponseBuilder;
 import server.router.routes.HeadRequest;
 import server.router.routes.RouteHandler;
 import server.router.routes.SimpleGet;
@@ -17,11 +16,11 @@ public class RequestRouter {
     RouteHandler route = routes.get(request.path());
 
     if (request.path() == null) {
-      return errorResponse(Status.NOT_FOUND);
+      return new Response(Status.NOT_FOUND.format(), null, null);
     }
 
     if (request.method() == null) {
-      return errorResponse(Status.BAD_REQUEST);
+      return new Response(Status.BAD_REQUEST.format(), null, null);
     }
 
     if (route != null) {
@@ -38,11 +37,5 @@ public class RequestRouter {
     routes.put(Path.HEAD_REQUEST, new HeadRequest());
 
     return routes;
-  }
-
-  private Response errorResponse(Status status) {
-    return new ResponseBuilder()
-            .setStartLine(status.format())
-            .build();
   }
 }
