@@ -9,7 +9,6 @@ import java.io.OutputStream;
 import java.net.Socket;
 import java.util.HashMap;
 import java.util.List;
-import server.constants.Header;
 import server.constants.Method;
 import server.constants.Path;
 import server.request.Request;
@@ -36,8 +35,7 @@ public class TestHelpers {
   }
 
   public static Request simpleGetRequest() {
-    HashMap<Header, String> emptyHeaders = new HashMap<>();
-    return new Request(Method.GET, Path.SIMPLE_GET, emptyHeaders, null);
+    return new Request(Method.GET, Path.SIMPLE_GET, new HashMap<>(), null);
   }
 
   public static String stringRequestWithHeader() {
@@ -50,8 +48,8 @@ public class TestHelpers {
   }
 
   public static Request requestWithHeader() {
-    HashMap<Header, String> headers = new HashMap<>();
-    headers.put(Header.ACCEPT, "*/*");
+    HashMap<String, String> headers = new HashMap<>();
+    headers.put("Accept", "*/*");
     return new Request(Method.GET, Path.SIMPLE_GET, headers, null);
   }
 
@@ -66,8 +64,8 @@ public class TestHelpers {
   }
 
   public static Request requestWithHeaderAndBody() {
-    HashMap<Header, String> headers = new HashMap<>();
-    headers.put(Header.CONTENT_LENGTH, "11");
+    HashMap<String, String> headers = new HashMap<>();
+    headers.put("Content-Length", "11");
     return new Request(Method.POST, Path.ECHO_BODY, headers, "Hello world");
   }
 
@@ -84,7 +82,7 @@ public class TestHelpers {
   }
 
   public static Request requestWithMultipleHeaders() {
-    HashMap<Header, String> headers = mappedHeaders();
+    HashMap<String, String> headers = mappedHeaders();
 
     return new Request(Method.GET, Path.SIMPLE_GET, headers, null);
   }
@@ -100,8 +98,8 @@ public class TestHelpers {
   }
 
   public static Request requestWithBodyWithBreaks() {
-    HashMap<Header, String> headers = new HashMap<>();
-    headers.put(Header.CONTENT_LENGTH, "40");
+    HashMap<String, String> headers = new HashMap<>();
+    headers.put("Content-Length", "40");
     String body = bodyWithLineBreaks();
 
     return new Request(Method.POST, Path.ECHO_BODY, headers, body);
@@ -149,13 +147,13 @@ public class TestHelpers {
     return new Response(startLine, headers, null);
   }
 
-  public static HashMap<Header, String> mappedHeaders() {
-    HashMap<Header, String> mappedHeaders = new HashMap<>();
-    mappedHeaders.put(Header.USER_AGENT, "PostmanRuntime/7.29.2");
-    mappedHeaders.put(Header.ACCEPT, "*/*");
-    mappedHeaders.put(Header.HOST, "0.0.0.0:5000");
-    mappedHeaders.put(Header.ACCEPT_ENCODING, "gzip, deflate, br");
-    mappedHeaders.put(Header.CONNECTION, "keep-alive");
+  public static HashMap<String, String> mappedHeaders() {
+    HashMap<String, String> mappedHeaders = new HashMap<>();
+    mappedHeaders.put("User-Agent", "PostmanRuntime/7.29.2");
+    mappedHeaders.put("Accept", "*/*");
+    mappedHeaders.put("Host", "0.0.0.0:5000");
+    mappedHeaders.put("Accept-Encoding", "gzip, deflate, br");
+    mappedHeaders.put("Connection", "keep-alive");
 
     return mappedHeaders;
   }

@@ -5,12 +5,11 @@ import static org.junit.Assert.assertEquals;
 import java.util.HashMap;
 import org.junit.Test;
 import server.TestHelpers;
-import server.constants.Header;
 import server.constants.Method;
 import server.constants.Path;
 
 public class RequestBuilderTest {
-  private final HashMap<Header, String> headers = TestHelpers.mappedHeaders();
+  private final HashMap<String, String> headers = TestHelpers.mappedHeaders();
 
   @Test
   public void setsAndBuildsRequestWithMethodAndPathOnly() {

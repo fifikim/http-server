@@ -4,7 +4,6 @@ import java.io.IOException;
 import java.util.HashMap;
 import server.SocketIo;
 import server.constants.Format;
-import server.constants.Header;
 import server.constants.Method;
 import server.constants.Path;
 
@@ -22,11 +21,11 @@ public class RequestReader {
       RequestParser parser = new RequestParser(rawRequest);
       Method method = parser.method();
       Path path = parser.path();
-      HashMap<Header, String> headers = parser.headers();
+      HashMap<String, String> headers = parser.headers();
 
       String body = null;
-      if (headers.containsKey(Header.CONTENT_LENGTH)) {
-        int bytes = Integer.parseInt(headers.get(Header.CONTENT_LENGTH));
+      if (headers.containsKey("Content-Length")) {
+        int bytes = Integer.parseInt(headers.get("Content-Length"));
         body = getRequestBody(bytes);
       }
 

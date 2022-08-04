@@ -6,7 +6,6 @@ import static org.junit.Assert.assertNull;
 import java.util.HashMap;
 import org.junit.Test;
 import server.TestHelpers;
-import server.constants.Header;
 import server.constants.Method;
 import server.constants.Path;
 
@@ -46,19 +45,19 @@ public class RequestParserTest {
   @Test
   public void parsesRequestHeader() {
     String testRequest = TestHelpers.stringRequestWithHeader();
-    HashMap<Header, String> header = new RequestParser(testRequest).headers();
+    HashMap<String, String> header = new RequestParser(testRequest).headers();
 
-    assertEquals("*/*", header.get(Header.ACCEPT));
+    assertEquals("*/*", header.get("Accept"));
   }
 
   @Test
   public void parsesMultipleHeadersAsHashMapPairs() {
     String testRequest = TestHelpers.stringRequestWithMultipleHeaders();
-    HashMap<Header, String> headers = new RequestParser(testRequest).headers();
+    HashMap<String, String> headers = new RequestParser(testRequest).headers();
 
-    assertEquals("*/*", headers.get(Header.ACCEPT));
-    assertEquals("0.0.0.0:5000", headers.get(Header.HOST));
-    assertEquals("gzip, deflate, br", headers.get(Header.ACCEPT_ENCODING));
-    assertEquals("keep-alive", headers.get(Header.CONNECTION));
+    assertEquals("*/*", headers.get("Accept"));
+    assertEquals("0.0.0.0:5000", headers.get("Host"));
+    assertEquals("gzip, deflate, br", headers.get("Accept-Encoding"));
+    assertEquals("keep-alive", headers.get("Connection"));
   }
 }

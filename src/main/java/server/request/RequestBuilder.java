@@ -1,14 +1,13 @@
 package server.request;
 
 import java.util.HashMap;
-import server.constants.Header;
 import server.constants.Method;
 import server.constants.Path;
 
 public class RequestBuilder {
   private Method method;
   private Path path;
-  private HashMap<Header, String> headers;
+  private HashMap<String, String> headers;
   private String body;
 
   public RequestBuilder setMethod(Method method) {
@@ -21,7 +20,7 @@ public class RequestBuilder {
     return this;
   }
 
-  public RequestBuilder setHeaders(HashMap<Header, String> headers) {
+  public RequestBuilder setHeaders(HashMap<String, String> headers) {
     this.headers = headers;
     return this;
   }

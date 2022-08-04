@@ -2,7 +2,6 @@ package server.router.routes;
 
 import java.util.ArrayList;
 import java.util.List;
-import server.constants.Header;
 import server.constants.Method;
 import server.constants.Path;
 import server.constants.Protocol;
@@ -90,7 +89,7 @@ public abstract class Route {
     String joinedMethods = String.join(", ", stringMethods);
 
     StringBuilder header = new StringBuilder();
-    header.append(Header.ALLOW.toKey());
+    header.append("Allow: ");
     header.append(joinedMethods);
 
     return header.toString();
@@ -100,7 +99,7 @@ public abstract class Route {
     int contentLength = body().getBytes().length;
 
     StringBuilder header = new StringBuilder();
-    header.append(Header.CONTENT_LENGTH.toKey());
+    header.append("Content-Length: ");
     header.append(contentLength);
 
     return header.toString();

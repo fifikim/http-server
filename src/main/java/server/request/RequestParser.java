@@ -3,7 +3,6 @@ package server.request;
 import java.util.Arrays;
 import java.util.HashMap;
 import server.constants.Format;
-import server.constants.Header;
 import server.constants.Method;
 import server.constants.Path;
 
@@ -24,18 +23,17 @@ public class RequestParser {
     return Path.get(stringPath);
   }
 
-  public HashMap<Header, String> headers() {
+  public HashMap<String, String> headers() {
     String requestHead = rawRequest.split(Format.DBL_BREAK)[0];
     String[] headLines = requestHead.split(Format.BREAK);
 
-    HashMap<Header, String> mappedHeaders = new HashMap<>();
+    HashMap<String, String> mappedHeaders = new HashMap<>();
     String[] headers = Arrays.copyOfRange(headLines, 1, headLines.length);
 
     for (String line : headers) {
       if (!line.isBlank()) {
         String[] lineData = line.split(": ");
-        Header headerType = Header.get(lineData[0]);
-        mappedHeaders.put(headerType, lineData[1]);
+        mappedHeaders.put(lineData[0], lineData[1]);
       }
     }
 
