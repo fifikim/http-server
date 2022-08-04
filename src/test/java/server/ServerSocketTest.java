@@ -1,7 +1,6 @@
 package server;
 
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNull;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
@@ -60,7 +59,7 @@ public class ServerSocketTest {
   }
 
   @Test
-  public void readRequestReceivesRequestWithStartLineOnly() throws IOException {
+  public void getRequestReceivesRequestFromReader() throws IOException {
     String testRequest = "GET /simple_get HTTP/1.1\r\n\r\n";
     initializeWithInput(testRequest);
 
@@ -68,60 +67,6 @@ public class ServerSocketTest {
     Request actualReceived = serverSocketInterface.getRequest();
 
     assertEquals(expectedRequest, actualReceived);
-  }
-
-  @Test
-  public void readRequestReceivesRequestWithStartLineAndHeader() throws IOException {
-    String testRequest = TestHelpers.stringRequestWithHeader();
-    initializeWithInput(testRequest);
-
-    Request expectedRequest = TestHelpers.requestWithHeader();
-    Request actualReceived = serverSocketInterface.getRequest();
-
-    assertEquals(expectedRequest, actualReceived);
-  }
-
-  @Test
-  public void readRequestReceivesRequestWithStartLineHeaderAndBody() throws IOException {
-    String testRequest = TestHelpers.stringRequestWithHeaderAndBody();
-    initializeWithInput(testRequest);
-
-    Request expectedRequest = TestHelpers.requestWithHeaderAndBody();
-    Request actualReceived = serverSocketInterface.getRequest();
-
-    assertEquals(expectedRequest, actualReceived);
-  }
-
-  @Test
-  public void readRequestReceivesRequestWithMultipleHeaders() throws IOException {
-    String testRequest = TestHelpers.stringRequestWithMultipleHeaders();
-    initializeWithInput(testRequest);
-
-    Request expectedRequest = TestHelpers.requestWithMultipleHeaders();
-    Request actualReceived = serverSocketInterface.getRequest();
-
-    assertEquals(expectedRequest, actualReceived);
-  }
-
-  @Test
-  public void readRequestReceivesRequestWithBodyWithLineBreaks() throws IOException {
-    String testRequest = TestHelpers.stringRequestWithBodyWithBreaks();
-    initializeWithInput(testRequest);
-
-    Request expectedRequest = TestHelpers.requestWithBodyWithBreaks();
-    Request actualReceived = serverSocketInterface.getRequest();
-
-    assertEquals(expectedRequest, actualReceived);
-  }
-
-  @Test
-  public void readRequestReturnsNullForEmptyMessage() throws IOException {
-    String testRequest = "  ";
-    initializeWithInput(testRequest);
-
-    Request actualReceived = serverSocketInterface.getRequest();
-
-    assertNull(actualReceived);
   }
 
   @Test
