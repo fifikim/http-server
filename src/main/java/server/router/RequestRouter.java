@@ -5,6 +5,7 @@ import server.constants.Path;
 import server.constants.Status;
 import server.request.Request;
 import server.response.Response;
+import server.router.routes.EchoBody;
 import server.router.routes.HeadRequest;
 import server.router.routes.RouteHandler;
 import server.router.routes.SimpleGet;
@@ -31,6 +32,7 @@ public class RequestRouter {
     routes.put(Path.SIMPLE_GET, new SimpleGet());
     routes.put(Path.SIMPLE_GET_WITH_BODY, new SimpleGetWithBody());
     routes.put(Path.HEAD_REQUEST, new HeadRequest());
+    routes.put(Path.ECHO_BODY, new EchoBody());
 
     return routes;
   }
