@@ -1,27 +1,35 @@
 package server.router.routes;
 
-import java.util.List;
+import java.util.Arrays;
+import java.util.LinkedHashSet;
+import java.util.Set;
 import server.constants.Method;
-import server.constants.Path;
+import server.constants.Status;
 import server.request.Request;
+import server.response.Response;
+import server.response.ResponseBuilder;
 
-public class SimpleGetWithBody extends Route {
-  public SimpleGetWithBody(Request request) {
-    super(request);
-  }
-
-  @Override
-  public Path path() {
-    return Path.SIMPLE_GET_WITH_BODY;
-  }
+public class SimpleGetWithBody implements RouteHandler {
+  Set<Method> methodsAllowed = new LinkedHashSet<>(Arrays.asList(Method.GET));
+  String body = "Hello world";
 
   @Override
-  public List<Method> methods() {
-    return List.of(Method.GET);
-  }
+  public Response processRequest(Request request) {
+    ResponseBuilder responseBuilder = new ResponseBuilder();
+    Method method = request.method();
 
-  @Override
-  public String body() {
-    return "Hello world";
+    switch (method) {
+      case GET -> {
+        responseBuilder.setBody(body);
+        responseBuilder.addContentLengthHeader(body);
+      }
+      case HEAD -> responseBuilder.addContentLengthHeader(body);
+      default -> {
+        responseBuilder.setStartLine(Status.NOT_ALLOWED.format());
+        responseBuilder.addAllowHeader(methodsAllowed);
+      }
+    }
+
+    return responseBuilder.build();
   }
 }

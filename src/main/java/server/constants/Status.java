@@ -16,4 +16,12 @@ public enum Status {
   public String toString() {
     return value;
   }
+
+  public String format() {
+    StringBuilder startLine = new StringBuilder();
+    startLine.append("HTTP/1.1 ");
+    startLine.append(this.value);
+
+    return startLine.toString();
+  }
 }

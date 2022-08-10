@@ -1,54 +1,37 @@
 package server.router;
 
-import java.util.List;
-import server.constants.Protocol;
+import java.util.HashMap;
+import server.constants.Path;
 import server.constants.Status;
 import server.request.Request;
 import server.response.Response;
-import server.response.ResponseBuilder;
 import server.router.routes.HeadRequest;
-import server.router.routes.Route;
+import server.router.routes.RouteHandler;
 import server.router.routes.SimpleGet;
 import server.router.routes.SimpleGetWithBody;
 
 public class RequestRouter {
-  private Request request;
-
   public Response getResponse(Request request) {
-    this.request = request;
-    List<Route> routes = getAllRoutes();
-
-    if (request.path() == null) {
-      return errorResponse(Status.NOT_FOUND);
-    }
+    HashMap<Path, RouteHandler> routes = getAllRoutes();
+    RouteHandler route = routes.get(request.path());
 
     if (request.method() == null) {
-      return errorResponse(Status.BAD_REQUEST);
+      return new Response(Status.BAD_REQUEST.format(), null, null);
     }
 
-    for (Route route : routes) {
-      if (route.path().equals(request.path())) {
-        return route.processRequest();
-      }
+    if (route != null) {
+      return route.processRequest(request);
     }
-    return null;
+
+    return new Response(Status.NOT_FOUND.format(), null, null);
   }
 
-  private List<Route> getAllRoutes() {
-    return List.of(
-            new SimpleGet(request),
-            new SimpleGetWithBody(request),
-            new HeadRequest(request)
-    );
-  }
+  private static HashMap<Path, RouteHandler> getAllRoutes() {
+    HashMap<Path, RouteHandler> routes = new HashMap<>();
+    routes.put(Path.SIMPLE_GET, new SimpleGet());
+    routes.put(Path.SIMPLE_GET_WITH_BODY, new SimpleGetWithBody());
+    routes.put(Path.HEAD_REQUEST, new HeadRequest());
 
-  private Response errorResponse(Status status) {
-    StringBuilder startLine = new StringBuilder();
-    startLine.append(Protocol.DEFAULT);
-    startLine.append(status);
-
-    return new ResponseBuilder()
-            .setStartLine(startLine.toString())
-            .build();
+    return routes;
   }
 }

@@ -1,6 +1,8 @@
 package server;
 
 import static org.junit.Assert.assertEquals;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.verify;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
@@ -21,10 +23,26 @@ public class SocketIoTest {
     socketIo = new SocketIo(clientSocket);
   }
 
+  public void initializeWithMockStreams() throws IOException {
+    inputStream = mock(ByteArrayInputStream.class);
+    outputStream = mock(ByteArrayOutputStream.class);
+
+    Socket clientSocket = TestHelpers.socket(inputStream, outputStream);
+    socketIo = new SocketIo(clientSocket);
+  }
+
   @Test
-  public void readsSocketStreamInput() throws IOException {
+  public void readsSingleLineOfInputStream() throws IOException {
     initialize();
-    String actualReceived = socketIo.read();
+    String actualReceived = socketIo.readLine();
+
+    assertEquals(testMessage, actualReceived);
+  }
+
+  @Test
+  public void readsGivenNumberOfBytesOfInputStream() throws IOException {
+    initialize();
+    String actualReceived = socketIo.readBytes(12);
 
     assertEquals(testMessage, actualReceived);
   }
@@ -34,6 +52,18 @@ public class SocketIoTest {
     initialize();
     socketIo.send(testMessage);
 
-    assertEquals(testMessage, outputStream.toString());
+    String expectedSent = "test message\n";
+    String actualSent = outputStream.toString();
+
+    assertEquals(expectedSent, actualSent);
+  }
+
+  @Test
+  public void closesStreams() throws IOException {
+    initializeWithMockStreams();
+    socketIo.closeStreams();
+
+    verify(inputStream).close();
+    verify(outputStream).close();
   }
 }

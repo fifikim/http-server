@@ -1,20 +1,42 @@
 package server.response;
 
-import java.util.List;
+import java.util.ArrayList;
+import java.util.Set;
+import server.constants.Method;
+import server.constants.Status;
 
 public class ResponseBuilder {
-  private String startLine;
-  private List<String> headers;
+  private String startLine = Status.OK.format();
+  private ArrayList<String> headers = new ArrayList<>();
   private String body;
 
-  public ResponseBuilder setStartLine(String startLine) {
+  public void setStartLine(String startLine) {
     this.startLine = startLine;
-    return this;
   }
 
-  public ResponseBuilder setHeaders(List<String> headers) {
-    this.headers = headers;
-    return this;
+  public void addAllowHeader(Set<Method> methods) {
+    ArrayList<String> stringMethods = new ArrayList<>();
+    for (Method method : methods) {
+      stringMethods.add(method.name());
+    }
+
+    String joinedMethods = String.join(", ", stringMethods);
+
+    StringBuilder header = new StringBuilder();
+    header.append("Allow: ");
+    header.append(joinedMethods);
+
+    headers.add(header.toString());
+  }
+
+  public void addContentLengthHeader(String body) {
+    int contentLength = body.getBytes().length;
+
+    StringBuilder header = new StringBuilder();
+    header.append("Content-Length: ");
+    header.append(contentLength);
+
+    headers.add(header.toString());
   }
 
   public ResponseBuilder setBody(String body) {
@@ -23,6 +45,10 @@ public class ResponseBuilder {
   }
 
   public Response build() {
+    if (headers.isEmpty()) {
+      headers = null;
+    }
+
     return new Response(startLine, headers, body);
   }
 }

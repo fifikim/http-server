@@ -1,27 +1,27 @@
 package server.router.routes;
 
-import java.util.List;
+import java.util.Arrays;
+import java.util.LinkedHashSet;
+import java.util.Set;
 import server.constants.Method;
-import server.constants.Path;
+import server.constants.Status;
 import server.request.Request;
+import server.response.Response;
+import server.response.ResponseBuilder;
 
-public class HeadRequest extends Route {
-  public HeadRequest(Request request) {
-    super(request);
-  }
-
-  @Override
-  public Path path() {
-    return Path.HEAD_REQUEST;
-  }
+public class HeadRequest implements RouteHandler {
+  Set<Method> methodsAllowed = new LinkedHashSet<>(Arrays.asList(Method.HEAD, Method.OPTIONS));
 
   @Override
-  public List<Method> methods() {
-    return List.of(Method.HEAD, Method.OPTIONS);
-  }
+  public Response processRequest(Request request) {
+    ResponseBuilder responseBuilder = new ResponseBuilder();
+    Method method = request.method();
 
-  @Override
-  public String body() {
-    return null;
+    if (method != Method.HEAD) {
+      responseBuilder.setStartLine(Status.NOT_ALLOWED.format());
+      responseBuilder.addAllowHeader(methodsAllowed);
+    }
+
+    return responseBuilder.build();
   }
 }

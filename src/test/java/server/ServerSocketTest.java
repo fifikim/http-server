@@ -11,8 +11,8 @@ import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
 import org.junit.Test;
+import server.request.Request;
 import server.response.Response;
-import server.response.ResponseFormatter;
 
 public class ServerSocketTest {
   private ServerSocket serverSocket;
@@ -46,24 +46,27 @@ public class ServerSocketTest {
     serverSocketInterface = new ServerSocketWrapper(clientSocket, socketIo);
   }
 
-  @Test
-  public void readRequestReceivesRequest() throws IOException {
-    String testRequest = "GET /simple_get HTTP/1.1\r\n\r\n";
-    initializeWithInput(testRequest);
+  public void initializeWithMockStreams() throws IOException {
+    inputStream = mock(ByteArrayInputStream.class);
+    outputStream = mock(ByteArrayOutputStream.class);
 
-    String actualReceived = serverSocketInterface.getRequest();
+    serverSocket = mock(ServerSocket.class);
+    clientSocket = TestHelpers.socket(inputStream, outputStream);
+    when(serverSocket.accept()).thenReturn(clientSocket);
 
-    assertEquals(testRequest, actualReceived);
+    socketIo = mock(SocketIo.class);
+    serverSocketInterface = new ServerSocketWrapper(clientSocket, socketIo);
   }
 
   @Test
-  public void readRequestReturnsNullForEmptyMessage() throws IOException {
-    String testRequest = "  ";
+  public void getRequestReceivesRequestFromReader() throws IOException {
+    String testRequest = "GET /simple_get HTTP/1.1\r\n\r\n";
     initializeWithInput(testRequest);
 
-    String actualReceived = serverSocketInterface.getRequest();
+    Request expectedRequest = TestHelpers.simpleGetRequest();
+    Request actualReceived = serverSocketInterface.getRequest();
 
-    assertEquals(null, actualReceived);
+    assertEquals(expectedRequest, actualReceived);
   }
 
   @Test
@@ -73,7 +76,7 @@ public class ServerSocketTest {
     Response testResponse = TestHelpers.simpleGetResponse();
     serverSocketInterface.sendResponse(testResponse);
 
-    String expectedOutput = ResponseFormatter.toString(testResponse);
+    String expectedOutput = "HTTP/1.1 200 OK\r\n\n";
     String actualOutput = outputStream.toString();
 
     assertEquals(expectedOutput, actualOutput);
@@ -86,17 +89,18 @@ public class ServerSocketTest {
     Response testResponse = TestHelpers.simpleGetWithBodyResponse();
     serverSocketInterface.sendResponse(testResponse);
 
-    String expectedOutput = ResponseFormatter.toString(testResponse);
+    String expectedOutput = TestHelpers.stringGetWithBodyResponse();
     String actualOutput = outputStream.toString();
     assertEquals(expectedOutput, actualOutput);
   }
 
   @Test
   public void closesConnectionAndStreams() throws IOException {
-    initialize();
+    initializeWithMockStreams();
 
     serverSocketInterface.closeSocket();
 
     verify(clientSocket).close();
+    verify(socketIo).closeStreams();
   }
 }

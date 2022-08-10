@@ -3,7 +3,6 @@ package server;
 import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
-import server.request.RequestParser;
 import server.router.RequestRouter;
 
 public class App {
@@ -20,9 +19,8 @@ public class App {
 
         SocketIo socketIo = new SocketIo(clientSocket);
         ServerSocketWrapper serverSocketWrapper = new ServerSocketWrapper(clientSocket, socketIo);
-        RequestParser parser = new RequestParser();
         RequestRouter router = new RequestRouter();
-        ClientHandler clientHandler = new ClientHandler(serverSocketWrapper, parser, router);
+        ClientHandler clientHandler = new ClientHandler(serverSocketWrapper, router);
 
         new Thread(clientHandler).start();
       }

@@ -31,5 +31,6 @@ jobs:
           host: ${{ secrets.HOST }}
           user: ${{ secrets.USERNAME }}
           key: ${{ secrets.KEY }}
-          post_upload: java -jar http-server.jar &
+          pre_upload: lsof -i:5000 -t | xargs -r kill
+          post_upload: java -jar http-server.jar
 
