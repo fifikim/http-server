@@ -1,7 +1,7 @@
 package server.router.routes;
 
-import java.util.Arrays;
 import java.util.LinkedHashSet;
+import java.util.List;
 import java.util.Set;
 import server.constants.Method;
 import server.constants.Status;
@@ -10,7 +10,7 @@ import server.response.Response;
 import server.response.ResponseBuilder;
 
 public class SimpleGetWithBody implements RouteHandler {
-  Set<Method> methodsAllowed = new LinkedHashSet<>(Arrays.asList(Method.GET));
+  Set<Method> methodsAllowed = new LinkedHashSet<>(List.of(Method.GET));
   String body = "Hello world";
 
   @Override
