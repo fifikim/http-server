@@ -3,6 +3,7 @@ package server.response;
 import java.util.ArrayList;
 import java.util.Set;
 import server.constants.Method;
+import server.constants.Path;
 import server.constants.Status;
 
 public class ResponseBuilder {
@@ -35,6 +36,15 @@ public class ResponseBuilder {
     StringBuilder header = new StringBuilder();
     header.append("Content-Length: ");
     header.append(contentLength);
+
+    headers.add(header.toString());
+  }
+
+  public void addLocationHeader(String host, Path newLocation) {
+    StringBuilder header = new StringBuilder();
+    header.append("Location: http://");
+    header.append(host);
+    header.append(newLocation);
 
     headers.add(header.toString());
   }
