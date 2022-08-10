@@ -15,10 +15,6 @@ public class RequestRouter {
     HashMap<Path, RouteHandler> routes = getAllRoutes();
     RouteHandler route = routes.get(request.path());
 
-    if (request.path() == null) {
-      return new Response(Status.NOT_FOUND.format(), null, null);
-    }
-
     if (request.method() == null) {
       return new Response(Status.BAD_REQUEST.format(), null, null);
     }
@@ -27,7 +23,7 @@ public class RequestRouter {
       return route.processRequest(request);
     }
 
-    return null;
+    return new Response(Status.NOT_FOUND.format(), null, null);
   }
 
   private static HashMap<Path, RouteHandler> getAllRoutes() {

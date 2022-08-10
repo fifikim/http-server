@@ -113,16 +113,14 @@ public class TestHelpers {
 
   public static Response headRequestToSimpleGetResponse() {
     String startLine = "HTTP/1.1 200 OK";
-    List<String> headers = List.of("Allow: GET, HEAD");
 
-    return new Response(startLine, headers, null);
+    return new Response(startLine, null, null);
   }
 
   public static Response headRequestToHeadResponse() {
     String startLine = "HTTP/1.1 200 OK";
-    List<String> headers = List.of("Allow: HEAD, OPTIONS");
 
-    return new Response(startLine, headers, null);
+    return new Response(startLine, null, null);
   }
 
   public static Response simpleGetWithBodyResponse() {

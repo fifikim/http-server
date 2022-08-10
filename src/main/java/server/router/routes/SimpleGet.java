@@ -19,9 +19,7 @@ public class SimpleGet implements RouteHandler {
 
     switch (method) {
       case GET:
-        break;
       case HEAD:
-        responseBuilder.addAllowHeader(methodsAllowed);
         break;
       default:
         responseBuilder.setStartLine(Status.NOT_ALLOWED.format());

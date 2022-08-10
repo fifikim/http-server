@@ -17,17 +17,11 @@ public class HeadRequest implements RouteHandler {
     ResponseBuilder responseBuilder = new ResponseBuilder();
     Method method = request.method();
 
-    switch (method) {
-      case HEAD:
-        responseBuilder.addAllowHeader(methodsAllowed);
-        break;
-      case OPTIONS:
-        break;
-      default:
-        responseBuilder.setStartLine(Status.NOT_ALLOWED.format());
-        responseBuilder.addAllowHeader(methodsAllowed);
+    if (method != Method.HEAD) {
+      responseBuilder.setStartLine(Status.NOT_ALLOWED.format());
+      responseBuilder.addAllowHeader(methodsAllowed);
     }
 
-    return  responseBuilder.build();
+    return responseBuilder.build();
   }
 }

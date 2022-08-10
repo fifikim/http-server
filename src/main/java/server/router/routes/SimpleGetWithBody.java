@@ -18,12 +18,16 @@ public class SimpleGetWithBody implements RouteHandler {
     ResponseBuilder responseBuilder = new ResponseBuilder();
     Method method = request.method();
 
-    if (method == Method.GET) {
-      responseBuilder.setBody(body);
-      responseBuilder.addContentLengthHeader(body);
-    } else {
-      responseBuilder.setStartLine(Status.NOT_ALLOWED.format());
-      responseBuilder.addAllowHeader(methodsAllowed);
+    switch (method) {
+      case GET -> {
+        responseBuilder.setBody(body);
+        responseBuilder.addContentLengthHeader(body);
+      }
+      case HEAD -> responseBuilder.addContentLengthHeader(body);
+      default -> {
+        responseBuilder.setStartLine(Status.NOT_ALLOWED.format());
+        responseBuilder.addAllowHeader(methodsAllowed);
+      }
     }
 
     return responseBuilder.build();
