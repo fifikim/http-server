@@ -19,13 +19,15 @@ No external dependencies have been incorporated, apart from those used for linti
 
 The following routes and methods are currently supported:
 
-| URI                   | Methods Allowed | Response Headers | Response Body? |
-|-----------------------|:---------------:|:----------------:|:--------------:|
-| /simple_get           |       GET       |       none       |       No       |    
-| /simple_get_with_body |       GET       |  Content-Length  |      Yes       |
-| /head_request         |      HEAD       |      Allow       |       No       |
-| /echo_body            |      POST       |  Content-Length  |      Yes       |
-| /redirect             |       GET       |     Location     |       No       |
+| URI                   |        Methods Allowed        | Response Headers | Response Body? |
+|-----------------------|:-----------------------------:|:----------------:|:--------------:|
+| /simple_get           |              GET              |       none       |       No       |    
+| /simple_get_with_body |              GET              |  Content-Length  |      Yes       |
+| /head_request         |             HEAD              |      Allow       |       No       |
+| /echo_body            |             POST              |  Content-Length  |      Yes       |
+| /redirect             |              GET              |     Location     |       No       |
+| /method_options       |      GET, HEAD, OPTIONS       |      Allow       |       No       |
+| /method_options2      | GET, HEAD, OPTIONS, POST, PUT |      Allow       |       No       |
 
 The production server is located at [tbd]. Please see instructions below for guidance on installing and running the server locally on your own machine.
 

@@ -10,7 +10,8 @@ import server.response.Response;
 import server.response.ResponseBuilder;
 
 public class MethodOptions2 implements RouteHandler {
-  Set<Method> methodsAllowed = new LinkedHashSet<>(List.of(Method.GET, Method.HEAD, Method.OPTIONS, Method.POST, Method.PUT));
+  Set<Method> methodsAllowed = new LinkedHashSet<>(List.of(
+          Method.GET, Method.HEAD, Method.OPTIONS, Method.POST, Method.PUT));
 
   @Override
   public Response processRequest(Request request) {

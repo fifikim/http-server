@@ -9,26 +9,27 @@ import server.request.Request;
 import server.response.Response;
 import server.response.ResponseBuilder;
 
-  public class MethodOptions implements RouteHandler {
-    Set<Method> methodsAllowed = new LinkedHashSet<>(List.of(Method.GET, Method.HEAD, Method.OPTIONS));
+public class MethodOptions implements RouteHandler {
+  Set<Method> methodsAllowed = new LinkedHashSet<>(List.of(
+          Method.GET, Method.HEAD, Method.OPTIONS));
 
-    @Override
-    public Response processRequest(Request request) {
-      ResponseBuilder responseBuilder = new ResponseBuilder();
-      Method method = request.method();
+  @Override
+  public Response processRequest(Request request) {
+    ResponseBuilder responseBuilder = new ResponseBuilder();
+    Method method = request.method();
 
-      switch (method) {
-        case GET, HEAD -> {
-        }
-        case OPTIONS -> {
-          responseBuilder.addAllowHeader(methodsAllowed);
-        }
-        default -> {
-          responseBuilder.setStartLine(Status.NOT_ALLOWED.format());
-          responseBuilder.addAllowHeader(methodsAllowed);
-        }
+    switch (method) {
+      case GET, HEAD -> {
       }
-
-      return responseBuilder.build();
+      case OPTIONS -> {
+        responseBuilder.addAllowHeader(methodsAllowed);
+      }
+      default -> {
+        responseBuilder.setStartLine(Status.NOT_ALLOWED.format());
+        responseBuilder.addAllowHeader(methodsAllowed);
+      }
     }
-  }}
+
+    return responseBuilder.build();
+  }
+}
