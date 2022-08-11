@@ -3,6 +3,7 @@ package server.router;
 import static org.junit.Assert.assertEquals;
 
 import java.util.HashMap;
+import java.util.Map;
 import org.junit.Test;
 import server.TestHelpers;
 import server.constants.Method;
@@ -52,13 +53,19 @@ public class RequestRouterTest {
   }
 
   @Test
-  public void processesCorrectResponseForNotAllowedGetRequest() {
-    Request request = new Request(Method.GET, Path.HEAD_REQUEST, null, null);
+  public void returnsMethodNotAllowedForEachRoute() {
+    HashMap<Method, Path> badRequests = TestHelpers.badRequests();
 
-    Response expectedResponse = TestHelpers.notAllowedResponse();
-    Response actualResponse = new RequestRouter().getResponse(request);
+    for (Map.Entry<Method, Path> mapElement : badRequests.entrySet()) {
+      Method method = mapElement.getKey();
+      Path path = mapElement.getValue();
 
-    assertEquals(expectedResponse, actualResponse);
+      Request request = new Request(method, path, null, null);
+      Response response = new RequestRouter().getResponse(request);
+      String startLine = response.startLine();
+
+      assertEquals("HTTP/1.1 405 Method Not Allowed", startLine);
+    }
   }
 
   @Test

@@ -194,4 +194,15 @@ public class TestHelpers {
 
     return body.toString();
   }
+
+  public static HashMap<Method, Path> badRequests() {
+    HashMap<Method, Path> badRequests = new HashMap<>();
+    badRequests.put(Method.DELETE, Path.ECHO_BODY);
+    badRequests.put(Method.POST, Path.HEAD_REQUEST);
+    badRequests.put(Method.PUT, Path.REDIRECT);
+    badRequests.put(Method.PATCH, Path.SIMPLE_GET);
+    badRequests.put(Method.OPTIONS, Path.SIMPLE_GET_WITH_BODY);
+
+    return badRequests;
+  }
 }
