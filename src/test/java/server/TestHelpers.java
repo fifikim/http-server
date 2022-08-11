@@ -153,7 +153,7 @@ public class TestHelpers {
 
   public static Response notAllowedResponse() {
     String startLine = "HTTP/1.1 405 Method Not Allowed";
-    List<String> headers = List.of("Allow: HEAD, OPTIONS");
+    List<String> headers = List.of("Allow: HEAD");
 
     return new Response(startLine, headers, null);
   }

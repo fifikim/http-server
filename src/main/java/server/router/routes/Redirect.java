@@ -11,25 +11,20 @@ import server.response.Response;
 import server.response.ResponseBuilder;
 
 public class Redirect implements RouteHandler {
-  Set<Method> methodsAllowed = new LinkedHashSet<>(List.of(Method.GET));
   Path newLocation = Path.SIMPLE_GET;
+
+  @Override
+  public Set<Method> getMethods() {
+    return new LinkedHashSet<>(List.of(Method.GET, Method.HEAD));
+  }
 
   @Override
   public Response processRequest(Request request) {
     ResponseBuilder responseBuilder = new ResponseBuilder();
-    Method method = request.method();
     String host = request.headers().get("Host");
 
-    switch (method) {
-      case GET, HEAD -> {
-        responseBuilder.setStartLine(Status.MOVED.format());
-        responseBuilder.addLocationHeader(host, newLocation);
-      }
-      default -> {
-        responseBuilder.setStartLine(Status.NOT_ALLOWED.format());
-        responseBuilder.addAllowHeader(methodsAllowed);
-      }
-    }
+    responseBuilder.setStartLine(Status.MOVED.format());
+    responseBuilder.addLocationHeader(host, newLocation);
 
     return responseBuilder.build();
   }
