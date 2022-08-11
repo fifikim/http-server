@@ -11,11 +11,18 @@ import server.response.ResponseBuilder;
 public class HeadRequest implements RouteHandler {
   @Override
   public Set<Method> getMethods() {
-    return new LinkedHashSet<>(Arrays.asList(Method.HEAD));
+    return new LinkedHashSet<>(Arrays.asList(Method.HEAD, Method.OPTIONS));
   }
 
   @Override
   public Response processRequest(Request request) {
-    return new ResponseBuilder().build();
+    ResponseBuilder responseBuilder = new ResponseBuilder();
+    Method method = request.method();
+
+    if (method == Method.OPTIONS) {
+      responseBuilder.addAllowHeader(getMethods());
+    }
+
+    return responseBuilder.build();
   }
 }
