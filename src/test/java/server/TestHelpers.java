@@ -107,7 +107,6 @@ public class TestHelpers {
 
   public static Response simpleGetResponse() {
     String startLine = "HTTP/1.1 200 OK";
-
     return new Response(startLine, null, null);
   }
 
@@ -154,20 +153,9 @@ public class TestHelpers {
 
   public static Response notAllowedResponse() {
     String startLine = "HTTP/1.1 405 Method Not Allowed";
-    List<String> headers = List.of("Allow: HEAD, OPTIONS");
+    List<String> headers = List.of("Allow: HEAD");
 
     return new Response(startLine, headers, null);
-  }
-
-
-  public static HashMap<String, String> mappedHeaders() {
-    HashMap<String, String> mappedHeaders = new HashMap<>();
-    mappedHeaders.put("User-Agent", "PostmanRuntime/7.29.2");
-    mappedHeaders.put("Accept", "*/*");
-    mappedHeaders.put("Host", "0.0.0.0:5000");
-    mappedHeaders.put("Accept-Encoding", "gzip, deflate, br");
-    mappedHeaders.put("Connection", "keep-alive");
-    return mappedHeaders;
   }
 
   public static Response echoBodyResponse() {
@@ -176,6 +164,24 @@ public class TestHelpers {
     String body = "test message";
 
     return new Response(startLine, headers, body);
+  }
+
+  public static Response redirectResponse() {
+    String startLine = "HTTP/1.1 301 Moved Permanently";
+    List<String> headers = List.of("Location: http://0.0.0.0:5000/simple_get");
+
+    return new Response(startLine, headers, null);
+  }
+
+  public static HashMap<String, String> mappedHeaders() {
+    HashMap<String, String> mappedHeaders = new HashMap<>();
+    mappedHeaders.put("User-Agent", "PostmanRuntime/7.29.2");
+    mappedHeaders.put("Accept", "*/*");
+    mappedHeaders.put("Host", "0.0.0.0:5000");
+    mappedHeaders.put("Accept-Encoding", "gzip, deflate, br");
+    mappedHeaders.put("Connection", "keep-alive");
+
+    return mappedHeaders;
   }
 
   public static String bodyWithLineBreaks() {
@@ -187,5 +193,16 @@ public class TestHelpers {
     body.append("Third line");
 
     return body.toString();
+  }
+
+  public static HashMap<Method, Path> badRequests() {
+    HashMap<Method, Path> badRequests = new HashMap<>();
+    badRequests.put(Method.DELETE, Path.ECHO_BODY);
+    badRequests.put(Method.POST, Path.HEAD_REQUEST);
+    badRequests.put(Method.PUT, Path.REDIRECT);
+    badRequests.put(Method.PATCH, Path.SIMPLE_GET);
+    badRequests.put(Method.OPTIONS, Path.SIMPLE_GET_WITH_BODY);
+
+    return badRequests;
   }
 }
