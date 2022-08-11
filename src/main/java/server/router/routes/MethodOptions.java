@@ -8,18 +8,21 @@ import server.request.Request;
 import server.response.Response;
 import server.response.ResponseBuilder;
 
-public class EchoBody implements RouteHandler {
+public class MethodOptions implements RouteHandler {
   @Override
   public Set<Method> getMethods() {
-    return new LinkedHashSet<>(List.of(Method.POST));
+    return new LinkedHashSet<>(List.of(
+            Method.GET, Method.HEAD, Method.OPTIONS));
   }
 
   @Override
   public Response processRequest(Request request) {
     ResponseBuilder responseBuilder = new ResponseBuilder();
+    Method method = request.method();
 
-    responseBuilder.addContentLengthHeader(request.body());
-    responseBuilder.setBody(request.body());
+    if (method == Method.OPTIONS) {
+      responseBuilder.addAllowHeader(getMethods());
+    }
 
     return responseBuilder.build();
   }

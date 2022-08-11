@@ -202,7 +202,23 @@ public class TestHelpers {
     badRequests.put(Method.PUT, Path.REDIRECT);
     badRequests.put(Method.PATCH, Path.SIMPLE_GET);
     badRequests.put(Method.OPTIONS, Path.SIMPLE_GET_WITH_BODY);
+    badRequests.put(Method.TRACE, Path.METHOD_OPTIONS);
+    badRequests.put(Method.CONNECT, Path.METHOD_OPTIONS2);
 
     return badRequests;
+  }
+
+  public static Response methodOptionsResponse() {
+    String startLine = "HTTP/1.1 200 OK";
+    List<String> headers = List.of("Allow: GET, HEAD, OPTIONS");
+
+    return new Response(startLine, headers, null);
+  }
+
+  public static Response methodOptions2Response() {
+    String startLine = "HTTP/1.1 200 OK";
+    List<String> headers = List.of("Allow: GET, HEAD, OPTIONS, POST, PUT");
+
+    return new Response(startLine, headers, null);
   }
 }

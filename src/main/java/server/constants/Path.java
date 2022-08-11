@@ -5,7 +5,9 @@ public enum Path {
   SIMPLE_GET_WITH_BODY("/simple_get_with_body"),
   HEAD_REQUEST("/head_request"),
   ECHO_BODY("/echo_body"),
-  REDIRECT("/redirect");
+  REDIRECT("/redirect"),
+  METHOD_OPTIONS("/method_options"),
+  METHOD_OPTIONS2("/method_options2");
 
   private final String url;
 
