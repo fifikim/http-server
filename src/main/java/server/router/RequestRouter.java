@@ -10,6 +10,7 @@ import server.response.Response;
 import server.response.ResponseBuilder;
 import server.router.routes.EchoBody;
 import server.router.routes.HeadRequest;
+import server.router.routes.HealthCheck;
 import server.router.routes.HtmlResponse;
 import server.router.routes.JsonResponse;
 import server.router.routes.MethodOptions;
@@ -56,6 +57,7 @@ public class RequestRouter {
     routes.put(Path.JSON_RESPONSE, new JsonResponse());
     routes.put(Path.TEXT_RESPONSE, new TextResponse());
     routes.put(Path.XML_RESPONSE, new XmlResponse());
+    routes.put(Path.HEALTH_CHECK, new HealthCheck());
 
     return routes;
   }

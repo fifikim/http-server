@@ -9,8 +9,8 @@ import server.request.Request;
 import server.response.Response;
 import server.response.ResponseBuilder;
 
-public class HtmlResponse implements RouteHandler {
-  String body = "<html><body><p>HTML Response</p></body></html>";
+public class HealthCheck implements RouteHandler {
+  String body = "<strong>Status:</strong> pass";
 
   @Override
   public Set<Method> getMethods() {
@@ -19,15 +19,12 @@ public class HtmlResponse implements RouteHandler {
 
   @Override
   public Response processRequest(Request request) {
+
     ResponseBuilder responseBuilder = new ResponseBuilder();
-    Method method = request.method();
 
     responseBuilder.addContentTypeHeader(ContentType.HTML);
     responseBuilder.addContentLengthHeader(body);
-
-    if (method == Method.GET) {
-      responseBuilder.setBody(body);
-    }
+    responseBuilder.setBody(body);
 
     return responseBuilder.build();
   }

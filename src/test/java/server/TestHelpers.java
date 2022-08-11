@@ -251,4 +251,13 @@ public class TestHelpers {
 
     return new Response(startLine, headers, "<note><body>XML Response</body></note>");
   }
+
+  public static Response healthCheckResponse() {
+    String startLine = "HTTP/1.1 200 OK";
+    List<String> headers = List.of("Content-Type: text/html;charset=utf-8",
+            "Content-Length: 29");
+    String body = "<strong>Status:</strong> pass";
+
+    return new Response(startLine, headers, body);
+  }
 }

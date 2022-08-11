@@ -168,4 +168,14 @@ public class RequestRouterTest {
 
     assertEquals(expectedResponse, actualResponse);
   }
+
+  @Test
+  public void returnsCorrectResponseForHealthCheckRequest() {
+    Request request = new Request(Method.GET, Path.HEALTH_CHECK, null, null);
+
+    Response expectedResponse = TestHelpers.healthCheckResponse();
+    Response actualResponse = new RequestRouter().getResponse(request);
+
+    assertEquals(expectedResponse, actualResponse);
+  }
 }
