@@ -9,7 +9,6 @@ import server.response.Response;
 import server.response.ResponseBuilder;
 
 public class SimpleGet implements RouteHandler {
-
   @Override
   public Set<Method> getMethods() {
     return new LinkedHashSet<>(Arrays.asList(Method.GET, Method.HEAD));
@@ -17,6 +16,6 @@ public class SimpleGet implements RouteHandler {
 
   @Override
   public Response processRequest(Request request) {
-    return  new ResponseBuilder().build();
+    return new ResponseBuilder().build();
   }
 }
