@@ -1,5 +1,6 @@
 package server.router;
 
+import java.io.IOException;
 import java.util.HashMap;
 import java.util.Set;
 import server.constants.Method;
@@ -23,7 +24,7 @@ import server.router.routes.TextResponse;
 import server.router.routes.XmlResponse;
 
 public class RequestRouter {
-  public Response getResponse(Request request) {
+  public Response getResponse(Request request) throws IOException {
     HashMap<Path, RouteHandler> routes = getAllRoutes();
     RouteHandler route = routes.get(request.path());
 

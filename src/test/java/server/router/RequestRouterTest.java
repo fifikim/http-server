@@ -2,6 +2,7 @@ package server.router;
 
 import static org.junit.Assert.assertEquals;
 
+import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 import org.junit.Test;
@@ -13,7 +14,7 @@ import server.response.Response;
 
 public class RequestRouterTest {
   @Test
-  public void processesCorrectResponseForSimpleGet() {
+  public void processesCorrectResponseForSimpleGet() throws IOException {
     Request request = new Request(Method.GET, Path.SIMPLE_GET, null, null);
 
     Response expectedResponse = TestHelpers.simpleGetResponse();
@@ -23,7 +24,7 @@ public class RequestRouterTest {
   }
 
   @Test
-  public void processesCorrectResponseForSimpleGetWithBody() {
+  public void processesCorrectResponseForSimpleGetWithBody() throws IOException {
     Request request = new Request(Method.GET, Path.SIMPLE_GET_WITH_BODY, null, null);
 
     Response expectedResponse = TestHelpers.simpleGetWithBodyResponse();
@@ -33,7 +34,7 @@ public class RequestRouterTest {
   }
 
   @Test
-  public void processesCorrectResponseForUnknownRoute() {
+  public void processesCorrectResponseForUnknownRoute() throws IOException {
     Request request = new Request(Method.GET, null, null, null);
 
     Response expectedResponse = TestHelpers.notFoundResponse();
@@ -43,7 +44,7 @@ public class RequestRouterTest {
   }
 
   @Test
-  public void processesCorrectResponseForInvalidMethod() {
+  public void processesCorrectResponseForInvalidMethod() throws IOException {
     Request request = new Request(null, Path.SIMPLE_GET, null, null);
 
     Response expectedResponse = TestHelpers.badRequestResponse();
@@ -53,7 +54,7 @@ public class RequestRouterTest {
   }
 
   @Test
-  public void returnsMethodNotAllowedForEachRoute() {
+  public void returnsMethodNotAllowedForEachRoute() throws IOException {
     HashMap<Path, Method> badRequests = TestHelpers.badRequests();
 
     for (Map.Entry<Path, Method> mapElement : badRequests.entrySet()) {
@@ -69,7 +70,7 @@ public class RequestRouterTest {
   }
 
   @Test
-  public void returnsCorrectResponseForHeadRequestToSimpleGet() {
+  public void returnsCorrectResponseForHeadRequestToSimpleGet() throws IOException {
     Request request = new Request(Method.HEAD, Path.SIMPLE_GET,  null, null);
 
     Response expectedResponse = TestHelpers.headRequestToSimpleGetResponse();
@@ -79,7 +80,7 @@ public class RequestRouterTest {
   }
 
   @Test
-  public void returnsCorrectResponseForHeadRequestToHeadRequest() {
+  public void returnsCorrectResponseForHeadRequestToHeadRequest() throws IOException {
     Request request = new Request(Method.HEAD, Path.HEAD_REQUEST,  null, null);
 
     Response expectedResponse = TestHelpers.headRequestToHeadResponse();
@@ -89,7 +90,7 @@ public class RequestRouterTest {
   }
 
   @Test
-  public void returnsCorrectResponseForPostRequestToEchoBody() {
+  public void returnsCorrectResponseForPostRequestToEchoBody() throws IOException {
     Request request = new Request(Method.POST, Path.ECHO_BODY, null, "test message");
 
     Response expectedResponse = TestHelpers.echoBodyResponse();
@@ -99,7 +100,7 @@ public class RequestRouterTest {
   }
 
   @Test
-  public void returnsCorrectResponseForGetRequestToRedirect() {
+  public void returnsCorrectResponseForGetRequestToRedirect() throws IOException {
     HashMap<String, String> headers = TestHelpers.mappedHeaders();
     Request request = new Request(Method.GET, Path.REDIRECT, headers, null);
 
@@ -110,7 +111,7 @@ public class RequestRouterTest {
   }
 
   @Test
-  public void returnsCorrectResponseForOptionsRequestToMethodOptions() {
+  public void returnsCorrectResponseForOptionsRequestToMethodOptions() throws IOException {
     Request request = new Request(Method.OPTIONS, Path.METHOD_OPTIONS, null, null);
 
     Response expectedResponse = TestHelpers.methodOptionsResponse();
@@ -120,7 +121,7 @@ public class RequestRouterTest {
   }
 
   @Test
-  public void returnsCorrectResponseForOptionsRequestToMethodOptions2() {
+  public void returnsCorrectResponseForOptionsRequestToMethodOptions2() throws IOException {
     Request request = new Request(Method.OPTIONS, Path.METHOD_OPTIONS2, null, null);
 
     Response expectedResponse = TestHelpers.methodOptions2Response();
@@ -130,7 +131,7 @@ public class RequestRouterTest {
   }
 
   @Test
-  public void returnsCorrectResponseForGetRequestToHtmlResponse() {
+  public void returnsCorrectResponseForGetRequestToHtmlResponse() throws IOException {
     Request request = new Request(Method.GET, Path.HTML_RESPONSE, null, null);
 
     Response expectedResponse = TestHelpers.htmlResponse();
@@ -140,7 +141,7 @@ public class RequestRouterTest {
   }
 
   @Test
-  public void returnsCorrectResponseForGetRequestToJsonResponse() {
+  public void returnsCorrectResponseForGetRequestToJsonResponse() throws IOException {
     Request request = new Request(Method.GET, Path.JSON_RESPONSE, null, null);
 
     Response expectedResponse = TestHelpers.jsonResponse();
@@ -150,7 +151,7 @@ public class RequestRouterTest {
   }
 
   @Test
-  public void returnsCorrectResponseForGetRequestToTextResponse() {
+  public void returnsCorrectResponseForGetRequestToTextResponse() throws IOException {
     Request request = new Request(Method.GET, Path.TEXT_RESPONSE, null, null);
 
     Response expectedResponse = TestHelpers.textResponse();
@@ -160,7 +161,7 @@ public class RequestRouterTest {
   }
 
   @Test
-  public void returnsCorrectResponseForGetRequestToXmlResponse() {
+  public void returnsCorrectResponseForGetRequestToXmlResponse() throws IOException {
     Request request = new Request(Method.GET, Path.XML_RESPONSE, null, null);
 
     Response expectedResponse = TestHelpers.xmlResponse();
@@ -170,7 +171,7 @@ public class RequestRouterTest {
   }
 
   @Test
-  public void returnsCorrectResponseForHealthCheckRequest() {
+  public void returnsCorrectResponseForHealthCheckRequest() throws IOException {
     Request request = new Request(Method.GET, Path.HEALTH_CHECK, null, null);
 
     Response expectedResponse = TestHelpers.healthCheckResponse();
