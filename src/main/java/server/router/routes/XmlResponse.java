@@ -3,13 +3,14 @@ package server.router.routes;
 import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Set;
+import server.constants.ContentType;
 import server.constants.Method;
 import server.request.Request;
 import server.response.Response;
 import server.response.ResponseBuilder;
 
-public class SimpleGetWithBody implements RouteHandler {
-  String body = "Hello world";
+public class XmlResponse implements RouteHandler {
+  String body = "<note><body>XML Response</body></note>";
 
   @Override
   public Set<Method> getMethods() {
@@ -21,6 +22,7 @@ public class SimpleGetWithBody implements RouteHandler {
     ResponseBuilder responseBuilder = new ResponseBuilder();
     Method method = request.method();
 
+    responseBuilder.addContentTypeHeader(ContentType.XML);
     responseBuilder.addContentLengthHeader(body);
 
     if (method == Method.GET) {

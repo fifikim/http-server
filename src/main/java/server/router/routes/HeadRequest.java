@@ -11,7 +11,7 @@ import server.response.ResponseBuilder;
 public class HeadRequest implements RouteHandler {
   @Override
   public Set<Method> getMethods() {
-    return new LinkedHashSet<>(Arrays.asList(Method.HEAD));
+    return new LinkedHashSet<>(Arrays.asList(Method.HEAD, Method.OPTIONS));
   }
 
   @Override

@@ -54,11 +54,11 @@ public class RequestRouterTest {
 
   @Test
   public void returnsMethodNotAllowedForEachRoute() {
-    HashMap<Method, Path> badRequests = TestHelpers.badRequests();
+    HashMap<Path, Method> badRequests = TestHelpers.badRequests();
 
-    for (Map.Entry<Method, Path> mapElement : badRequests.entrySet()) {
-      Method method = mapElement.getKey();
-      Path path = mapElement.getValue();
+    for (Map.Entry<Path, Method> mapElement : badRequests.entrySet()) {
+      Method method = mapElement.getValue();
+      Path path = mapElement.getKey();
 
       Request request = new Request(method, path, null, null);
       Response response = new RequestRouter().getResponse(request);
@@ -124,6 +124,46 @@ public class RequestRouterTest {
     Request request = new Request(Method.OPTIONS, Path.METHOD_OPTIONS2, null, null);
 
     Response expectedResponse = TestHelpers.methodOptions2Response();
+    Response actualResponse = new RequestRouter().getResponse(request);
+
+    assertEquals(expectedResponse, actualResponse);
+  }
+
+  @Test
+  public void returnsCorrectResponseForGetRequestToHtmlResponse() {
+    Request request = new Request(Method.GET, Path.HTML_RESPONSE, null, null);
+
+    Response expectedResponse = TestHelpers.htmlResponse();
+    Response actualResponse = new RequestRouter().getResponse(request);
+
+    assertEquals(expectedResponse, actualResponse);
+  }
+
+  @Test
+  public void returnsCorrectResponseForGetRequestToJsonResponse() {
+    Request request = new Request(Method.GET, Path.JSON_RESPONSE, null, null);
+
+    Response expectedResponse = TestHelpers.jsonResponse();
+    Response actualResponse = new RequestRouter().getResponse(request);
+
+    assertEquals(expectedResponse, actualResponse);
+  }
+
+  @Test
+  public void returnsCorrectResponseForGetRequestToTextResponse() {
+    Request request = new Request(Method.GET, Path.TEXT_RESPONSE, null, null);
+
+    Response expectedResponse = TestHelpers.textResponse();
+    Response actualResponse = new RequestRouter().getResponse(request);
+
+    assertEquals(expectedResponse, actualResponse);
+  }
+
+  @Test
+  public void returnsCorrectResponseForGetRequestToXmlResponse() {
+    Request request = new Request(Method.GET, Path.XML_RESPONSE, null, null);
+
+    Response expectedResponse = TestHelpers.xmlResponse();
     Response actualResponse = new RequestRouter().getResponse(request);
 
     assertEquals(expectedResponse, actualResponse);

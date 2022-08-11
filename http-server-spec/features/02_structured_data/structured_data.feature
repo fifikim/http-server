@@ -1,4 +1,4 @@
-@structured-data @02-structured-data
+@structured-data @02-structured-data @implemented
 Feature: Structured Data
 
   Scenario: Returning a text response
