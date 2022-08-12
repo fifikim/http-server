@@ -9,11 +9,14 @@ import server.constants.Status;
 import server.request.Request;
 import server.response.Response;
 import server.response.ResponseBuilder;
+import server.router.routes.DoggoPng;
 import server.router.routes.EchoBody;
 import server.router.routes.HeadRequest;
 import server.router.routes.HealthCheck;
 import server.router.routes.HtmlResponse;
 import server.router.routes.JsonResponse;
+import server.router.routes.KissesGif;
+import server.router.routes.KittehJpg;
 import server.router.routes.MethodOptions;
 import server.router.routes.MethodOptions2;
 import server.router.routes.Redirect;
@@ -59,6 +62,9 @@ public class RequestRouter {
     routes.put(Path.TEXT_RESPONSE, new TextResponse());
     routes.put(Path.XML_RESPONSE, new XmlResponse());
     routes.put(Path.HEALTH_CHECK, new HealthCheck());
+    routes.put(Path.KITTEH_JPG, new KittehJpg());
+    routes.put(Path.DOGGO_PNG, new DoggoPng());
+    routes.put(Path.KISSES_GIF, new KissesGif());
 
     return routes;
   }

@@ -12,7 +12,10 @@ public enum Path {
   JSON_RESPONSE("/json_response"),
   TEXT_RESPONSE("/text_response"),
   XML_RESPONSE("/xml_response"),
-  HEALTH_CHECK("/health-check.html");
+  HEALTH_CHECK("/health-check.html"),
+  KITTEH_JPG("/kitteh.jpg"),
+  DOGGO_PNG("/doggo.png"),
+  KISSES_GIF("/kisses.gif");
 
   private final String url;
 

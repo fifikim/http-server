@@ -2,38 +2,40 @@ package server.response;
 
 import static org.junit.Assert.assertEquals;
 
+import java.io.IOException;
+import java.util.Arrays;
 import org.junit.Test;
 import server.TestHelpers;
 
 public class ResponseFormatterTest {
   @Test
-  public void correctlyFormatsResponseWithStartLineHeadersAndBody() {
+  public void correctlyFormatsResponseWithStartLineHeadersAndBody() throws IOException {
     Response testResponse = TestHelpers.simpleGetWithBodyResponse();
 
-    String expectedOutput =
-            "HTTP/1.1 200 OK\r\nContent-Length: 11\r\n\r\nHello world";
-    String actualOutput = ResponseFormatter.toString(testResponse);
+    byte[] expectedOutput =
+            "HTTP/1.1 200 OK\r\nContent-Length: 11\r\n\r\nHello world".getBytes();
+    byte[] actualOutput = ResponseFormatter.toBytes(testResponse);
 
-    assertEquals(expectedOutput, actualOutput);
+    assertEquals(Arrays.toString(expectedOutput), Arrays.toString(actualOutput));
   }
 
   @Test
-  public void correctlyFormatsResponseWithStartLineAndHeaders() {
+  public void correctlyFormatsResponseWithStartLineAndHeaders() throws IOException {
     Response testResponse = TestHelpers.simpleGetResponse();
 
-    String expectedOutput = "HTTP/1.1 200 OK\r\n";
-    String actualOutput = ResponseFormatter.toString(testResponse);
+    byte[] expectedOutput = "HTTP/1.1 200 OK\r\n\r\n".getBytes();
+    byte[] actualOutput = ResponseFormatter.toBytes(testResponse);
 
-    assertEquals(expectedOutput, actualOutput);
+    assertEquals(Arrays.toString(expectedOutput), Arrays.toString(actualOutput));
   }
 
   @Test
-  public void correctlyFormatsResponseWithStartLineOnly() {
+  public void correctlyFormatsResponseWithStartLineOnly() throws IOException {
     Response testResponse = TestHelpers.notFoundResponse();
 
-    String expectedOutput = "HTTP/1.1 404 Not Found\r\n";
-    String actualOutput = ResponseFormatter.toString(testResponse);
+    byte[] expectedOutput = "HTTP/1.1 404 Not Found\r\n\r\n".getBytes();
+    byte[] actualOutput = ResponseFormatter.toBytes(testResponse);
 
-    assertEquals(expectedOutput, actualOutput);
+    assertEquals(Arrays.toString(expectedOutput), Arrays.toString(actualOutput));
   }
 }

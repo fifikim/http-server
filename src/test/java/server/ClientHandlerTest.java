@@ -76,7 +76,7 @@ public class ClientHandlerTest {
   public void sendsResponseIfRequestReceived() throws IOException {
     runTestWithSocketIo();
 
-    String expectedSent = "HTTP/1.1 200 OK\r\n\n";
+    String expectedSent = "HTTP/1.1 200 OK\r\n\r\n";
     String actualSent = outputStream.toString();
 
     assertEquals(expectedSent, actualSent);

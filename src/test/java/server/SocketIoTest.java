@@ -50,12 +50,11 @@ public class SocketIoTest {
   @Test
   public void sendsSocketStreamOutput() throws IOException {
     initialize();
-    socketIo.send(testMessage);
+    socketIo.sendBytes(testMessage.getBytes());
 
-    String expectedSent = "test message\n";
     String actualSent = outputStream.toString();
 
-    assertEquals(expectedSent, actualSent);
+    assertEquals(testMessage, actualSent);
   }
 
   @Test

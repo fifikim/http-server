@@ -17,9 +17,10 @@ public class EchoBody implements RouteHandler {
   @Override
   public Response processRequest(Request request) {
     ResponseBuilder responseBuilder = new ResponseBuilder();
+    byte[] bodyBytes = request.body().getBytes();
 
-    responseBuilder.addContentLengthHeader(request.body());
-    responseBuilder.setBody(request.body());
+    responseBuilder.addContentLengthHeader(bodyBytes.length);
+    responseBuilder.setBody(bodyBytes);
 
     return responseBuilder.build();
   }

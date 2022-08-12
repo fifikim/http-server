@@ -76,7 +76,7 @@ public class ServerSocketTest {
     Response testResponse = TestHelpers.simpleGetResponse();
     serverSocketInterface.sendResponse(testResponse);
 
-    String expectedOutput = "HTTP/1.1 200 OK\r\n\n";
+    String expectedOutput = "HTTP/1.1 200 OK\r\n\r\n";
     String actualOutput = outputStream.toString();
 
     assertEquals(expectedOutput, actualOutput);

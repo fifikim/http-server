@@ -10,7 +10,7 @@ import server.constants.Status;
 public class ResponseBuilder {
   private String startLine = Status.OK.format();
   private ArrayList<String> headers = new ArrayList<>();
-  private String body;
+  private byte[] body;
 
   public void setStartLine(String startLine) {
     this.startLine = startLine;
@@ -31,9 +31,7 @@ public class ResponseBuilder {
     headers.add(header.toString());
   }
 
-  public void addContentLengthHeader(String body) {
-    int contentLength = body.getBytes().length;
-
+  public void addContentLengthHeader(int contentLength) {
     StringBuilder header = new StringBuilder();
     header.append("Content-Length: ");
     header.append(contentLength);
@@ -58,7 +56,7 @@ public class ResponseBuilder {
     headers.add(header.toString());
   }
 
-  public ResponseBuilder setBody(String body) {
+  public ResponseBuilder setBody(byte[] body) {
     this.body = body;
     return this;
   }
