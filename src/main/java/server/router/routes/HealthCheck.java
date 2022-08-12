@@ -4,12 +4,12 @@ import java.io.IOException;
 import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Set;
+import server.FileReader;
 import server.constants.ContentType;
 import server.constants.Method;
 import server.request.Request;
 import server.response.Response;
 import server.response.ResponseBuilder;
-import server.router.FileReader;
 
 public class HealthCheck implements RouteHandler {
   @Override
