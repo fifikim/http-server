@@ -25,7 +25,10 @@ public class HealthCheck implements RouteHandler {
 
     responseBuilder.addContentTypeHeader(ContentType.HTML);
     responseBuilder.addContentLengthHeader(body);
-    responseBuilder.setBody(body);
+
+    if (request.method() == Method.GET) {
+      responseBuilder.setBody(body);
+    }
 
     return responseBuilder.build();
   }
