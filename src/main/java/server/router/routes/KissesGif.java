@@ -25,7 +25,10 @@ public class KissesGif implements RouteHandler {
 
     responseBuilder.addContentTypeHeader(ContentType.GIF);
     responseBuilder.addContentLengthHeader(body.length);
-    responseBuilder.setBody(body);
+
+    if (request.method() == Method.GET) {
+      responseBuilder.setBody(body);
+    }
 
     return responseBuilder.build();
   }

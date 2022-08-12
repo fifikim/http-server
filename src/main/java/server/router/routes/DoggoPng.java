@@ -24,7 +24,10 @@ public class DoggoPng implements RouteHandler {
 
     responseBuilder.addContentTypeHeader(ContentType.PNG);
     responseBuilder.addContentLengthHeader(body.length);
-    responseBuilder.setBody(body);
+
+    if (request.method() == Method.GET) {
+      responseBuilder.setBody(body);
+    }
 
     return responseBuilder.build();
   }
