@@ -34,7 +34,7 @@ jobs:
           user: ${{ secrets.USERNAME }}
           key: ${{ secrets.KEY }}
 
-      - name: Upload static file directory to production server
+      - name: Upload JAR artifact to production server
         uses: mdallasanta/ssh-scp-deploy@v1.2.0
         with:
           local: 'build/libs/http-server.jar'
