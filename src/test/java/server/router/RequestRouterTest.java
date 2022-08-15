@@ -3,6 +3,7 @@ package server.router;
 import static org.junit.Assert.assertEquals;
 
 import java.io.IOException;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 import org.junit.Test;
@@ -30,7 +31,9 @@ public class RequestRouterTest {
     Response expectedResponse = TestHelpers.simpleGetWithBodyResponse();
     Response actualResponse = new RequestRouter().getResponse(request);
 
-    assertEquals(expectedResponse, actualResponse);
+    assertEquals(expectedResponse.startLine(), actualResponse.startLine());
+    assertEquals(expectedResponse.headers(), actualResponse.headers());
+    assertEquals(Arrays.toString(expectedResponse.body()), Arrays.toString(actualResponse.body()));
   }
 
   @Test
@@ -96,7 +99,9 @@ public class RequestRouterTest {
     Response expectedResponse = TestHelpers.echoBodyResponse();
     Response actualResponse = new RequestRouter().getResponse(request);
 
-    assertEquals(expectedResponse, actualResponse);
+    assertEquals(expectedResponse.startLine(), actualResponse.startLine());
+    assertEquals(expectedResponse.headers(), actualResponse.headers());
+    assertEquals(Arrays.toString(expectedResponse.body()), Arrays.toString(actualResponse.body()));
   }
 
   @Test
@@ -137,7 +142,9 @@ public class RequestRouterTest {
     Response expectedResponse = TestHelpers.htmlResponse();
     Response actualResponse = new RequestRouter().getResponse(request);
 
-    assertEquals(expectedResponse, actualResponse);
+    assertEquals(expectedResponse.startLine(), actualResponse.startLine());
+    assertEquals(expectedResponse.headers(), actualResponse.headers());
+    assertEquals(Arrays.toString(expectedResponse.body()), Arrays.toString(actualResponse.body()));
   }
 
   @Test
@@ -147,7 +154,9 @@ public class RequestRouterTest {
     Response expectedResponse = TestHelpers.jsonResponse();
     Response actualResponse = new RequestRouter().getResponse(request);
 
-    assertEquals(expectedResponse, actualResponse);
+    assertEquals(expectedResponse.startLine(), actualResponse.startLine());
+    assertEquals(expectedResponse.headers(), actualResponse.headers());
+    assertEquals(Arrays.toString(expectedResponse.body()), Arrays.toString(actualResponse.body()));
   }
 
   @Test
@@ -157,7 +166,9 @@ public class RequestRouterTest {
     Response expectedResponse = TestHelpers.textResponse();
     Response actualResponse = new RequestRouter().getResponse(request);
 
-    assertEquals(expectedResponse, actualResponse);
+    assertEquals(expectedResponse.startLine(), actualResponse.startLine());
+    assertEquals(expectedResponse.headers(), actualResponse.headers());
+    assertEquals(Arrays.toString(expectedResponse.body()), Arrays.toString(actualResponse.body()));
   }
 
   @Test
@@ -167,7 +178,9 @@ public class RequestRouterTest {
     Response expectedResponse = TestHelpers.xmlResponse();
     Response actualResponse = new RequestRouter().getResponse(request);
 
-    assertEquals(expectedResponse, actualResponse);
+    assertEquals(expectedResponse.startLine(), actualResponse.startLine());
+    assertEquals(expectedResponse.headers(), actualResponse.headers());
+    assertEquals(Arrays.toString(expectedResponse.body()), Arrays.toString(actualResponse.body()));
   }
 
   @Test
@@ -177,6 +190,44 @@ public class RequestRouterTest {
     Response expectedResponse = TestHelpers.healthCheckResponse();
     Response actualResponse = new RequestRouter().getResponse(request);
 
-    assertEquals(expectedResponse, actualResponse);
+    assertEquals(expectedResponse.startLine(), actualResponse.startLine());
+    assertEquals(expectedResponse.headers(), actualResponse.headers());
+    assertEquals(Arrays.toString(expectedResponse.body()), Arrays.toString(actualResponse.body()));
+  }
+
+  @Test
+  public void returnsCorrectResponseForKittehJpg() throws IOException {
+    Request request = new Request(Method.GET, Path.KITTEH_JPG, null, null);
+
+    Response expectedResponse = TestHelpers.kittehJpgResponse();
+    Response actualResponse = new RequestRouter().getResponse(request);
+
+    assertEquals(expectedResponse.startLine(), actualResponse.startLine());
+    assertEquals(expectedResponse.headers(), actualResponse.headers());
+    assertEquals(Arrays.toString(expectedResponse.body()), Arrays.toString(actualResponse.body()));
+  }
+
+  @Test
+  public void returnsCorrectResponseForDoggoPng() throws IOException {
+    Request request = new Request(Method.GET, Path.DOGGO_PNG, null, null);
+
+    Response expectedResponse = TestHelpers.doggoPngResponse();
+    Response actualResponse = new RequestRouter().getResponse(request);
+
+    assertEquals(expectedResponse.startLine(), actualResponse.startLine());
+    assertEquals(expectedResponse.headers(), actualResponse.headers());
+    assertEquals(Arrays.toString(expectedResponse.body()), Arrays.toString(actualResponse.body()));
+  }
+
+  @Test
+  public void returnsCorrectResponseForKissesGif() throws IOException {
+    Request request = new Request(Method.GET, Path.KISSES_GIF, null, null);
+
+    Response expectedResponse = TestHelpers.kissesGifResponse();
+    Response actualResponse = new RequestRouter().getResponse(request);
+
+    assertEquals(expectedResponse.startLine(), actualResponse.startLine());
+    assertEquals(expectedResponse.headers(), actualResponse.headers());
+    assertEquals(Arrays.toString(expectedResponse.body()), Arrays.toString(actualResponse.body()));
   }
 }

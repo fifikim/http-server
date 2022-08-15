@@ -19,13 +19,16 @@ public class HealthCheck implements RouteHandler {
 
   @Override
   public Response processRequest(Request request) throws IOException {
-    String body = FileReader.read("/health-check.html");
+    byte[] body = FileReader.readBytes("/health-check.html");
 
     ResponseBuilder responseBuilder = new ResponseBuilder();
 
     responseBuilder.addContentTypeHeader(ContentType.HTML);
-    responseBuilder.addContentLengthHeader(body);
-    responseBuilder.setBody(body);
+    responseBuilder.addContentLengthHeader(body.length);
+
+    if (request.method() == Method.GET) {
+      responseBuilder.setBody(body);
+    }
 
     return responseBuilder.build();
   }

@@ -8,13 +8,13 @@ import org.junit.Test;
 public class ResponseBuilderTest {
   private final String startLine = "HTTP/1.1 200 OK";
   private final List<String> headers = List.of("Content-Length: 11");
-  private final String body = "Hello world";
+  private final byte[] body = "Hello world".getBytes();
 
   @Test
   public void setsAndBuildsResponseWithStartLineHeadersAndBody() {
     ResponseBuilder builder = new ResponseBuilder();
     builder.setStartLine(startLine);
-    builder.addContentLengthHeader(body);
+    builder.addContentLengthHeader(body.length);
     builder.setBody(body);
 
     Response expectedResponse = new Response(startLine, headers, body);
@@ -27,7 +27,7 @@ public class ResponseBuilderTest {
   public void setsAndBuildsResponseWithStartLineAndHeaders() {
     ResponseBuilder builder = new ResponseBuilder();
     builder.setStartLine(startLine);
-    builder.addContentLengthHeader(body);
+    builder.addContentLengthHeader(body.length);
 
     Response expectedResponse = new Response(startLine, headers, null);
     Response actualResponse = builder.build();

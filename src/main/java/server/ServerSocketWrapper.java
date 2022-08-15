@@ -5,7 +5,7 @@ import java.net.Socket;
 import server.request.Request;
 import server.request.RequestReader;
 import server.response.Response;
-import server.response.ResponseFormatter;
+import server.response.ResponseWriter;
 
 public class ServerSocketWrapper implements ServerSocketInterface {
   private final Socket clientSocket;
@@ -20,11 +20,8 @@ public class ServerSocketWrapper implements ServerSocketInterface {
     return new RequestReader(socketIo).readRequest();
   }
 
-  public void sendResponse(Response response) {
-    if (response != null) {
-      String responseString = ResponseFormatter.toString(response);
-      socketIo.send(responseString);
-    }
+  public void sendResponse(Response response) throws IOException {
+    new ResponseWriter(socketIo).writeResponse(response);
   }
 
   public void closeSocket() throws IOException {

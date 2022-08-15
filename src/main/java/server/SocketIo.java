@@ -3,12 +3,12 @@ package server;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.io.PrintWriter;
+import java.io.OutputStream;
 import java.net.Socket;
 
 public class SocketIo {
   private final BufferedReader input;
-  private final PrintWriter output;
+  private final OutputStream output;
   private final Socket clientSocket;
 
   public SocketIo(Socket clientSocket) throws IOException {
@@ -27,8 +27,9 @@ public class SocketIo {
     return new String(container, 0, length);
   }
 
-  public void send(String message) {
-    output.println(message);
+  public void sendBytes(byte[] bytes) throws IOException {
+    output.write(bytes);
+    output.flush();
   }
 
   public void closeStreams() throws IOException {
@@ -40,7 +41,7 @@ public class SocketIo {
     return new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
   }
 
-  private PrintWriter createSocketOutput() throws IOException {
-    return new PrintWriter(clientSocket.getOutputStream(), true);
+  private OutputStream createSocketOutput() throws IOException {
+    return clientSocket.getOutputStream();
   }
 }

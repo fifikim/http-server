@@ -1,20 +1,30 @@
 package server.response;
 
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
 import java.util.List;
 import server.constants.Format;
 
 public class ResponseFormatter {
-  public static String toString(Response response) {
+  public static byte[] toBytes(Response response) throws IOException {
     String startLine = formatStartLine(response.startLine());
     String headers = formatHeaders(response.headers());
-    String body = formatBody(response.body());
 
-    StringBuilder formattedResponse = new StringBuilder();
-    formattedResponse.append(startLine);
-    formattedResponse.append(headers);
-    formattedResponse.append(body);
+    StringBuilder responseHead = new StringBuilder();
+    responseHead.append(startLine);
+    responseHead.append(headers);
+    responseHead.append(Format.BREAK);
 
-    return formattedResponse.toString();
+    byte[] formattedResponseHead = responseHead.toString().getBytes();
+
+    if (response.body() == null) {
+      return formattedResponseHead;
+    }
+
+    ByteArrayOutputStream responseWithBody = new ByteArrayOutputStream();
+    responseWithBody.write(formattedResponseHead);
+    responseWithBody.write(response.body());
+    return responseWithBody.toByteArray();
   }
 
   private static String formatStartLine(String startLine) {
@@ -37,16 +47,5 @@ public class ResponseFormatter {
     }
 
     return formattedHeaders.toString();
-  }
-
-  private static String formatBody(String body) {
-    StringBuilder formattedBody = new StringBuilder();
-
-    if (body != null) {
-      formattedBody.append(Format.BREAK);
-      formattedBody.append(body);
-    }
-
-    return formattedBody.toString();
   }
 }

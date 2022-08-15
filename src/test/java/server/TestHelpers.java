@@ -7,6 +7,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.net.Socket;
+import java.nio.charset.StandardCharsets;
 import java.util.HashMap;
 import java.util.List;
 import server.constants.Method;
@@ -125,7 +126,7 @@ public class TestHelpers {
   public static Response simpleGetWithBodyResponse() {
     String startLine = "HTTP/1.1 200 OK";
     List<String> headers = List.of("Content-Length: 11");
-    String body = "Hello world";
+    byte[] body = "Hello world".getBytes(StandardCharsets.UTF_8);
 
     return new Response(startLine, headers, body);
   }
@@ -134,7 +135,7 @@ public class TestHelpers {
     StringBuilder response = new StringBuilder();
     response.append("HTTP/1.1 200 OK\r\n");
     response.append("Content-Length: 11\r\n\r\n");
-    response.append("Hello world\n");
+    response.append("Hello world");
 
     return response.toString();
   }
@@ -154,7 +155,7 @@ public class TestHelpers {
   public static Response echoBodyResponse() {
     String startLine = "HTTP/1.1 200 OK";
     List<String> headers = List.of("Content-Length: 12");
-    String body = "test message";
+    byte[] body = "test message".getBytes();
 
     return new Response(startLine, headers, body);
   }
@@ -201,6 +202,10 @@ public class TestHelpers {
     badRequests.put(Path.JSON_RESPONSE, Method.POST);
     badRequests.put(Path.TEXT_RESPONSE, Method.PATCH);
     badRequests.put(Path.XML_RESPONSE, Method.PUT);
+    badRequests.put(Path.HEALTH_CHECK, Method.OPTIONS);
+    badRequests.put(Path.KITTEH_JPG, Method.CONNECT);
+    badRequests.put(Path.DOGGO_PNG, Method.TRACE);
+    badRequests.put(Path.KISSES_GIF, Method.POST);
 
     return badRequests;
   }
@@ -224,16 +229,18 @@ public class TestHelpers {
     String startLine = "HTTP/1.1 200 OK";
     List<String> headers = List.of("Content-Type: text/html;charset=utf-8",
             "Content-Length: 46");
+    byte[] body = "<html><body><p>HTML Response</p></body></html>".getBytes();
 
-    return new Response(startLine, headers, "<html><body><p>HTML Response</p></body></html>");
+    return new Response(startLine, headers, body);
   }
 
   public static Response jsonResponse() {
     String startLine = "HTTP/1.1 200 OK";
     List<String> headers = List.of("Content-Type: application/json;charset=utf-8",
             "Content-Length: 33");
+    byte[] body = "{\"key1\":\"value1\",\"key2\":\"value2\"}".getBytes();
 
-    return new Response(startLine, headers, "{\"key1\":\"value1\",\"key2\":\"value2\"}");
+    return new Response(startLine, headers, body);
   }
 
   public static Response textResponse() {
@@ -241,30 +248,50 @@ public class TestHelpers {
     List<String> headers = List.of("Content-Type: text/plain;charset=utf-8",
             "Content-Length: 13");
 
-    return new Response(startLine, headers, "text response");
+    return new Response(startLine, headers, "text response".getBytes());
   }
 
   public static Response xmlResponse() {
     String startLine = "HTTP/1.1 200 OK";
     List<String> headers = List.of("Content-Type: application/xml;charset=utf-8",
             "Content-Length: 38");
+    byte[] body = "<note><body>XML Response</body></note>".getBytes();
 
-    return new Response(startLine, headers, "<note><body>XML Response</body></note>");
+    return new Response(startLine, headers, body);
   }
 
-  public static String htmlFileContents() {
-    StringBuilder html = new StringBuilder();
-    html.append("<!doctype><html lang=\"en-US\">  <head>    <title>TODO List</title>  </head>  ");
-    html.append("<body>    <main>      <strong>Status:</strong> pass    </main>  </body></html>");
-
-    return html.toString();
-  }
-
-  public static Response healthCheckResponse() {
+  public static Response healthCheckResponse() throws IOException {
     String startLine = "HTTP/1.1 200 OK";
     List<String> headers = List.of("Content-Type: text/html;charset=utf-8",
-            "Content-Length: 154");
-    String body = htmlFileContents();
+            "Content-Length: 166");
+    byte[] body = FileReader.readBytes("/health-check.html");
+
+    return new Response(startLine, headers, body);
+  }
+
+  public static Response kittehJpgResponse() throws IOException {
+    String startLine = "HTTP/1.1 200 OK";
+    List<String> headers = List.of("Content-Type: image/jpeg",
+            "Content-Length: 207922");
+    byte[] body = FileReader.readBytes("/kitteh.jpg");
+
+    return new Response(startLine, headers, body);
+  }
+
+  public static Response doggoPngResponse() throws IOException {
+    String startLine = "HTTP/1.1 200 OK";
+    List<String> headers = List.of("Content-Type: image/png",
+            "Content-Length: 351702");
+    byte[] body = FileReader.readBytes("/doggo.png");
+
+    return new Response(startLine, headers, body);
+  }
+
+  public static Response kissesGifResponse() throws IOException {
+    String startLine = "HTTP/1.1 200 OK";
+    List<String> headers = List.of("Content-Type: image/gif",
+            "Content-Length: 432985");
+    byte[] body = FileReader.readBytes("/kisses.gif");
 
     return new Response(startLine, headers, body);
   }

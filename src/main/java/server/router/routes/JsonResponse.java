@@ -21,12 +21,13 @@ public class JsonResponse implements RouteHandler {
   public Response processRequest(Request request) {
     ResponseBuilder responseBuilder = new ResponseBuilder();
     Method method = request.method();
+    byte[] bodyBytes = body.getBytes();
 
     responseBuilder.addContentTypeHeader(ContentType.JSON);
-    responseBuilder.addContentLengthHeader(body);
+    responseBuilder.addContentLengthHeader(bodyBytes.length);
 
     if (method == Method.GET) {
-      responseBuilder.setBody(body);
+      responseBuilder.setBody(bodyBytes);
     }
 
     return responseBuilder.build();

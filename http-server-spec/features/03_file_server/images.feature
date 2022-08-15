@@ -1,4 +1,4 @@
-@images @03-file-server
+@images @03-file-server @implemented
 Feature: Images
 
   Scenario: Getting a JPEG image of a kitteh
