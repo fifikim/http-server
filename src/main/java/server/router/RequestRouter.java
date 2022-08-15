@@ -1,5 +1,6 @@
 package server.router;
 
+import java.io.IOException;
 import java.util.HashMap;
 import java.util.Set;
 import server.constants.Method;
@@ -10,6 +11,7 @@ import server.response.Response;
 import server.response.ResponseBuilder;
 import server.router.routes.EchoBody;
 import server.router.routes.HeadRequest;
+import server.router.routes.HealthCheck;
 import server.router.routes.HtmlResponse;
 import server.router.routes.JsonResponse;
 import server.router.routes.MethodOptions;
@@ -22,7 +24,7 @@ import server.router.routes.TextResponse;
 import server.router.routes.XmlResponse;
 
 public class RequestRouter {
-  public Response getResponse(Request request) {
+  public Response getResponse(Request request) throws IOException {
     HashMap<Path, RouteHandler> routes = getAllRoutes();
     RouteHandler route = routes.get(request.path());
 
@@ -56,6 +58,7 @@ public class RequestRouter {
     routes.put(Path.JSON_RESPONSE, new JsonResponse());
     routes.put(Path.TEXT_RESPONSE, new TextResponse());
     routes.put(Path.XML_RESPONSE, new XmlResponse());
+    routes.put(Path.HEALTH_CHECK, new HealthCheck());
 
     return routes;
   }

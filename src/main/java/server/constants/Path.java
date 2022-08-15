@@ -11,7 +11,8 @@ public enum Path {
   HTML_RESPONSE("/html_response"),
   JSON_RESPONSE("/json_response"),
   TEXT_RESPONSE("/text_response"),
-  XML_RESPONSE("/xml_response");
+  XML_RESPONSE("/xml_response"),
+  HEALTH_CHECK("/health-check.html");
 
   private final String url;
 

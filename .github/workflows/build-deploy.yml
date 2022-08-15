@@ -25,7 +25,17 @@ jobs:
       - name: Build with Gradle wrapper
         run: ./gradlew build
 
-      - uses: mdallasanta/ssh-scp-deploy@v1.2.0
+      - name: Upload static file directory to production server
+        uses: mdallasanta/ssh-scp-deploy@v1.2.0
+        with:
+          local: 'web'
+          remote: 'web'
+          host: ${{ secrets.HOST }}
+          user: ${{ secrets.USERNAME }}
+          key: ${{ secrets.KEY }}
+
+      - name: Upload JAR artifact to production server
+        uses: mdallasanta/ssh-scp-deploy@v1.2.0
         with:
           local: 'build/libs/http-server.jar'
           host: ${{ secrets.HOST }}

@@ -1,4 +1,4 @@
-@health-check @03-file-server
+@health-check @03-file-server @implemented
 Feature: Health Check
 
   Scenario: Health check request
