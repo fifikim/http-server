@@ -2,6 +2,7 @@ package server.response;
 
 import java.util.ArrayList;
 import java.util.Set;
+import server.constants.ContentType;
 import server.constants.Method;
 import server.constants.Path;
 import server.constants.Status;
@@ -36,6 +37,14 @@ public class ResponseBuilder {
     StringBuilder header = new StringBuilder();
     header.append("Content-Length: ");
     header.append(contentLength);
+
+    headers.add(header.toString());
+  }
+
+  public void addContentTypeHeader(ContentType contentType) {
+    StringBuilder header = new StringBuilder();
+    header.append("Content-Type: ");
+    header.append(contentType);
 
     headers.add(header.toString());
   }

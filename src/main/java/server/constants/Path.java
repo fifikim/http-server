@@ -7,7 +7,11 @@ public enum Path {
   ECHO_BODY("/echo_body"),
   REDIRECT("/redirect"),
   METHOD_OPTIONS("/method_options"),
-  METHOD_OPTIONS2("/method_options2");
+  METHOD_OPTIONS2("/method_options2"),
+  HTML_RESPONSE("/html_response"),
+  JSON_RESPONSE("/json_response"),
+  TEXT_RESPONSE("/text_response"),
+  XML_RESPONSE("/xml_response");
 
   private final String url;
 

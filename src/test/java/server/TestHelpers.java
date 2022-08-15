@@ -151,13 +151,6 @@ public class TestHelpers {
     return new Response(startLine, null, null);
   }
 
-  public static Response notAllowedResponse() {
-    String startLine = "HTTP/1.1 405 Method Not Allowed";
-    List<String> headers = List.of("Allow: HEAD");
-
-    return new Response(startLine, headers, null);
-  }
-
   public static Response echoBodyResponse() {
     String startLine = "HTTP/1.1 200 OK";
     List<String> headers = List.of("Content-Length: 12");
@@ -195,15 +188,19 @@ public class TestHelpers {
     return body.toString();
   }
 
-  public static HashMap<Method, Path> badRequests() {
-    HashMap<Method, Path> badRequests = new HashMap<>();
-    badRequests.put(Method.DELETE, Path.ECHO_BODY);
-    badRequests.put(Method.POST, Path.HEAD_REQUEST);
-    badRequests.put(Method.PUT, Path.REDIRECT);
-    badRequests.put(Method.PATCH, Path.SIMPLE_GET);
-    badRequests.put(Method.OPTIONS, Path.SIMPLE_GET_WITH_BODY);
-    badRequests.put(Method.TRACE, Path.METHOD_OPTIONS);
-    badRequests.put(Method.CONNECT, Path.METHOD_OPTIONS2);
+  public static HashMap<Path, Method> badRequests() {
+    HashMap<Path, Method> badRequests = new HashMap<>();
+    badRequests.put(Path.ECHO_BODY, Method.DELETE);
+    badRequests.put(Path.HEAD_REQUEST, Method.POST);
+    badRequests.put(Path.REDIRECT, Method.PUT);
+    badRequests.put(Path.SIMPLE_GET, Method.PATCH);
+    badRequests.put(Path.SIMPLE_GET_WITH_BODY, Method.OPTIONS);
+    badRequests.put(Path.METHOD_OPTIONS, Method.TRACE);
+    badRequests.put(Path.METHOD_OPTIONS2, Method.CONNECT);
+    badRequests.put(Path.HTML_RESPONSE, Method.DELETE);
+    badRequests.put(Path.JSON_RESPONSE, Method.POST);
+    badRequests.put(Path.TEXT_RESPONSE, Method.PATCH);
+    badRequests.put(Path.XML_RESPONSE, Method.PUT);
 
     return badRequests;
   }
@@ -220,5 +217,38 @@ public class TestHelpers {
     List<String> headers = List.of("Allow: GET, HEAD, OPTIONS, POST, PUT");
 
     return new Response(startLine, headers, null);
+  }
+
+
+  public static Response htmlResponse() {
+    String startLine = "HTTP/1.1 200 OK";
+    List<String> headers = List.of("Content-Type: text/html;charset=utf-8",
+            "Content-Length: 46");
+
+    return new Response(startLine, headers, "<html><body><p>HTML Response</p></body></html>");
+  }
+
+  public static Response jsonResponse() {
+    String startLine = "HTTP/1.1 200 OK";
+    List<String> headers = List.of("Content-Type: application/json;charset=utf-8",
+            "Content-Length: 33");
+
+    return new Response(startLine, headers, "{\"key1\":\"value1\",\"key2\":\"value2\"}");
+  }
+
+  public static Response textResponse() {
+    String startLine = "HTTP/1.1 200 OK";
+    List<String> headers = List.of("Content-Type: text/plain;charset=utf-8",
+            "Content-Length: 13");
+
+    return new Response(startLine, headers, "text response");
+  }
+
+  public static Response xmlResponse() {
+    String startLine = "HTTP/1.1 200 OK";
+    List<String> headers = List.of("Content-Type: application/xml;charset=utf-8",
+            "Content-Length: 38");
+
+    return new Response(startLine, headers, "<note><body>XML Response</body></note>");
   }
 }

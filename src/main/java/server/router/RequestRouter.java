@@ -10,12 +10,16 @@ import server.response.Response;
 import server.response.ResponseBuilder;
 import server.router.routes.EchoBody;
 import server.router.routes.HeadRequest;
+import server.router.routes.HtmlResponse;
+import server.router.routes.JsonResponse;
 import server.router.routes.MethodOptions;
 import server.router.routes.MethodOptions2;
 import server.router.routes.Redirect;
 import server.router.routes.RouteHandler;
 import server.router.routes.SimpleGet;
 import server.router.routes.SimpleGetWithBody;
+import server.router.routes.TextResponse;
+import server.router.routes.XmlResponse;
 
 public class RequestRouter {
   public Response getResponse(Request request) {
@@ -48,6 +52,10 @@ public class RequestRouter {
     routes.put(Path.REDIRECT, new Redirect());
     routes.put(Path.METHOD_OPTIONS, new MethodOptions());
     routes.put(Path.METHOD_OPTIONS2, new MethodOptions2());
+    routes.put(Path.HTML_RESPONSE, new HtmlResponse());
+    routes.put(Path.JSON_RESPONSE, new JsonResponse());
+    routes.put(Path.TEXT_RESPONSE, new TextResponse());
+    routes.put(Path.XML_RESPONSE, new XmlResponse());
 
     return routes;
   }
